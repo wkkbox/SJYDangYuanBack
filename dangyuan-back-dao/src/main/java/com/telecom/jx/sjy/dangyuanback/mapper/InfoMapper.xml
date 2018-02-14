@@ -49,6 +49,7 @@
         WHERE id = #{infoId};
     </select>
 
+    <!--将已读消息从t_user_unreadedinfo中删除-->
     <delete id="updateInfoReaded" parameterType="java.lang.Long">
         DELETE FROM t_user_unreadedinfo WHERE infoId = #{infoId};
     </delete>

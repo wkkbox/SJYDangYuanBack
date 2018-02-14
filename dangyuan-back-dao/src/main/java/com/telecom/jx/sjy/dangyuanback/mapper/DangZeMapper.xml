@@ -13,6 +13,7 @@
         d.roleId roleId
     </sql>
 
+    <!--查询用户所有党责活动-->
     <select id="selectDangZes" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
         SELECT
         <include refid="baseSql"/>
@@ -20,6 +21,7 @@
         WHERE roleId >= #{roleId}
     </select>
 
+    <!--查询党责活动的完成状态-->
     <select id="selectDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT state
         FROM t_user_dangze
