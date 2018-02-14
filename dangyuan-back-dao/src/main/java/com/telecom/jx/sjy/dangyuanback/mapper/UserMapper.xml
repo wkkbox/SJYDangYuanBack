@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.telecom.jx.sjy.dangyuanback.mapper.UserMapper">
+
+    <!--注意字段要和javabean的一样-->
+    <sql id="baseSql">
+        u.id id,
+        u.accountName accountName,
+        u.userName userName,
+        u.password password,
+        u.gender gender,
+        u.salt salt,
+        u.nation nation,
+        u.nativeplace nativeplace,
+        u.birthday birthday,
+        u.degree degree,
+        u.inpartyday inpartyday,
+        u.job job,
+        u.inandout inandout,
+        u.score score,
+        u.branch branch
+    </sql>
+
+    <!--查询所有积分公示-->
+    <select id="selectScorePublicity" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.Score">
+        SELECT id,userName,gender,score,branch
+        FROM user_score_publicity
+    </select>
+    <!--分页查询所有积分公示-->
+    <select id="selectScorePublicityByPage" parameterType="java.util.Map"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.Score">
+        SELECT id,userName,gender,score,branch
+        FROM user_score_publicity
+        limit #{currentPage} , #{pageSize}
+    </select>
+    <!--查询所有积分公示条数-->
+    <select id="selectScorePublicitySize" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM user_score_publicity
+    </select>
+
+    <select id="listUsers" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_user u
+    </select>
+    <!--通过姓名查用户，集合-->
+    <select id="selectUserByUserName" parameterType="java.lang.String"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_user u
+        WHERE u.userName = #{userName}
+    </select>
+    <!--通过账户查用户，唯一-->
+    <select id="selectUserByAccountName" parameterType="java.lang.String"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_user u
+        WHERE u.accountName = #{accountName}
+    </select>
+
+    <!--查询本用户的用户角色id集合-->
+    <select id="selectUserRolesByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT r.id
+        FROM t_user u
+        LEFT JOIN t_user_role u_r
+        ON u.id = u_r.userId
+        LEFT JOIN t_role r
+        ON u_r.roleId = r.id
+        WHERE u.id = #{userId}
+    </select>
+
+    <select id="selectUserPermissionsByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT p.permName
+        FROM t_user u
+        LEFT JOIN t_user_role u_r
+        ON u.id = u_r.userId
+        LEFT JOIN t_role_permission r_p
+        ON r_p.roleId = u_r.roleId
+        LEFT JOIN t_permission p
+        ON r_p.permId = p.id
+        WHERE u.id = #{userId}
+    </select>
+
+    <select id="selectMenusByUserId" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.util.dto.Menu">
+        SELECT p.description menuName ,p.url menuUrl
+        FROM t_user u
+        LEFT JOIN t_user_role u_r
+        ON u.id = u_r.userId
+        LEFT JOIN t_role_permission r_p
+        ON r_p.roleId = u_r.roleId
+        LEFT JOIN t_permission p
+        ON r_p.permId = p.id
+        WHERE u.id = #{userId}
+    </select>
+
+</mapper>

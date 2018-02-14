@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.telecom.jx.sjy.dangyuanback.mapper.DangZeMapper">
+
+    <!--注意字段要和javabean的一样-->
+    <sql id="baseSql">
+        d.id id,
+        d.title title,
+        d.content content,
+        d.scoreRule scoreRule,
+        d.publishtime publishtime,
+        d.endtime endtime,
+        d.roleId roleId
+    </sql>
+
+    <select id="selectDangZes" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_dangze d
+        WHERE roleId >= #{roleId}
+    </select>
+
+    <select id="selectDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT state
+        FROM t_user_dangze
+        WHERE userId = #{userId} AND dangzeId = #{dangzeId};
+    </select>
+
+
+</mapper>

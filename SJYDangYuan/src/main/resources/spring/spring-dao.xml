@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+    ">
+
+    <!--1 读取数据库配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!--2 创建数据库连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!--基本属性-->
+        <property name="driverClassName" value="${db.driverClass}"/>
+        <property name="url" value="${db.jdbcUrl}"/>
+        <property name="username" value="${db.user}"/>
+        <property name="password" value="${db.password}"/>
+        <!--优化属性-->
+        <property name="defaultAutoCommit" value="false"/>
+    </bean>
+
+    <!--3 创建mybatis的会话工厂-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 引入mybatis-config.xml文件 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <!--自动扫描mapper里面的所有的Mapper.xml-->
+        <property name="mapperLocations" value="classpath*:com/telecom/jx/sjy/dangyuanback/mapper/*Mapper.xml"/>
+    </bean>
+
+    <!--4 配置扫描DAO层接口，配置了这个类之后就不需要再对接口进行实现(不需要再写接口的实现类)-->
+    <!--没有id，是一个匿名的，不被引用，所以可以不写，写id也不要紧-->
+    <!-- mapper接口代理对像 -->
+    <bean id="mapperscan" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 这里使用sessionfactory的名字 -->
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+        <!-- 扫描mapper接口 -->
+        <property name="basePackage" value="com.telecom.jx.sjy.dangyuanback.mapper"/>
+    </bean>
+
+    <!--5 扫描DAO层下注解类,base-package,那么可以扫描到base-package的当前包以及子包的所有注解类-->
+    <context:component-scan base-package="com.telecom.jx.sjy.dangyuanback.mapper"/>
+
+</beans>

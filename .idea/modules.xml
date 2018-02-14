@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SJYDangYuan/SJYDangYuan.iml" filepath="$PROJECT_DIR$/SJYDangYuan/SJYDangYuan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dangyuan-back-common/dangyuan-back-common.iml" filepath="$PROJECT_DIR$/dangyuan-back-common/dangyuan-back-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dangyuan-back-dao/dangyuan-back-dao.iml" filepath="$PROJECT_DIR$/dangyuan-back-dao/dangyuan-back-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dangyuan-back-parent/dangyuan-back-parent.iml" filepath="$PROJECT_DIR$/dangyuan-back-parent/dangyuan-back-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dangyuan-back-pojo/dangyuan-back-pojo.iml" filepath="$PROJECT_DIR$/dangyuan-back-pojo/dangyuan-back-pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dangyuan-back-service/dangyuan-back-service.iml" filepath="$PROJECT_DIR$/dangyuan-back-service/dangyuan-back-service.iml" />
+    </modules>
+  </component>
+</project>

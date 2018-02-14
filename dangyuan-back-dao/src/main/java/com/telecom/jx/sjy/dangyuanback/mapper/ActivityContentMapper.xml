@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.telecom.jx.sjy.dangyuanback.mapper.ActivityContentMapper">
+
+    <!--注意字段要和javabean的一样-->
+    <sql id="baseSql">
+        a_c.id id,
+        a_c.content content,
+        a_c.userId userId,
+        a_c.activityId activityId,
+        a_c.activityType activityType
+    </sql>
+
+    <insert id="insertActivityContent" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.ActivityContent">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.ActivityContent">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_activity_content
+        (content,userId,activityId,activityType)
+        VALUES (#{content},#{userId},#{activityId},#{activityType})
+    </insert>
+
+
+</mapper>

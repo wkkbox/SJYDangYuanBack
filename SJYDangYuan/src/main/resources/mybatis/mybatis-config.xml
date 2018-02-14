@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- setting标签:设置全局配置开关 -->
+    <!--<settings>
+
+    </settings>-->
+
+    <!-- typeAlias:别名标签 -->
+    <typeAliases>
+        <!-- 给类起别名 -->
+        <!-- <typeAlias type="model.User" alias="User"/> -->
+        <!-- 扫描包,给包中类起别名=类名,首字母大小写无所谓 -->
+        <!--<package name="com.shiro.pojo"/>-->
+    </typeAliases>
+
+
+</configuration>

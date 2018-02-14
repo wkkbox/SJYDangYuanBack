@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dangyuan-back-common" />
+        <module name="dangyuan-back-dao" />
+        <module name="dangyuan-back-pojo" />
+        <module name="dangyuan-back-service" />
+        <module name="SJYDangYuan" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dangyuan-back-common" target="1.8" />
+      <module name="dangyuan-back-dao" target="1.8" />
+      <module name="dangyuan-back-parent" target="1.8" />
+      <module name="dangyuan-back-pojo" target="1.8" />
+      <module name="dangyuan-back-service" target="1.8" />
+      <module name="SJYDangYuan" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
