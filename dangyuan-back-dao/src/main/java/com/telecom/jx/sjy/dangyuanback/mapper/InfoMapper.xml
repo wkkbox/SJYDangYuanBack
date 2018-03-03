@@ -26,7 +26,8 @@
     </select>
 
     <!--分页查询本用户所有的消息集合-->
-    <select id="selectInfoByPage" parameterType="java.util.Map" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Info">
+    <select id="selectInfoByPage" parameterType="java.util.Map"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Info">
         SELECT
         <include refid="baseSql"/>
         FROM t_info i
@@ -42,7 +43,8 @@
     </select>
 
     <!--根据消息id查询消息-->
-    <select id="selectInfoByInfoId" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Info">
+    <select id="selectInfoByInfoId" parameterType="java.lang.Long"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Info">
         SELECT
         <include refid="baseSql"/>
         FROM t_info i
@@ -53,5 +55,31 @@
     <delete id="updateInfoReaded" parameterType="java.lang.Long">
         DELETE FROM t_user_unreadedinfo WHERE infoId = #{infoId};
     </delete>
+
+    <select id="selectInfos" parameterType="java.lang.Integer"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Info">
+        SELECT id,title,content,year,publishtime,roleId
+        FROM t_info
+        WHERE year = #{year}
+    </select>
+
+    <insert id="insertUnReadedInfo" parameterType="java.util.Map">
+        INSERT INTO t_user_unreadedinfo
+        (userId,infoId,year)
+        VALUES
+        (#{userId},#{infoId},#{year})
+    </insert>
+
+    <insert id="insertInfo" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.Info">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Info">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_info
+        (title,content,year,publishtime,roleId)
+        VALUES
+        (#{title},#{content},#{year},#{publishtime},#{roleId})
+    </insert>
 
 </mapper>

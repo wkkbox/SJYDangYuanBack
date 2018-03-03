@@ -7,15 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface InfoMapper {
-    Integer selectUnreadInfoCount(Long userId) throws Exception;
+    List<Info> selectInfos(Integer year);
 
-    Integer selectInfoSize(Long roleId) throws Exception;
+    void insertUnReadedInfo(Map<String, Object> map);
 
-    List<Info> selectInfoByPage(Map<String, Object> map) throws Exception;
-
-    List<Long> selectUnreadInfoId(Long userId) throws Exception;
-
-    Info selectInfoByInfoId(Long infoId) throws Exception;
-
-    void updateInfoReaded(Long infoId) throws Exception;
+    void insertInfo(Info info);
 }

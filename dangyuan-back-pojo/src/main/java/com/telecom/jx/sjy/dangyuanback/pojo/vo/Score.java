@@ -2,6 +2,9 @@ package com.telecom.jx.sjy.dangyuanback.pojo.vo;
 
 import java.io.Serializable;
 
+/**
+ * 积分实体
+ */
 public class Score implements Serializable {
 
     private Long id;//主键

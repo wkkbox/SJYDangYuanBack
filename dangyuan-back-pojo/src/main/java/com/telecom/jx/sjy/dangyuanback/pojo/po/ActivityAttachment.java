@@ -3,7 +3,7 @@ package com.telecom.jx.sjy.dangyuanback.pojo.po;
 import java.io.Serializable;
 
 /**
- * 完成活动后上传的活动附件
+ * 完成活动后上传的活动附件实体
  */
 public class ActivityAttachment implements Serializable {
 
@@ -11,12 +11,18 @@ public class ActivityAttachment implements Serializable {
     private String localAddress;//本机地址
     private String serverAddress;//服务器地址
     private Integer attachmentType;//附件类型，0是照片
-    private String uploadtime;//上传时间
-    private Long userId;//附件所属用户id
-    private Long activityContentId;//外键，活动附件所属活动记录id
-    private Long activityId;//附件所属活动id
+    private String uploadTime;//上传时间
+    private Long contentId;//外键，活动附件所属活动记录id
     private Integer activityType;//附件所属活动类型，0是党责活动
 
+    //private Long userId;//附件所属用户id
+    //private Long activityId;//附件所属活动id
+
+
+    @Override
+    public String toString() {
+        return "id=" + id + ",localAddress=" + localAddress + ",serverAddress=" + serverAddress + ",attachmentType=" + attachmentType + ",uploadTime=" + uploadTime + ",contentId=" + contentId;
+    }
 
     public Long getId() {
         return id;
@@ -42,37 +48,12 @@ public class ActivityAttachment implements Serializable {
         this.serverAddress = serverAddress;
     }
 
-    public String getUploadtime() {
-        return uploadtime;
+    public String getUploadTime() {
+        return uploadTime;
     }
 
-    public void setUploadtime(String uploadtime) {
-        this.uploadtime = uploadtime;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-
-    public Long getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(Long activityId) {
-        this.activityId = activityId;
-    }
-
-    public Integer getActivityType() {
-        return activityType;
-    }
-
-    public void setActivityType(Integer activityType) {
-        this.activityType = activityType;
+    public void setUploadTime(String uploadTime) {
+        this.uploadTime = uploadTime;
     }
 
     public Integer getAttachmentType() {
@@ -83,11 +64,19 @@ public class ActivityAttachment implements Serializable {
         this.attachmentType = attachmentType;
     }
 
-    public Long getActivityContentId() {
-        return activityContentId;
+    public Long getContentId() {
+        return contentId;
     }
 
-    public void setActivityContentId(Long activityContentId) {
-        this.activityContentId = activityContentId;
+    public void setContentId(Long contentId) {
+        this.contentId = contentId;
+    }
+
+    public Integer getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(Integer activityType) {
+        this.activityType = activityType;
     }
 }

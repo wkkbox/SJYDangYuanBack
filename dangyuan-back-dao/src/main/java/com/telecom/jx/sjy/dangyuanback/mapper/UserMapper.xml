@@ -14,11 +14,18 @@
         u.nativeplace nativeplace,
         u.birthday birthday,
         u.degree degree,
+        u.inworkday inworkday,
         u.inpartyday inpartyday,
-        u.job job,
+        u.partDuties partDuties,
+        u.administrativeDuties administrativeDuties,
+        u.profession profession,
+        u.positional positional,
+        u.idCard idCard,
         u.inandout inandout,
         u.score score,
-        u.branch branch
+        u.branch branch,
+        u.isFormal isFormal,
+        u.isWork isWork
     </sql>
 
     <!--查询所有积分公示-->
@@ -26,6 +33,7 @@
         SELECT id,userName,gender,score,branch
         FROM user_score_publicity
     </select>
+
     <!--分页查询所有积分公示-->
     <select id="selectScorePublicityByPage" parameterType="java.util.Map"
             resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.Score">
@@ -33,6 +41,7 @@
         FROM user_score_publicity
         limit #{currentPage} , #{pageSize}
     </select>
+
     <!--查询所有积分公示条数-->
     <select id="selectScorePublicitySize" resultType="java.lang.Integer">
         SELECT count(1)
@@ -44,6 +53,7 @@
         <include refid="baseSql"/>
         FROM t_user u
     </select>
+
     <!--通过姓名查用户，集合-->
     <select id="selectUserByUserName" parameterType="java.lang.String"
             resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
@@ -52,6 +62,7 @@
         FROM t_user u
         WHERE u.userName = #{userName}
     </select>
+
     <!--通过账户查用户，唯一-->
     <select id="selectUserByAccountName" parameterType="java.lang.String"
             resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
@@ -62,7 +73,7 @@
     </select>
 
     <!--查询本用户的用户角色id集合-->
-    <select id="selectUserRolesByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    <select id="selectUserRoleIdsByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
         SELECT r.id
         FROM t_user u
         LEFT JOIN t_user_role u_r
@@ -72,8 +83,20 @@
         WHERE u.id = #{userId}
     </select>
 
+    <!--查询本用户的用户角色集合(admin,user...)-->
+    <select id="selectUserRolesByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT r.role
+        FROM t_user u
+        LEFT JOIN t_user_role u_r
+        ON u.id = u_r.userId
+        LEFT JOIN t_role r
+        ON u_r.roleId = r.id
+        WHERE u.id = #{userId}
+    </select>
+
+    <!--查询本用户的用户权限集合(user:create...)-->
     <select id="selectUserPermissionsByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
-        SELECT p.permName
+        SELECT p.perm
         FROM t_user u
         LEFT JOIN t_user_role u_r
         ON u.id = u_r.userId
@@ -84,7 +107,8 @@
         WHERE u.id = #{userId}
     </select>
 
-    <select id="selectMenusByUserId" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.util.dto.Menu">
+    <select id="selectMenusByUserId" parameterType="java.lang.Long"
+            resultType="com.telecom.jx.sjy.dangyuanback.util.dto.Menu">
         SELECT p.description menuName ,p.url menuUrl
         FROM t_user u
         LEFT JOIN t_user_role u_r
@@ -95,5 +119,44 @@
         ON r_p.permId = p.id
         WHERE u.id = #{userId}
     </select>
+
+    <select id="selectUserCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM t_user
+    </select>
+
+    <select id="selectUserByPage" parameterType="java.util.Map"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_user u
+        limit #{currentPage} , #{pageSize}
+    </select>
+
+    <select id="selectUsers" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_user u
+        WHERE u.accountName != 'admin'
+    </select>
+
+    <insert id="insertUser" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_user
+        (accountName,userName,gender,salt,password,idCard,branch,score)
+        VALUES
+        (#{accountName},#{userName},#{gender},#{salt},#{password},#{idCard},#{branch},#{score})
+    </insert>
+
+    <insert id="addRole" parameterType="java.lang.Long">
+        INSERT INTO t_user_role
+        (userId,roleId)
+        VALUES
+        (#{userId},3)
+    </insert>
 
 </mapper>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+</head>
+<body>
+<div class="panel admin-panel">
+  <div class="panel-head"><strong class="icon-reorder"> 详情</strong></div>
+
+  <table class="table table-hover text-center">
+    <tr>
+      <th width="3%">ID</th>
+      <th width="5%">姓名</th>
+      <th width="5%">性别</th>
+      <th width="5%">民族</th>
+      <th width="5%">籍贯</th>
+      <th width="5%">出生年月</th>
+      <th width="5%">学历学位</th>
+      <th width="5%">入党年月</th>
+      <th width="5%">职务</th>
+      <th width="10%">调入、调出时间及单位</th>
+      <th width="5%">所属支部</th>
+      <th width="5%">积分</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>姓名</td>
+      <td>性别</td>
+       <td>民族</td>
+        <td>籍贯</td>
+         <td>出生年月</td>
+          <td>学历学位</td>
+           <td>入党年月</td>
+      <td>职务</td>
+            <td>调入、调出时间及单位</td>
+            <td>所属支部</td>
+            <td>积分</td>
+    </tr>
+
+  </table>
+
+</div>
+<script type="text/javascript">
+function del(id,mid){
+	if(confirm("您确定要删除吗?")){			
+		
+	}
+}
+</script>
+<div class="panel admin-panel margin-top">
+  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>参加活动内容</strong></div>
+  <div class="body-content">
+    <form method="post" class="form-x" action="">
+      <div class="form-group">
+        <div class="label">
+          <label>活动主题：</label>
+        </div>
+        <div class="field">
+          <select name="pid" class="input w50">
+            <option value="">活动主题</option>
+
+          </select>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>活动时间：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input w50" name="title" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>活动相片：</label>
+        </div>
+        <div class="field">
+          <textarea type="text" class="input w50" name="tits" style="height:150px;" placeholder="多个分类标题请转行"></textarea>
+          <div class="tips">提交的照片内容</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>内容纪录：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input" name="s_title" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label></label>
+        </div>
+        <div class="field">
+          <button class="button bg-main icon-check-square-o" type="submit"> 审批</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+</head>
+<body>
+<div class="panel admin-panel">
+  <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong></div>
+  <div class="padding border-bottom">
+    <button type="button" class="button border-yellow" onclick="window.location.href='#add'"><span class="icon-plus-square-o"></span> 党责录入</button>
+  </div>
+  <table class="table table-hover text-center">
+    <tr>
+      <th width="3%">ID</th>
+      <th width="5%">标题</th>
+      <th width="5%">积分内容</th>
+      <th width="5%">分值/次</th>
+      <th width="5%">频率</th>
+      <th width="5%">最高分</th>
+      <th width="10%">操作</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>党内责任</td>
+      <td>参加支部党员大会</td>
+       <td>3分</td>
+        <td>每季</td>
+         <td>12分</td>
+      <td><div class="button-group"> <a class="button border-main" href="xg.html"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="return del(1,2)"><span class="icon-trash-o"></span> 删除</a> </div></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>标题</td>
+      <td>内容</td>
+       <td>3分</td>
+        <td>每月</td>
+         <td>6分</td>
+      <td><div class="button-group"> <a class="button border-main" href="xg.html"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="return del(1,2)"><span class="icon-trash-o"></span> 删除</a> </div></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>标题</td>
+      <td>内容</td>
+      <td>3分</td>
+        <td>每月</td>
+         <td>6分</td>
+      <td><div class="button-group"> <a class="button border-main" href="xg.html"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="return del(1,2)"><span class="icon-trash-o"></span> 删除</a> </div></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>标题</td>
+      <td>内容</td>
+      <td>3分</td>
+        <td>每季</td>
+         <td>6分</td>
+      <td><div class="button-group"> <a class="button border-main" href="xg.html"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="return del(1,2)"><span class="icon-trash-o"></span> 删除</a> </div></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>标题</td>
+      <td>内容</td>
+      <td>3分</td>
+        <td>每季</td>
+         <td>12分</td>
+      <td><div class="button-group"> <a class="button border-main" href="xg.html"><span class="icon-edit"></span>  修改</a> <a class="button border-red" href="javascript:void(0)" onclick="return del(1,2)"><span class="icon-trash-o"></span> 删除</a> </div></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>标题</td>
+      <td>内容</td>
+      <td>3分</td>
+        <td>每月</td>
+         <td>12分</td>
+      <td><div class="button-group"> <a class="button border-main" href="xg.html"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="return del(1,2)"><span class="icon-trash-o"></span> 删除</a> </div></td>
+    </tr>
+  </table>
+
+</div>
+<script type="text/javascript">
+function del(id,mid){
+	if(confirm("您确定要删除吗?")){			
+		
+	}
+}
+</script>
+<div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a href="">3</a><a href="">下一页</a><a href="">尾页</a> </div>
+<div class="panel admin-panel margin-top">
+  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>党责录入</strong></div>
+  <div class="body-content">
+    <form method="post" class="form-x" action="">
+      <div class="form-group">
+        <div class="label">
+          <label>标题：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input w50" name="title3" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>积分内容：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input w50" name="title" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>分值/次：</label>
+        </div>
+        <div class="field">
+          <select name="pid" class="input w50">
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+             <option value="">4</option>
+             <option value="">5</option>
+            <option value="">6</option>
+            <option value="">7</option>
+             <option value="">8</option>
+             <option value="">9</option>
+            <option value="">10</option>
+            <option value="">11</option>
+             <option value="">12</option>
+          </select>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>频率：</label>
+        </div>
+        <div class="field">
+          <select name="pid2" class="input w50">
+          <option value="">无</option>
+            <option value="">每月</option>
+            <option value="">每季</option>
+            <option value="">每年</option>
+          </select>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>最高分：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input w50" name="title2" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label></label>
+        </div>
+        <div class="field">
+          <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

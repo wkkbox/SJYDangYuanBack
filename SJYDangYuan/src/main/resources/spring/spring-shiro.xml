@@ -36,14 +36,18 @@
         <!-- Shiro的核心安全接口,这个属性是必须的 -->
         <property name="securityManager" ref="securityManager"/>
         <!-- 身份认证失败，则跳转到登录页面的配置 -->
-        <property name="loginUrl" value="/"/>
+        <property name="loginUrl" value="/user/login"/>
         <!-- 权限认证失败，则跳转到指定页面 -->
-        <property name="unauthorizedUrl" value="error/unauthor"/>
+        <!--<property name="unauthorizedUrl" value="error/unauthor"/>-->
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源允许访问 -->
-                / = anon
+                /js/** = anon
+                /css/** = anon
+                /images/** = anon
+                <!-- 登录页允许访问 -->
                 /user/login = anon
+                /user/dologin = anon
                 <!-- 其他资源需要认证 authc -->
                 /** = authc
             </value>

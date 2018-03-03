@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title></title>  
+    <link rel="stylesheet" href="css/pintuer.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/pintuer.js"></script>  
+</head>
+<body>
+<form method="post" action="">
+  <div class="panel admin-panel">
+    <div class="panel-head"><strong class="icon-reorder"> 积分管理</strong></div>
+    <div class="padding border-bottom"> 
+    </div>
+    <table class="table table-hover text-center">
+      <tr>
+        <th width="5%">ID</th>
+        <th width="6%">姓名</th>       
+        <th width="6%">性别</th>
+        <th width="6%">民族</th>
+        <th width="6%">籍贯</th>
+        <th width="9%">出生年月</th>
+         <th width="9%">学历学位</th>
+         <th width="8%">入党年月</th>
+         <th width="4%">职务</th>
+         <th width="17%">调入、调出时间及单位</th>
+         <th width="9%">所属支部</th>
+         <th width="6%">积分</th>
+        <th width="9%">操作</th>       
+      </tr>      
+        <tr>
+          <td>
+            1</td>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>民族</td>      
+          <td>籍贯</td>
+          <td>出生年月</td>
+          <td>学历学位</td>
+          <td>入党年月</td>
+          <td>职务</td>
+          <td>调入、调出时间及单位</td>
+          <td>所属支部</td>
+          <td>积分</td>
+          <td><div class="button-group"><a class="button border-main" href="xq.html"><span class="icon-edit"></span> 详情</a></div></td>
+        </tr>
+        <tr>
+          <td>            1</td>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>民族</td>      
+          <td>籍贯</td>
+          <td>出生年月</td>
+          <td>学历学位</td>
+          <td>入党年月</td>
+          <td>职务</td>
+          <td>调入、调出时间及单位</td>
+          <td>所属支部</td>
+          <td>积分</td>
+          <td><div class="button-group"><a class="button border-main" href="cateedit.html"><span class="icon-edit"></span> 详情</a></div></td>
+        </tr>
+          <tr>
+          <td>            1</td>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>民族</td>      
+          <td>籍贯</td>
+          <td>出生年月</td>
+          <td>学历学位</td>
+          <td>入党年月</td>
+          <td>职务</td>
+          <td>调入、调出时间及单位</td>
+          <td>所属支部</td>
+          <td>积分</td>
+          <td><div class="button-group"><a class="button border-main" href="cateedit.html"><span class="icon-edit"></span> 详情</a></div></td>
+        </tr>
+          <tr>
+          <td>            1</td>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>民族</td>      
+          <td>籍贯</td>
+          <td>出生年月</td>
+          <td>学历学位</td>
+          <td>入党年月</td>
+          <td>职务</td>
+          <td>调入、调出时间及单位</td>
+          <td>所属支部</td>
+          <td>积分</td>
+          <td><div class="button-group"><a class="button border-main" href="xq.html"><span class="icon-edit"></span> 详情</a></div></td>
+        </tr>
+          <tr>
+            <td>            1</td>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>民族</td>      
+          <td>籍贯</td>
+          <td>出生年月</td>
+          <td>学历学位</td>
+          <td>入党年月</td>
+          <td>职务</td>
+          <td>调入、调出时间及单位</td>
+          <td>所属支部</td>
+          <td>积分</td>
+          <td><div class="button-group"><a class="button border-main" href="cateedit.html"><span class="icon-edit"></span> 详情</a></div></td>
+        </tr>
+      <tr>
+        <td colspan="120"><div class="pagelist"> <a href="">上一页</a> <span class="current">1</span><a href="">2</a><a href="">3</a><a href="">下一页</a><a href="">尾页</a> </div></td>
+      </tr>
+    </table>
+  </div>
+</form>
+<script type="text/javascript">
+
+function del(id){
+	if(confirm("您确定要删除吗?")){
+		
+	}
+}
+
+$("#checkall").click(function(){ 
+  $("input[name='id[]']").each(function(){
+	  if (this.checked) {
+		  this.checked = false;
+	  }
+	  else {
+		  this.checked = true;
+	  }
+  });
+})
+
+function DelSelect(){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){
+		var t=confirm("您确认要删除选中的内容吗？");
+		if (t==false) return false; 		
+	}
+	else{
+		alert("请选择您要删除的内容!");
+		return false;
+	}
+}
+
+</script>
+</body></html>

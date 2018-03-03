@@ -7,18 +7,23 @@
         d.id id,
         d.title title,
         d.content content,
-        d.scoreRule scoreRule,
-        d.publishtime publishtime,
-        d.endtime endtime,
-        d.roleId roleId
+        d.year year,
+        d.publishTime publishTime,
+        d.roleId roleId,
+        d.dScore dScore,
+        d.lScore lScore,
+        d.hScore hScore,
+        d.rate rate,
+        d.sumScore sumScore
     </sql>
 
     <!--查询用户所有党责活动-->
-    <select id="selectDangZes" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
+    <select id="selectDangZes" parameterType="java.lang.Integer"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
         SELECT
         <include refid="baseSql"/>
         FROM t_dangze d
-        WHERE roleId >= #{roleId}
+        WHERE d.year = #{year}
     </select>
 
     <!--查询党责活动的完成状态-->
@@ -27,6 +32,32 @@
         FROM t_user_dangze
         WHERE userId = #{userId} AND dangzeId = #{dangzeId};
     </select>
+
+    <insert id="insertDangZe3Arrange" parameterType="java.util.Map">
+        INSERT INTO t_dangze3_arrange
+        (id,year,userId,time,dangzeId)
+        VALUES
+        (#{id},#{year},#{userId},#{time},#{dangzeId})
+    </insert>
+
+    <insert id="insertDangZeArrange" parameterType="java.util.Map">
+        INSERT INTO t_dangze_arrange
+        (id,year,month,time,dangzeId)
+        VALUES
+        (#{id},#{year},#{month},#{time},#{dangzeId})
+    </insert>
+
+    <insert id="insertDangZe" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_dangze
+        (title,content,year,publishTime,roleId,dScore,lScore,hScore,rate,sumScore)
+        VALUES
+        (#{title},#{content},#{year},#{publishTime},#{roleId},#{dScore},#{lScore},#{hScore},#{rate},#{sumScore})
+    </insert>
 
 
 </mapper>

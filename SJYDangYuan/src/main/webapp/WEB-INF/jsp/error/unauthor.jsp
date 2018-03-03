@@ -6,6 +6,6 @@
     <title>Title</title>
 </head>
 <body>
-    对不起，没有权限或角色
+    对不起，没有权限
 </body>
 </html>

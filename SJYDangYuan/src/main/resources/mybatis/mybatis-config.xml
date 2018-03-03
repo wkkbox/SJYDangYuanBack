@@ -16,6 +16,14 @@
         <!-- 扫描包,给包中类起别名=类名,首字母大小写无所谓 -->
         <!--<package name="com.shiro.pojo"/>-->
     </typeAliases>
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->
+            <!--PageHelper插件4.0.0以后的版本支持自动识别使用的数据库，可以不用配置 <property name="dialect" value="mysql"/>-->
+            <!--<property name="dialect" value="mysql"/>-->
+        </plugin>
+    </plugins>
 
 
 </configuration>

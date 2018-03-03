@@ -3,7 +3,6 @@ package com.telecom.jx.sjy.dangyuanback.controller;
 
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.Score;
-import com.telecom.jx.sjy.dangyuanback.service.InfoService;
 import com.telecom.jx.sjy.dangyuanback.service.UserService;
 import com.telecom.jx.sjy.dangyuanback.util.JsonUtils;
 import com.telecom.jx.sjy.dangyuanback.util.dto.MessageResult;
@@ -12,7 +11,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -30,8 +29,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private InfoService infoService;
+    @RequestMapping("/login")
+    public String loginView() {
+        return "login";
+    }
 
     /**
      * 登录控制器
@@ -41,40 +42,38 @@ public class UserController {
      * @param request
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = {"/login"}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = {"/dologin"})
     public String login(User user, Model model, HttpServletRequest request) {
         System.out.println(request.getMethod());
         System.out.println(user);
-        /*if ("GET".equals(request.getMethod())) {
+        if ("GET".equals(request.getMethod())) {
             //回显
             model.addAttribute("msg", "提交方式有误");
             return "login";
-        }*/
+        }
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getAccountName(), user.getPassword());
         try {
             subject.login(token);
-            Session session = subject.getSession();
-            System.out.println("sessionId:" + session.getId());
-            System.out.println("sessionHost:" + session.getHost());
-            System.out.println("sessionTimeout:" + session.getTimeout());
+            //Session session = subject.getSession();
+            //System.out.println("sessionId:" + session.getId());
+            //System.out.println("sessionHost:" + session.getHost());
+            //System.out.println("sessionTimeout:" + session.getTimeout());
             //session.setAttribute("info", "session的数据");
         } catch (Exception e) {
             e.printStackTrace();
             //回显
-            MessageResult result = new MessageResult(false, "用户名或密码错误");
-            return JsonUtils.objectToJson(result);
+            model.addAttribute("msg", "用户名或密码错误");
+            return "login";
         }
         User currentUser = null;
         if (subject.isAuthenticated()) {
             try {
                 currentUser = userService.getUserByAccountName(user.getAccountName());
                 //登录成功currentUser存入session
-                subject.getSession().setAttribute("currentUser", currentUser);
-                //登录成功查询未读信息条数
-                int unreadInfoCount = infoService.getUnreadInfoCount(currentUser.getId());
-                currentUser.setUnreadInfoCount(unreadInfoCount);
+                HttpSession session = request.getSession();
+                //session.setMaxInactiveInterval(604800);//7天
+                session.setAttribute("currentUser", currentUser);
                 //User currentUser = userService.getUserByName(user.getUserName());
                 //List<Menu> menus = userService.getMenusByUserId(currentUser.getId());
                 //System.out.println("菜单：" + menus.size() + " " + menus);
@@ -85,7 +84,8 @@ public class UserController {
         }
 
         //登录成功
-        return JsonUtils.objectToJson(new MessageResult(true, "登录成功", currentUser));
+        return "index";
+        //return "forward:system/index";
     }
 
     /**
@@ -125,7 +125,15 @@ public class UserController {
 
     @RequestMapping("/createUser")
     @RequiresRoles("admin")
-    public String addUser() {
+    public String addUser(Model model, User user) {
+        try {
+            userService.addUser(user);
+            model.addAttribute("msg", "添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("msg", "添加失败");
+            model.addAttribute("user", user);
+        }
         return "addUser";
     }
 

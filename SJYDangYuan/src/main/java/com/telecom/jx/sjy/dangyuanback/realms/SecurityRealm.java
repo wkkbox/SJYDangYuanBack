@@ -14,6 +14,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+import java.util.Set;
+
 public class SecurityRealm extends AuthorizingRealm {
 
     @Autowired
@@ -38,11 +41,11 @@ public class SecurityRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         try {
             System.out.println(user);
-            //Set<String> roles = userService.getUserRolesByUserId(user.getId());
-            //Set<String> perms = userService.getUserPermissionsByUserId(user.getId());
-            //System.out.println("角色有：" + roles);
+            Set<String> roles = userService.getUserRolesByUserId(user.getId());
+            //List<String> perms = userService.getUserPermissionsByUserId(user.getId());
+            System.out.println("角色有：" + roles);
             //System.out.println("权限有：" + perms);
-            //authorizationInfo.setRoles(roles);
+            authorizationInfo.setRoles(roles);
             //authorizationInfo.setStringPermissions(perms);
         } catch (Exception e) {
             e.printStackTrace();

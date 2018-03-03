@@ -14,9 +14,9 @@ public interface UserService {
 
     List<User> getUserByUserName(String userName) throws Exception;
 
-    List<Long> getUserRolesByUserId(Long userId) throws Exception;
+    Set<String> getUserRolesByUserId(Long userId) throws Exception;
 
-    Set<String> getUserPermissionsByUserId(Long userId) throws Exception;
+    List<String> getUserPermissionsByUserId(Long userId) throws Exception;
 
     List<Menu> getMenusByUserId(Long userId) throws Exception;
 
@@ -27,4 +27,8 @@ public interface UserService {
     PageBean<Score> getScorePublicityByPage(Integer currentPage, Integer pageSize) throws Exception;
 
     Long getUserHighRoleByUserId(Long userId) throws Exception;
+
+    List<User> getUsers() throws Exception;
+
+    void addUser(User user) throws Exception;
 }

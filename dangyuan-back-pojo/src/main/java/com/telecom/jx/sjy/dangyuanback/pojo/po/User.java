@@ -3,7 +3,7 @@ package com.telecom.jx.sjy.dangyuanback.pojo.po;
 import java.io.Serializable;
 
 /**
- * 用户
+ * 用户实体
  */
 public class User implements Serializable {
 
@@ -11,28 +11,29 @@ public class User implements Serializable {
     private String accountName;//账户名,手机号
     private String userName;//真实姓名
     private String password;//密码Ad123@min,d3a4388accf317083f4d9dabda2f2c38
-    private String gender;//性别,0表示女1,表示男
+    private String gender;//性别,0表示女,1表示男
     private String salt;
     private String nation;//民族
     private String nativeplace;//籍贯
     private String birthday;//出生年月,格式:yyyy-MM 1996-09
-    private String degree;//学历学位
+    private String degree;//文化程度
+    private String inworkday;//参加工作时间
     private String inpartyday;//入党年月,格式:yyyy-MM 1996-09
-    private String job;//职务
-    private String inandout;//调入、调出时间及单位
-    private Float score;//积分
+    private String partDuties;//党内职务
+    private String administrativeDuties;//行政职务
+    private String profession;//职业
+    private String positional;//职称
+    private String idCard;//身份证号
+    private String inandout;//离退，退职，内退时间
+    private Integer score;//积分
     private String branch;//所属支部
+    private Integer isFormal;//是正式还是预备党员，0表示预备党员，1表示正式党员
+    private Integer isWork;//是否在岗，0表示离职，1表示在岗
 
     private int unreadInfoCount = 0;//未读信息条数
 
     public User() {
 
-    }
-
-    @Override
-    public String toString() {
-        return "{id=" + id + ",accountName=" + accountName + ",userName=" + userName + ",password=" + password + ",gender=" + gender + ",salt=" + salt + ",native=" + nation + ",nativeplace=" + nativeplace + ",birthday=" + birthday + ",degree=" + degree + ",inpartyday=" + inpartyday + ",job=" + job + ",inandout=" + inandout + ",score=" + score + ",branch=" + branch + ",unreadInfoCount=" + unreadInfoCount +
-                "}";
     }
 
     public Long getId() {
@@ -41,6 +42,14 @@ public class User implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getUserName() {
@@ -59,6 +68,13 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getSalt() {
         return salt;
@@ -76,12 +92,12 @@ public class User implements Serializable {
         this.nation = nation;
     }
 
-    public String getGender() {
-        return gender;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getNativeplace() {
@@ -92,20 +108,20 @@ public class User implements Serializable {
         this.nativeplace = nativeplace;
     }
 
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
     public String getDegree() {
         return degree;
     }
 
     public void setDegree(String degree) {
         this.degree = degree;
+    }
+
+    public String getInworkday() {
+        return inworkday;
+    }
+
+    public void setInworkday(String inworkday) {
+        this.inworkday = inworkday;
     }
 
     public String getInpartyday() {
@@ -116,28 +132,28 @@ public class User implements Serializable {
         this.inpartyday = inpartyday;
     }
 
-    public String getJob() {
-        return job;
+    public String getPartDuties() {
+        return partDuties;
     }
 
-    public void setJob(String job) {
-        this.job = job;
+    public void setPartDuties(String partDuties) {
+        this.partDuties = partDuties;
     }
 
-    public String getInandout() {
-        return inandout;
+    public Integer getIsWork() {
+        return isWork;
     }
 
-    public void setInandout(String inandout) {
-        this.inandout = inandout;
+    public void setIsWork(Integer isWork) {
+        this.isWork = isWork;
     }
 
-    public Float getScore() {
-        return score;
+    public Integer getIsFormal() {
+        return isFormal;
     }
 
-    public void setScore(Float score) {
-        this.score = score;
+    public void setIsFormal(Integer isFormal) {
+        this.isFormal = isFormal;
     }
 
     public String getBranch() {
@@ -148,12 +164,52 @@ public class User implements Serializable {
         this.branch = branch;
     }
 
-    public String getAccountName() {
-        return accountName;
+    public Integer getScore() {
+        return score;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public String getInandout() {
+        return inandout;
+    }
+
+    public void setInandout(String inandout) {
+        this.inandout = inandout;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getPositional() {
+        return positional;
+    }
+
+    public void setPositional(String positional) {
+        this.positional = positional;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getAdministrativeDuties() {
+        return administrativeDuties;
+    }
+
+    public void setAdministrativeDuties(String administrativeDuties) {
+        this.administrativeDuties = administrativeDuties;
     }
 
     public int getUnreadInfoCount() {
