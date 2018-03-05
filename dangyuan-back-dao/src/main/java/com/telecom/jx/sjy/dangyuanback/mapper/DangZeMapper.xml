@@ -59,7 +59,7 @@
         (#{title},#{content},#{year},#{publishTime},#{roleId},#{dScore},#{lScore},#{hScore},#{rate},#{sumScore})
     </insert>
 
-    <select id="selectDangZeById" parameterType="java.lang.Integer"
+    <select id="selectDangZeById" parameterType="java.lang.Long"
             resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
         SELECT
         <include refid="baseSql"/>
@@ -70,7 +70,8 @@
     <update id="updateDangZe" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
         UPDATE t_dangze
         SET title=#{title},content=#{content},dScore=#{dScore},lScore=#{lScore},hScore=#{hScore},rate=#{rate},sumScore=#{sumScore}
-    </update>
+        WHERE id=#{id}
+</update>
 
 
 </mapper>

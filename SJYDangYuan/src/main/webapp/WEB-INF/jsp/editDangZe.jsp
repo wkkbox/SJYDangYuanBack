@@ -48,6 +48,7 @@
     <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>党责修改</strong></div>
     <div class="body-content">
         <form id="editDangZeForm" method="post" class="form-x" action="${pageContext.request.contextPath}/dangZe/editDangZe">
+            <input type="hidden" value="${dangZe.id}" name="id" />
             <div class="form-group">
                 <div class="label">
                     <label>标题：</label>
