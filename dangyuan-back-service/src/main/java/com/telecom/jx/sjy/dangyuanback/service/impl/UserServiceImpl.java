@@ -9,6 +9,7 @@ import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.Score;
 import com.telecom.jx.sjy.dangyuanback.service.UserService;
+import com.telecom.jx.sjy.dangyuanback.util.CryptographyUtil;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
 import com.telecom.jx.sjy.dangyuanback.util.dto.Menu;
@@ -95,8 +96,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUsers() throws Exception {
         //查询所有用户集合
-        List<User> userList = userMapper.selectUsers();
-        return userList;
+        return userMapper.selectUsers();
     }
 
     @Override
@@ -139,5 +139,15 @@ public class UserServiceImpl implements UserService {
             }
         }
         //2.社责
+    }
+
+    @Override
+    public void resetPwd(Long userId) throws Exception {
+        String password = CryptographyUtil.md5("123456", "dangyuan", 2);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("password", password);
+        map.put("salt", "dangyuan");
+        userMapper.resetPwd(map);
     }
 }

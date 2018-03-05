@@ -17,8 +17,9 @@
 <div class="panel admin-panel">
     <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong></div>
     <div class="padding border-bottom">
-        <button type="button" class="button border-yellow" onclick="window.location.href='${pageContext.request.contextPath}/page/addUser'"><span
-                class="icon-plus-square-o"></span> 添加用户
+        <button type="button" class="button border-yellow"
+                onclick="window.location.href='${pageContext.request.contextPath}/page/addUser'">
+            <span class="icon-plus-square-o"></span> 添加用户
         </button>
     </div>
     <table class="table table-hover text-center">
@@ -28,7 +29,6 @@
             <th width="5%">身份证号</th>
             <th width="5%">真实姓名</th>
             <th width="5%">性别</th>
-            <th width="5%">联系方式</th>
             <th width="5%">所属支部</th>
             <th width="10%">操作</th>
         </tr>
@@ -46,35 +46,52 @@
                         男
                     </c:if>
                 </td>
-                <td>${user.accountName}</td>
                 <td>${user.branch}</td>
                 <td>
-                    <div class="button-group"><a class="button border-main" href="cateedit.html"><span
-                            class="icon-edit"></span> 重置密码</a> <a class="button border-red" href="javascript:void(0)"
-                                                                  onclick="return del(1,2)"><span
-                            class="icon-trash-o"></span> 删除</a></div>
+                    <div class="button-group">
+                        <button id="resetPwd" onclick="return resetPwd(${user.id},'${user.userName}')"
+                           class="button border-main">
+                            <span class="icon-edit"></span> 重置密码
+                        </button>
+                    </div>
                 </td>
             </tr>
         </c:forEach>
     </table>
-
 </div>
 <script type="text/javascript">
-    function del(id, mid) {
-        if (confirm("您确定要删除吗?")) {
-            alert(id);
+    function resetPwd(userId, userName) {
+        if (confirm("您确定要为 " + userName + " 重置密码吗?")) {
+            $.ajax({
+                url:"${pageContext.request.contextPath}/user/resetPwd",
+                data:{"userId":userId},
+                dataType:"json",
+                type:"post",
+                cache:false,
+                asynch:true,
+                success:function(data){
+                    alert(data.msg);
+                },
+                error:function(){
+                    alert("服务器异常");
+                }
+            });
         }
     }
 </script>
 <div class="pagelist">
-    <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=1&pageSize=${pageInfo.pageSize}">首页</a>
+    <c:if test="${pageInfo.pages!=1}">
+        <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=1&pageSize=${pageInfo.pageSize}">首页</a>
+    </c:if>
     <c:if test="${pageInfo.pageNum!=1}">
         <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.prePage}&pageSize=${pageInfo.pageSize}">上一页</a>
     </c:if>
     <c:if test="${pageInfo.pageNum!=pageInfo.pages}">
         <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.nextPage}&pageSize=${pageInfo.pageSize}">下一页</a>
     </c:if>
-    <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.pages}&pageSize=${pageInfo.pageSize}">尾页</a>
+    <c:if test="${pageInfo.pages!=1}">
+        <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.pages}&pageSize=${pageInfo.pageSize}">尾页</a>
+    </c:if>
     <span style="color: #333333;">&nbsp;当前&nbsp;${pageInfo.pageNum}&nbsp;/&nbsp;${pageInfo.pages}&nbsp;页&nbsp;，&nbsp;共&nbsp;${pageInfo.total}&nbsp;条</span>
 </div>
 </body>

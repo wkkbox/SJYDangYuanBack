@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
     <script type="text/javascript">
         $(function() {
-            $("#addDangZeForm").validate({
+            $("#editDangZeForm").validate({
                 rules:{
                     "title":{
                         required:true
@@ -45,9 +45,9 @@
 </head>
 <body>
 <div class="panel admin-panel margin-top">
-    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>党责录入</strong></div>
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>党责修改</strong></div>
     <div class="body-content">
-        <form id="addDangZeForm" method="post" class="form-x" action="${pageContext.request.contextPath}/dangZe/createDangZe">
+        <form id="editDangZeForm" method="post" class="form-x" action="${pageContext.request.contextPath}/dangZe/editDangZe">
             <div class="form-group">
                 <div class="label">
                     <label>标题：</label>
@@ -112,7 +112,7 @@
                     <label></label>
                 </div>
                 <div class="field">
-                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+                    <button class="button bg-main icon-check-square-o" type="submit"> 确认修改</button>
                     <span style="color: red">${msg}</span>
                 </div>
             </div>

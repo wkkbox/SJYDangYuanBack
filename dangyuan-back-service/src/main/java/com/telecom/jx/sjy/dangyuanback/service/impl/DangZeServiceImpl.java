@@ -110,12 +110,31 @@ public class DangZeServiceImpl implements DangZeService {
         Long infoId = info.getId();
         //在消息未读表为每个用户添加一条记录
         List<User> users = userMapper.selectUsers();
-        for(User item : users){
+        for (User item : users) {
             Map<String, Object> map = new HashMap<>();
-            map.put("userId",item.getId());
-            map.put("infoId",infoId);
-            map.put("year",year);
+            map.put("userId", item.getId());
+            map.put("infoId", infoId);
+            map.put("year", year);
             infoMapper.insertUnReadedInfo(map);
         }
+    }
+
+    @Override
+    public List<DangZe> getDangZes() throws Exception {
+        //查询所有党责集合
+        Integer year = DateUtil.getYear(new Date());
+        return dangZeMapper.selectDangZes(year);
+    }
+
+    @Override
+    public DangZe getDangZeById(Long dangzeId) throws Exception {
+        return dangZeMapper.selectDangZeById(dangzeId);
+    }
+
+    @Override
+    public void editDangZe(DangZe dangZe) throws Exception {
+        dangZe.setlScore(dangZe.getdScore());
+        dangZe.sethScore(dangZe.gethScore());
+        dangZeMapper.updateDangZe(dangZe);
     }
 }

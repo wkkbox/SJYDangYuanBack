@@ -20,7 +20,9 @@
         <h1><img src="${pageContext.request.contextPath}/images/y.jpg" class="radius-circle rotate-hover" height="50" alt=""/>党员管理系统</h1>
     </div>
     <div class="head-l">
-        <a class="button button-little bg-green" href="${pageContext.request.contextPath}/system/index" target="_blank"><span class="icon-home"></span>前台首页</a> &nbsp;&nbsp;
+        <button type="button" class="button button-little bg-green" onclick="window.location.href='${pageContext.request.contextPath}/system/index'">
+            <span class="icon-home"></span>前台首页
+        </button>
         <a class="button button-little bg-red" href="${pageContext.request.contextPath}/user/logout"><span class="icon-power-off"></span> 退出登录</a>
     </div>
 </div>

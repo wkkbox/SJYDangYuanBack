@@ -28,4 +28,18 @@ public class DangZeController {
         }
         return "addDangZe";
     }
+
+    @RequestMapping("/editDangZe")
+    @RequiresRoles("admin")
+    public String editDangZe(Model model, DangZe dangZe) {
+        try {
+            dangZeService.editDangZe(dangZe);
+            model.addAttribute("msg", "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("msg", "修改失败");
+            model.addAttribute("dangZe", dangZe);
+        }
+        return "editDangZe";
+    }
 }

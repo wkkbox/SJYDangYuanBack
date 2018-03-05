@@ -31,4 +31,6 @@ public interface UserService {
     List<User> getUsers() throws Exception;
 
     void addUser(User user) throws Exception;
+
+    void resetPwd(Long userId) throws Exception;
 }

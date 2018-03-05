@@ -159,4 +159,10 @@
         (#{userId},3)
     </insert>
 
+    <update id="resetPwd" parameterType="java.util.Map">
+        UPDATE t_user
+        SET password = #{password},salt = #{salt}
+        WHERE id = #{userId}
+    </update>
+
 </mapper>

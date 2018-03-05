@@ -89,7 +89,7 @@ public class UserController {
     }
 
     /**
-     * 管理员退出控制器,app没用到
+     * 管理员退出控制器
      *
      * @return
      */
@@ -136,6 +136,21 @@ public class UserController {
         }
         return "addUser";
     }
+
+    @RequestMapping("/resetPwd")
+    @ResponseBody
+    @RequiresRoles("admin")
+    public String resetPwd(Long userId) {
+        System.out.println("userId=" + userId);
+        try {
+            userService.resetPwd(userId);
+            return "{\"msg\":\"重置密码成功\"}";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{\"msg\":\"重置密码失败\"}";
+        }
+    }
+
 
     @RequestMapping("/deleteUser")
     @RequiresRoles("admin")

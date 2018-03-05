@@ -16,4 +16,8 @@ public interface DangZeMapper {
     void insertDangZe(DangZe dangZe);
 
     void insertDangZeArrange(Map<String, Object> map);
+
+    DangZe selectDangZeById(Long dangzeId);
+
+    void updateDangZe(DangZe dangZe);
 }

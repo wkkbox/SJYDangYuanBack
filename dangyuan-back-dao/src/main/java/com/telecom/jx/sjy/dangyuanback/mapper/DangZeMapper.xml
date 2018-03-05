@@ -17,7 +17,7 @@
         d.sumScore sumScore
     </sql>
 
-    <!--查询用户所有党责活动-->
+    <!--查询本年用户所有党责活动-->
     <select id="selectDangZes" parameterType="java.lang.Integer"
             resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
         SELECT
@@ -58,6 +58,19 @@
         VALUES
         (#{title},#{content},#{year},#{publishTime},#{roleId},#{dScore},#{lScore},#{hScore},#{rate},#{sumScore})
     </insert>
+
+    <select id="selectDangZeById" parameterType="java.lang.Integer"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_dangze d
+        WHERE d.id = #{dangzeId}
+    </select>
+
+    <update id="updateDangZe" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
+        UPDATE t_dangze
+        SET title=#{title},content=#{content},dScore=#{dScore},lScore=#{lScore},hScore=#{hScore},rate=#{rate},sumScore=#{sumScore}
+    </update>
 
 
 </mapper>
