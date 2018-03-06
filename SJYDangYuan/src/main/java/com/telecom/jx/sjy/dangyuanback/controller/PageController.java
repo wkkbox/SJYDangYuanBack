@@ -3,8 +3,10 @@ package com.telecom.jx.sjy.dangyuanback.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
 import com.telecom.jx.sjy.dangyuanback.service.DangZeService;
+import com.telecom.jx.sjy.dangyuanback.service.SheZeService;
 import com.telecom.jx.sjy.dangyuanback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class PageController {
 
     @Autowired
     private DangZeService dangZeService;
+
+    @Autowired
+    private SheZeService sheZeService;
 
     @RequestMapping("/userManagement")
     public String userManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -64,6 +69,38 @@ public class PageController {
         return "dangZeManagement";
     }
 
+    @RequestMapping("/sheZeManagement")
+    public String sheZeManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
+        //分页查询所有社责
+        if (currentPage == null || currentPage == 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 6;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<SheZe> sheZes = sheZeService.getSheZes();
+        // 绑定分页返回
+        model.addAttribute("pageInfo", new PageInfo<>(sheZes));
+        return "sheZeManagement";
+    }
+
+    @RequestMapping("/achievement")
+    public String achievement(Model model, Integer currentPage, Integer pageSize) throws Exception {
+        //分页查询所有工作业绩
+        if (currentPage == null || currentPage == 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 6;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<SheZe> sheZes = sheZeService.getSheZes();
+        // 绑定分页返回
+        model.addAttribute("pageInfo", new PageInfo<>(sheZes));
+        return "achievement";
+    }
+
     @RequestMapping("/info")
     public String info() {
         //欢迎访问本系统图片
@@ -80,12 +117,25 @@ public class PageController {
         return "addDangZe";
     }
 
+    @RequestMapping("/addSheZe")
+    public String addSheZe() {
+        return "addSheZe";
+    }
+
     @RequestMapping("/editDangZe")
     public String editDangZe(Model model, Long dangzeId) throws Exception {
         System.out.println("dangzeId=" + dangzeId);
         DangZe dangZe = dangZeService.getDangZeById(dangzeId);
         model.addAttribute("dangZe", dangZe);
         return "editDangZe";
+    }
+
+    @RequestMapping("/editSheZe")
+    public String editSheZe(Model model, Long shezeId) throws Exception {
+        System.out.println("shezeId=" + shezeId);
+        SheZe sheZe = sheZeService.getSheZeById(shezeId);
+        model.addAttribute("sheZe", sheZe);
+        return "editSheZe";
     }
 
 }

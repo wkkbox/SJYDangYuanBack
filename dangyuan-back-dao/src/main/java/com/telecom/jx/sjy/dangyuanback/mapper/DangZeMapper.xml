@@ -26,7 +26,7 @@
         WHERE d.year = #{year}
     </select>
 
-    <!--查询党责活动的完成状态-->
+    <!--查询党责活动的完成状态,未使用-->
     <select id="selectDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT state
         FROM t_user_dangze
@@ -69,7 +69,7 @@
 
     <update id="updateDangZe" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe">
         UPDATE t_dangze
-        SET title=#{title},content=#{content},dScore=#{dScore},lScore=#{lScore},hScore=#{hScore},rate=#{rate},sumScore=#{sumScore}
+        SET title=#{title},content=#{content}
         WHERE id=#{id}
 </update>
 

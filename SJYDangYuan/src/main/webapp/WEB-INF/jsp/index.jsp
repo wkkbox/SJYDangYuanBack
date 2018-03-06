@@ -39,7 +39,7 @@
     <h2><span class="icon-pencil-square-o"></span>活动录入</h2>
     <ul>
         <li><a href="${pageContext.request.contextPath}/page/dangZeManagement" target="right"><span class="icon-caret-right"></span>党责管理</a></li>
-        <li><a href="${pageContext.request.contextPath}/page/sheZeEnter" target="right"><span class="icon-caret-right"></span>社责录入</a></li>
+        <li><a href="${pageContext.request.contextPath}/page/sheZeManagement" target="right"><span class="icon-caret-right"></span>社责管理</a></li>
         <li><a href="${pageContext.request.contextPath}/page/achievement" target="right"><span class="icon-caret-right"></span>工作业绩</a></li>
         <li><a href="${pageContext.request.contextPath}/page/honorsAwards" target="right"><span class="icon-caret-right"></span>荣誉奖励</a></li>
         <li><a href="${pageContext.request.contextPath}/page/professionalDevelopment" target="right"><span class="icon-caret-right"></span>专业提升</a></li>

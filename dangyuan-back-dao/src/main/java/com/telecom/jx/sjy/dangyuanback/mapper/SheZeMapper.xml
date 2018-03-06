@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.telecom.jx.sjy.dangyuanback.mapper.SheZeMapper">
+
+    <!--注意字段要和javabean的一样-->
+    <sql id="baseSql">
+        s.id id,
+        s.title title,
+        s.content content,
+        s.year year,
+        s.publishTime publishTime,
+        s.roleId roleId,
+        s.dScore dScore,
+        s.lScore lScore,
+        s.hScore hScore,
+        s.rate rate,
+        s.otherAttr otherAttr,
+        s.sumScore sumScore
+    </sql>
+
+    <!--查询本年用户所有社责活动-->
+    <select id="selectSheZes" parameterType="java.lang.Integer"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_sheze s
+        WHERE s.year = #{year}
+    </select>
+
+    <!--查询党责活动的完成状态，未使用-->
+    <select id="selectDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT state
+        FROM t_user_dangze
+        WHERE userId = #{userId} AND dangzeId = #{dangzeId};
+    </select>
+
+    <insert id="insertSheZe3Arrange" parameterType="java.util.Map">
+        INSERT INTO t_sheze3_arrange
+        (id,year,userId,time,shezeId)
+        VALUES
+        (#{id},#{year},#{userId},#{time},#{shezeId})
+    </insert>
+
+    <insert id="insertSheZeArrange" parameterType="java.util.Map">
+        INSERT INTO t_sheze_arrange
+        (id,year,month,time,shezeId)
+        VALUES
+        (#{id},#{year},#{month},#{time},#{shezeId})
+    </insert>
+
+    <insert id="insertSheZe" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_sheze
+        (title,content,year,publishTime,roleId,dScore,lScore,hScore,rate,otherAttr,sumScore)
+        VALUES
+        (#{title},#{content},#{year},#{publishTime},#{roleId},#{dScore},#{lScore},#{hScore},#{rate},#{otherAttr},#{sumScore})
+    </insert>
+
+    <select id="selectSheZeById" parameterType="java.lang.Long"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_sheze s
+        WHERE s.id = #{shezeId}
+    </select>
+
+    <update id="updateSheZe" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe">
+        UPDATE t_sheze
+        SET title=#{title},content=#{content}
+        WHERE id=#{id}
+</update>
+
+
+</mapper>

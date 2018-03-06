@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
     <script type="text/javascript">
         $(function() {
-            $("#editDangZeForm").validate({
+            $("#addSheZeForm").validate({
                 rules:{
                     "title":{
                         required:true
@@ -39,16 +39,16 @@
 </head>
 <body>
 <div class="panel admin-panel margin-top">
-    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>党责修改</strong></div>
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>社责修改</strong></div>
     <div class="body-content">
-        <form id="editDangZeForm" method="post" class="form-x" action="${pageContext.request.contextPath}/dangZe/editDangZe">
-            <input type="hidden" value="${dangZe.id}" name="id" />
+        <form id="addSheZeForm" method="post" class="form-x" action="${pageContext.request.contextPath}/sheZe/editSheZe">
+            <input type="hidden" value="${sheZe.id}" name="id" />
             <div class="form-group">
                 <div class="label">
                     <label>标题：</label>
                 </div>
                 <div class="field">
-                    <input value="${dangZe.title}" type="text" class="input w50" name="title" />
+                    <input value="${sheZe.title}" type="text" class="input w50" name="title" />
                 </div>
             </div>
             <div class="form-group">
@@ -56,28 +56,45 @@
                     <label>积分内容：</label>
                 </div>
                 <div class="field">
-                    <input value="${dangZe.content}" type="text" class="input w50" name="content" />
+                    <input value="${sheZe.content}" type="text" class="input w50" name="content" />
                 </div>
             </div>
             <%--<div class="form-group">
                 <div class="label">
-                    <label>分值/次：</label>
+                    <label>分值：</label>
                 </div>
-                <div class="field">
-                    <select name="dScore" class="input w50">
-                        <option value="1" ${dangZe.dScore == 1 ? " selected = 'selected' " : " " }>1</option>
-                        <option value="2" ${dangZe.dScore == 2 ? " selected = 'selected' " : " " }>2</option>
-                        <option value="3" ${dangZe.dScore == 3 ? " selected = 'selected' " : " " }>3</option>
-                        <option value="4" ${dangZe.dScore == 4 ? " selected = 'selected' " : " " }>4</option>
-                        <option value="5" ${dangZe.dScore == 5 ? " selected = 'selected' " : " " }>5</option>
-                        <option value="6" ${dangZe.dScore == 6 ? " selected = 'selected' " : " " }>6</option>
-                        <option value="7" ${dangZe.dScore == 7 ? " selected = 'selected' " : " " }>7</option>
-                        <option value="8" ${dangZe.dScore == 8 ? " selected = 'selected' " : " " }>8</option>
-                        <option value="9" ${dangZe.dScore == 9 ? " selected = 'selected' " : " " }>9</option>
-                        <option value="10" ${dangZe.dScore == 10 ? " selected = 'selected' " : " " }>10</option>
-                        <option value="11" ${dangZe.dScore == 11 ? " selected = 'selected' " : " " }>11</option>
-                        <option value="12" ${dangZe.dScore == 12 ? " selected = 'selected' " : " " }>12</option>
+                <div class="w51">
+                    <select name="lScore" class="input w52">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
                     </select>
+                    <label class="w53">到</label>
+                    <select name="hScore" class="input w52">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <label class="w53">分</label>
+                    <div class="tips"></div>
                 </div>
             </div>--%>
             <%--<div class="form-group">
@@ -86,10 +103,11 @@
                 </div>
                 <div class="field">
                     <select name="rate" class="input w50">
-                        <option value="0" ${dangZe.rate == 0 ? " selected = 'selected' " : " " }>每月1次</option>
-                        <option value="1" ${dangZe.rate == 1 ? " selected = 'selected' " : " " }>每季1次</option>
-                        <option value="2" ${dangZe.rate == 2 ? " selected = 'selected' " : " " }>每年1次</option>
-                        <option value="3" ${dangZe.rate == 3 ? " selected = 'selected' " : " " }>不限次数</option>
+                        &lt;%&ndash;${dangZe.rate == 0 ? " selected = 'selected' " : " " }&ndash;%&gt;
+                        <option value="0" >每月1次</option>
+                        <option value="1" >每季1次</option>
+                        <option value="2" >每年1次</option>
+                        <option value="3" >不限次数</option>
                     </select>
                 </div>
             </div>--%>
@@ -98,8 +116,20 @@
                     <label>全年累积最高分：</label>
                 </div>
                 <div class="field">
-                    <input value="${dangZe.sumScore}" type="text" class="input w50" name="sumScore" />
+                    <input value="" type="text" class="input w50" name="sumScore" />
                     <div class="tips"></div>
+                </div>
+            </div>--%>
+            <%--<div class="form-group">
+                <div class="label">
+                    <label>其他属性：</label>
+                </div>
+                <div class="field">
+                    <select name="otherAttr" class="input w50">
+                        <option value="0" >无</option>
+                        <option value="1" >个人名义参加</option>
+                        <option value="2" >集体名义参加</option>
+                    </select>
                 </div>
             </div>--%>
             <div class="form-group">

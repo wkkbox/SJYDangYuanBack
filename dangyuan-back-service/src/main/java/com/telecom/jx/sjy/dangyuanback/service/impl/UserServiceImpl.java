@@ -3,9 +3,11 @@ package com.telecom.jx.sjy.dangyuanback.service.impl;
 
 import com.telecom.jx.sjy.dangyuanback.mapper.DangZeMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
+import com.telecom.jx.sjy.dangyuanback.mapper.SheZeMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.Score;
 import com.telecom.jx.sjy.dangyuanback.service.UserService;
@@ -31,6 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private DangZeMapper dangZeMapper;
+
+    @Autowired
+    private SheZeMapper sheZeMapper;
 
     @Override
     public List<User> showUsers() throws Exception {
@@ -138,7 +143,23 @@ public class UserServiceImpl implements UserService {
                 dangZeMapper.insertDangZe3Arrange(map);
             }
         }
-        //2.社责
+        //2.社责中不限次数
+        List<SheZe> sheZes = sheZeMapper.selectSheZes(DateUtil.getYear(new Date()));
+        for(SheZe item : sheZes){
+            if (item.getRate() == 3) {
+                //为用户在社责不限次数安排表中加一条记录
+                String year = item.getYear();
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", IDUtils.getItemId());
+                map.put("userId", userId);
+                map.put("year", year);
+                map.put("shezeId", item.getId());
+                map.put("time", year + "-01-01 00:00:00");
+                sheZeMapper.insertSheZe3Arrange(map);
+            }
+        }
+
+        //3.工作业绩不限次数
     }
 
     @Override

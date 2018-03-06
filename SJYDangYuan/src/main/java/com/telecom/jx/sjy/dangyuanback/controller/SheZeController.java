@@ -1,7 +1,7 @@
 package com.telecom.jx.sjy.dangyuanback.controller;
 
-import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
-import com.telecom.jx.sjy.dangyuanback.service.DangZeService;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
+import com.telecom.jx.sjy.dangyuanback.service.SheZeService;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,37 +9,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/dangZe")
-public class DangZeController {
+@RequestMapping("/sheZe")
+public class SheZeController {
 
     @Autowired
-    private DangZeService dangZeService;
+    private SheZeService sheZeService;
 
-    @RequestMapping("/createDangZe")
+    @RequestMapping("/createSheZe")
     @RequiresRoles("admin")
-    public String createDangZe(Model model, DangZe dangZe) {
+    public String createSheZe(Model model, SheZe sheZe) {
         try {
-            dangZeService.addDangZe(dangZe);
+            sheZeService.addSheZe(sheZe);
             model.addAttribute("msg", "添加成功");
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("msg", "添加失败");
-            model.addAttribute("dangZe", dangZe);
+            model.addAttribute("sheZe", sheZe);
         }
-        return "addDangZe";
+        return "addSheZe";
     }
 
-    @RequestMapping("/editDangZe")
+    @RequestMapping("/editSheZe")
     @RequiresRoles("admin")
-    public String editDangZe(Model model, DangZe dangZe) {
+    public String editSheZe(Model model, SheZe sheZe) {
         try {
-            dangZeService.editDangZe(dangZe);
+            sheZeService.editSheZe(sheZe);
             model.addAttribute("msg", "修改成功");
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("msg", "修改失败");
-            model.addAttribute("dangZe", dangZe);
+            model.addAttribute("sheZe", sheZe);
         }
-        return "editDangZe";
+        return "editSheZe";
     }
 }

@@ -72,7 +72,7 @@ public class UserController {
                 currentUser = userService.getUserByAccountName(user.getAccountName());
                 //登录成功currentUser存入session
                 HttpSession session = request.getSession();
-                //session.setMaxInactiveInterval(604800);//7天
+                session.setMaxInactiveInterval(604800);//7天
                 session.setAttribute("currentUser", currentUser);
                 //User currentUser = userService.getUserByName(user.getUserName());
                 //List<Menu> menus = userService.getMenusByUserId(currentUser.getId());
