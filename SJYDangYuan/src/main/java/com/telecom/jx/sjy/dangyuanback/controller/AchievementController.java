@@ -1,0 +1,47 @@
+package com.telecom.jx.sjy.dangyuanback.controller;
+
+import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
+import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
+import com.telecom.jx.sjy.dangyuanback.service.SheZeService;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/achievement")
+public class AchievementController {
+
+    @Autowired
+    private AchievementService achievementService;
+
+    @RequestMapping("/createAchievement")
+    @RequiresRoles("admin")
+    public String createAchievement(Model model, Achievement achievement) {
+        try {
+            achievementService.addAchievement(achievement);
+            model.addAttribute("msg", "添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("msg", "添加失败");
+            model.addAttribute("achievement", achievement);
+        }
+        return "addAchievement";
+    }
+
+    @RequestMapping("/editAchievement")
+    @RequiresRoles("admin")
+    public String editSheZe(Model model, Achievement achievement) {
+        try {
+            achievementService.editAchievement(achievement);
+            model.addAttribute("msg", "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("msg", "修改失败");
+            model.addAttribute("achievement", achievement);
+        }
+        return "editAchievement";
+    }
+}

@@ -2,9 +2,11 @@ package com.telecom.jx.sjy.dangyuanback.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
 import com.telecom.jx.sjy.dangyuanback.service.DangZeService;
 import com.telecom.jx.sjy.dangyuanback.service.SheZeService;
 import com.telecom.jx.sjy.dangyuanback.service.UserService;
@@ -27,6 +29,9 @@ public class PageController {
 
     @Autowired
     private SheZeService sheZeService;
+
+    @Autowired
+    private AchievementService achievementService;
 
     @RequestMapping("/userManagement")
     public String userManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -95,9 +100,9 @@ public class PageController {
             pageSize = 6;
         }
         PageHelper.startPage(currentPage, pageSize);
-        List<SheZe> sheZes = sheZeService.getSheZes();
+        List<Achievement> achievements = achievementService.getAchievements();
         // 绑定分页返回
-        model.addAttribute("pageInfo", new PageInfo<>(sheZes));
+        model.addAttribute("pageInfo", new PageInfo<>(achievements));
         return "achievement";
     }
 
@@ -122,6 +127,11 @@ public class PageController {
         return "addSheZe";
     }
 
+    @RequestMapping("/addAchievement")
+    public String addAchievement() {
+        return "addAchievement";
+    }
+
     @RequestMapping("/editDangZe")
     public String editDangZe(Model model, Long dangzeId) throws Exception {
         System.out.println("dangzeId=" + dangzeId);
@@ -136,6 +146,14 @@ public class PageController {
         SheZe sheZe = sheZeService.getSheZeById(shezeId);
         model.addAttribute("sheZe", sheZe);
         return "editSheZe";
+    }
+
+    @RequestMapping("/editAchievement")
+    public String editAchievement(Model model, Long achievementId) throws Exception {
+        System.out.println("achievementId=" + achievementId);
+        Achievement achievement = achievementService.getAchievementById(achievementId);
+        model.addAttribute("achievement", achievement);
+        return "editAchievement";
     }
 
 }

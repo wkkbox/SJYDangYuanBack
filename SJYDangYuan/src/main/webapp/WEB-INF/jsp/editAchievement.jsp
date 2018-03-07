@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
     <script type="text/javascript">
         $(function() {
-            $("#editSheZeForm").validate({
+            $("#editAchievementForm").validate({
                 rules:{
                     "title":{
                         required:true
@@ -39,16 +39,16 @@
 </head>
 <body>
 <div class="panel admin-panel margin-top">
-    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>社责修改</strong></div>
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>工作业绩修改</strong></div>
     <div class="body-content">
-        <form id="editSheZeForm" method="post" class="form-x" action="${pageContext.request.contextPath}/sheZe/editSheZe">
-            <input type="hidden" value="${sheZe.id}" name="id" />
+        <form id="editAchievementForm" method="post" class="form-x" action="${pageContext.request.contextPath}/achievement/editAchievement">
+            <input type="hidden" value="${achievement.id}" name="id" />
             <div class="form-group">
                 <div class="label">
                     <label>标题：</label>
                 </div>
                 <div class="field">
-                    <input value="${sheZe.title}" type="text" class="input w50" name="title" />
+                    <input value="${achievement.title}" type="text" class="input w50" name="title" />
                 </div>
             </div>
             <div class="form-group">
@@ -56,7 +56,7 @@
                     <label>积分内容：</label>
                 </div>
                 <div class="field">
-                    <input value="${sheZe.content}" type="text" class="input w50" name="content" />
+                    <input value="${achievement.content}" type="text" class="input w50" name="content" />
                 </div>
             </div>
             <%--<div class="form-group">

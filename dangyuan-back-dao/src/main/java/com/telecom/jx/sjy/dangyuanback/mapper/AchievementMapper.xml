@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.telecom.jx.sjy.dangyuanback.mapper.AchievementMapper">
+
+    <!--注意字段要和javabean的一样-->
+    <sql id="baseSql">
+        a.id id,
+        a.title title,
+        a.content content,
+        a.year year,
+        a.publishTime publishTime,
+        a.roleId roleId,
+        a.dScore dScore,
+        a.lScore lScore,
+        a.hScore hScore,
+        a.rate rate,
+        a.otherAttr otherAttr,
+        a.sumScore sumScore
+    </sql>
+
+    <!--查询本年用户所有工作业绩-->
+    <select id="selectAchievements" parameterType="java.lang.Integer"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_achievement a
+        WHERE a.year = #{year}
+    </select>
+
+    <!--查询党责活动的完成状态，未使用-->
+    <select id="selectDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT state
+        FROM t_user_dangze
+        WHERE userId = #{userId} AND dangzeId = #{dangzeId};
+    </select>
+
+    <insert id="insertAchievement3Arrange" parameterType="java.util.Map">
+        INSERT INTO t_achievement3_arrange
+        (id,year,userId,time,achievementId)
+        VALUES
+        (#{id},#{year},#{userId},#{time},#{achievementId})
+    </insert>
+
+    <insert id="insertAchievementArrange" parameterType="java.util.Map">
+        INSERT INTO t_achievement_arrange
+        (id,year,month,time,achievementId)
+        VALUES
+        (#{id},#{year},#{month},#{time},#{achievementId})
+    </insert>
+
+    <insert id="insertAchievement" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_achievement
+        (title,content,year,publishTime,roleId,dScore,lScore,hScore,rate,otherAttr,sumScore)
+        VALUES
+        (#{title},#{content},#{year},#{publishTime},#{roleId},#{dScore},#{lScore},#{hScore},#{rate},#{otherAttr},#{sumScore})
+    </insert>
+
+    <select id="selectAchievementById" parameterType="java.lang.Long"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_achievement a
+        WHERE a.id = #{achievementId}
+    </select>
+
+    <update id="updateAchievement" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement">
+        UPDATE t_achievement
+        SET title=#{title},content=#{content}
+        WHERE id=#{id}
+    </update>
+
+
+</mapper>
