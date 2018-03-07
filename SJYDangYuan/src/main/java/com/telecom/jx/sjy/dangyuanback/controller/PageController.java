@@ -2,14 +2,8 @@ package com.telecom.jx.sjy.dangyuanback.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
-import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
-import com.telecom.jx.sjy.dangyuanback.service.DangZeService;
-import com.telecom.jx.sjy.dangyuanback.service.SheZeService;
-import com.telecom.jx.sjy.dangyuanback.service.UserService;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.*;
+import com.telecom.jx.sjy.dangyuanback.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +26,12 @@ public class PageController {
 
     @Autowired
     private AchievementService achievementService;
+
+    @Autowired
+    private HonorsAwardService honorsAwardService;
+
+    @Autowired
+    private ProfessDevelopService professDevelopService;
 
     @RequestMapping("/userManagement")
     public String userManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -106,6 +106,38 @@ public class PageController {
         return "achievement";
     }
 
+    @RequestMapping("/honorsAward")
+    public String honorsAwards(Model model, Integer currentPage, Integer pageSize) throws Exception {
+        //分页查询所有荣誉奖励
+        if (currentPage == null || currentPage == 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 6;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<HonorsAward> honorsAwards = honorsAwardService.getHonorsAwards();
+        // 绑定分页返回
+        model.addAttribute("pageInfo", new PageInfo<>(honorsAwards));
+        return "honorsAward";
+    }
+
+    @RequestMapping("/professDevelop")
+    public String professDevelop(Model model, Integer currentPage, Integer pageSize) throws Exception {
+        //分页查询所有专业提升
+        if (currentPage == null || currentPage == 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 6;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<ProfessDevelop> professDevelops = professDevelopService.getProfessDevelops();
+        // 绑定分页返回
+        model.addAttribute("pageInfo", new PageInfo<>(professDevelops));
+        return "professDevelop";
+    }
+
     @RequestMapping("/info")
     public String info() {
         //欢迎访问本系统图片
@@ -132,6 +164,16 @@ public class PageController {
         return "addAchievement";
     }
 
+    @RequestMapping("/addProfessDevelop")
+    public String addProfessDevelop() {
+        return "addProfessDevelop";
+    }
+
+    @RequestMapping("/addHonorsAward")
+    public String addHonorsAward() {
+        return "addHonorsAward";
+    }
+
     @RequestMapping("/editDangZe")
     public String editDangZe(Model model, Long dangzeId) throws Exception {
         System.out.println("dangzeId=" + dangzeId);
@@ -154,6 +196,22 @@ public class PageController {
         Achievement achievement = achievementService.getAchievementById(achievementId);
         model.addAttribute("achievement", achievement);
         return "editAchievement";
+    }
+
+    @RequestMapping("/editProfessDevelop")
+    public String editProfessDevelop(Model model, Long professDevelopId) throws Exception {
+        System.out.println("professDevelopId=" + professDevelopId);
+        ProfessDevelop professDevelop = professDevelopService.getProfessDevelopById(professDevelopId);
+        model.addAttribute("professDevelop", professDevelop);
+        return "editProfessDevelop";
+    }
+
+    @RequestMapping("/editHonorsAward")
+    public String editHonorsAward(Model model, Long honorsAwardId) throws Exception {
+        System.out.println("honorsAwardId=" + honorsAwardId);
+        HonorsAward honorsAward = honorsAwardService.getHonorsAwardById(honorsAwardId);
+        model.addAttribute("honorsAward", honorsAward);
+        return "editHonorsAward";
     }
 
 }

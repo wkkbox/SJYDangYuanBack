@@ -1,12 +1,12 @@
 package com.telecom.jx.sjy.dangyuanback.service.impl;
 
-import com.telecom.jx.sjy.dangyuanback.mapper.AchievementMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
+import com.telecom.jx.sjy.dangyuanback.mapper.ProfessDevelopMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
-import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
+import com.telecom.jx.sjy.dangyuanback.service.ProfessDevelopService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,50 +19,49 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class AchievementServiceImpl implements AchievementService {
+public class ProfessDevelopServiceImpl implements ProfessDevelopService {
+
+    @Autowired
+    private ProfessDevelopMapper professDevelopMapper;
 
     @Autowired
     private UserMapper userMapper;
 
     @Autowired
-    private AchievementMapper achievementMapper;
-
-    @Autowired
     private InfoMapper infoMapper;
 
     @Override
-    public List<Achievement> getAchievements() throws Exception {
-        //查询所有工作业绩集合
+    public List<ProfessDevelop> getProfessDevelops() throws Exception {
+        //查询所有专业提升集合
         Integer year = DateUtil.getYear(new Date());
-        return achievementMapper.selectAchievements(year);
+        return professDevelopMapper.selectProfessDevelops(year);
     }
 
     @Override
-    public Achievement getAchievementById(Long achievementId) throws Exception {
-        return achievementMapper.selectAchievementById(achievementId);
-    }
-
-    @Override
-    @Transactional(rollbackFor = {Exception.class})
-    public void editAchievement(Achievement achievement) throws Exception {
-        achievementMapper.updateAchievement(achievement);
+    public ProfessDevelop getProfessDevelopById(Long professDevelopId) throws Exception {
+        return professDevelopMapper.selectProfessDevelopById(professDevelopId);
     }
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public void addAchievement(Achievement achievement) throws Exception {
-        //在工作业绩表添加一条记录
+    public void editProfessDevelop(ProfessDevelop professDevelop) throws Exception {
+        professDevelopMapper.updateProfessDevelop(professDevelop);
+    }
+
+    @Override
+    public void addProfessDevelop(ProfessDevelop professDevelop) throws Exception {
+        //在专业提升表添加一条记录
         String year = String.valueOf(DateUtil.getYear(new Date()));
-        achievement.setYear(year);
-        achievement.setPublishTime(DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        achievement.setRoleId((long) 3);
-        achievement.setlScore(achievement.getdScore());
-        achievement.sethScore(achievement.getdScore());
-        achievementMapper.insertAchievement(achievement);
-        Long achievementId = achievement.getId();
-        System.out.println("achievementId=" + achievementId);
+        professDevelop.setYear(year);
+        professDevelop.setPublishTime(DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        professDevelop.setRoleId((long) 3);
+        professDevelop.setlScore(professDevelop.getdScore());
+        professDevelop.sethScore(professDevelop.getdScore());
+        professDevelopMapper.insertProfessDevelop(professDevelop);
+        Long professDevelopId = professDevelop.getId();
+        System.out.println("professDevelopId=" + professDevelopId);
         //无限次数和不是无限次数
-        if (achievement.getRate() == 0) {//不是无限次数的情况,0表示每月一次
+        if (professDevelop.getRate() == 0) {//不是无限次数的情况,0表示每月一次
             for (int i = 1; i <= 12; i++) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", IDUtils.getItemId());
@@ -73,10 +72,10 @@ public class AchievementServiceImpl implements AchievementService {
                 } else {
                     map.put("time", year + "-" + i + "-01 00:00:00");
                 }
-                map.put("achievementId", achievementId);
-                achievementMapper.insertAchievementArrange(map);
+                map.put("professDevelopId", professDevelopId);
+                professDevelopMapper.insertProfessDevelopArrange(map);
             }
-        } else if (achievement.getRate() == 1) {//不是无限次数的情况,1表示每季度一次
+        } else if (professDevelop.getRate() == 1) {//不是无限次数的情况,1表示每季度一次
             for (int i = 1; i <= 12; i++) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", IDUtils.getItemId());
@@ -91,20 +90,20 @@ public class AchievementServiceImpl implements AchievementService {
                 } else if (i >= 10 && i <= 12) {
                     map.put("time", year + "-10" + "-01 00:00:00");
                 }
-                map.put("achievementId", achievementId);
-                achievementMapper.insertAchievementArrange(map);
+                map.put("professDevelopId", professDevelopId);
+                professDevelopMapper.insertProfessDevelopArrange(map);
             }
-        } else if (achievement.getRate() == 2) {//不是无限次数的情况,2表示每年一次
+        } else if (professDevelop.getRate() == 2) {//不是无限次数的情况,2表示每年一次
             for (int i = 1; i <= 12; i++) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", IDUtils.getItemId());
                 map.put("year", year);
                 map.put("month", year + i);
                 map.put("time", year + "-01" + "-01 00:00:00");
-                map.put("achievementId", achievementId);
-                achievementMapper.insertAchievementArrange(map);
+                map.put("professDevelopId", professDevelopId);
+                professDevelopMapper.insertProfessDevelopArrange(map);
             }
-        } else if (achievement.getRate() == 3) {//无限次数的情况
+        } else if (professDevelop.getRate() == 3) {//无限次数的情况
             List<User> users = userMapper.selectUsers();
             for (User item : users) {
                 Map<String, Object> map = new HashMap<>();
@@ -112,19 +111,19 @@ public class AchievementServiceImpl implements AchievementService {
                 map.put("year", year);
                 map.put("userId", item.getId());
                 map.put("time", year + "-01" + "-01 00:00:00");
-                map.put("achievementId", achievementId);
-                achievementMapper.insertAchievement3Arrange(map);
+                map.put("professDevelopId", professDevelopId);
+                professDevelopMapper.insertProfessDevelop3Arrange(map);
             }
         }
         //发布的工作业绩给所有用户添加消息
         //在t_info表添加一条记录,先判断
         Map<String, Object> map_ = new HashMap<>();
-        map_.put("title", achievement.getTitle());
-        map_.put("content", achievement.getContent());
+        map_.put("title", professDevelop.getTitle());
+        map_.put("content", professDevelop.getContent());
         if (infoMapper.selectInfoByTitleAndContent(map_) == null) {
             Info info = new Info();
-            info.setTitle(achievement.getTitle());
-            info.setContent(achievement.getContent());
+            info.setTitle(professDevelop.getTitle());
+            info.setContent(professDevelop.getContent());
             info.setYear(year);
             info.setPublishtime(DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
             info.setRoleId((long) 3);

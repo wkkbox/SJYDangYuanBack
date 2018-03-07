@@ -1,6 +1,7 @@
 package com.telecom.jx.sjy.dangyuanback.mapper;
 
 
+import com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAward;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface InfoMapper {
     void insertUnReadedInfo(Map<String, Object> map);
 
     void insertInfo(Info info);
+
+    Info selectInfoByTitleAndContent(Map<String, Object> map);
 }

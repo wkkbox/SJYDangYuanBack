@@ -99,23 +99,28 @@ public class DangZeServiceImpl implements DangZeService {
             }
         }
         //发布的党责活动给所有用户添加消息
-        //在t_info表添加一条记录
-        Info info = new Info();
-        info.setTitle(dangZe.getTitle());
-        info.setContent(dangZe.getContent());
-        info.setYear(year);
-        info.setPublishtime(DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        info.setRoleId((long) 3);
-        infoMapper.insertInfo(info);
-        Long infoId = info.getId();
-        //在消息未读表为每个用户添加一条记录
-        List<User> users = userMapper.selectUsers();
-        for (User item : users) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("userId", item.getId());
-            map.put("infoId", infoId);
-            map.put("year", year);
-            infoMapper.insertUnReadedInfo(map);
+        //在t_info表添加一条记录,先判断
+        Map<String, Object> map_ = new HashMap<>();
+        map_.put("title", dangZe.getTitle());
+        map_.put("content", dangZe.getContent());
+        if (infoMapper.selectInfoByTitleAndContent(map_) == null) {
+            Info info = new Info();
+            info.setTitle(dangZe.getTitle());
+            info.setContent(dangZe.getContent());
+            info.setYear(year);
+            info.setPublishtime(DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+            info.setRoleId((long) 3);
+            infoMapper.insertInfo(info);
+            Long infoId = info.getId();
+            //在消息未读表为每个用户添加一条记录
+            List<User> users = userMapper.selectUsers();
+            for (User item : users) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", item.getId());
+                map.put("infoId", infoId);
+                map.put("year", year);
+                infoMapper.insertUnReadedInfo(map);
+            }
         }
     }
 

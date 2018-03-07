@@ -103,34 +103,28 @@ public class SheZeServiceImpl implements SheZeService {
             }
         }
         //发布的社责活动给所有用户添加消息
-        //在t_info表添加一条记录
-        Info info = new Info();
-        Integer otherAttr = sheZeMapper.selectSheZeById(shezeId).getOtherAttr();
-        if (otherAttr == 1) {
-            info.setTitle(sheZe.getTitle() + "(个人名义参加)");
-            info.setContent(sheZe.getContent() + "(个人名义参加)");
-        }
-        if (otherAttr == 2) {
-            info.setTitle(sheZe.getTitle() + "(集体名义参加)");
-            info.setContent(sheZe.getContent() + "(集体名义参加)");
-        }
-        if (otherAttr == 0) {
+        //在t_info表添加一条记录,先判断
+        Map<String, Object> map_ = new HashMap<>();
+        map_.put("title", sheZe.getTitle());
+        map_.put("content", sheZe.getContent());
+        if (infoMapper.selectInfoByTitleAndContent(map_) == null) {
+            Info info = new Info();
             info.setTitle(sheZe.getTitle());
             info.setContent(sheZe.getContent());
-        }
-        info.setYear(year);
-        info.setPublishtime(DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        info.setRoleId((long) 3);
-        infoMapper.insertInfo(info);
-        Long infoId = info.getId();
-        //在消息未读表为每个用户添加一条记录
-        List<User> users = userMapper.selectUsers();
-        for (User item : users) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("userId", item.getId());
-            map.put("infoId", infoId);
-            map.put("year", year);
-            infoMapper.insertUnReadedInfo(map);
+            info.setYear(year);
+            info.setPublishtime(DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+            info.setRoleId((long) 3);
+            infoMapper.insertInfo(info);
+            Long infoId = info.getId();
+            //在消息未读表为每个用户添加一条记录
+            List<User> users = userMapper.selectUsers();
+            for (User item : users) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", item.getId());
+                map.put("infoId", infoId);
+                map.put("year", year);
+                infoMapper.insertUnReadedInfo(map);
+            }
         }
     }
 

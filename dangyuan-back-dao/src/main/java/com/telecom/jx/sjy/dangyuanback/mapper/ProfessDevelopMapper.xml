@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.telecom.jx.sjy.dangyuanback.mapper.ProfessDevelopMapper">
+
+    <!--注意字段要和javabean的一样-->
+    <sql id="baseSql">
+        p.id id,
+        p.title title,
+        p.content content,
+        p.year year,
+        p.publishTime publishTime,
+        p.roleId roleId,
+        p.dScore dScore,
+        p.lScore lScore,
+        p.hScore hScore,
+        p.rate rate,
+        p.otherAttr otherAttr,
+        p.sumScore sumScore
+    </sql>
+
+    <!--查询本年用户所有专业提升-->
+    <select id="selectProfessDevelops" parameterType="java.lang.Integer"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_professdevelop p
+        WHERE p.year = #{year}
+    </select>
+
+    <!--查询党责活动的完成状态，未使用-->
+    <select id="selectDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT state
+        FROM t_user_dangze
+        WHERE userId = #{userId} AND dangzeId = #{dangzeId};
+    </select>
+
+    <insert id="insertProfessDevelop3Arrange" parameterType="java.util.Map">
+        INSERT INTO t_professdevelop3_arrange
+        (id,year,userId,time,professDevelopId)
+        VALUES
+        (#{id},#{year},#{userId},#{time},#{professDevelopId})
+    </insert>
+
+    <insert id="insertProfessDevelopArrange" parameterType="java.util.Map">
+        INSERT INTO t_professdevelop_arrange
+        (id,year,month,time,professDevelopId)
+        VALUES
+        (#{id},#{year},#{month},#{time},#{professDevelopId})
+    </insert>
+
+    <insert id="insertProfessDevelop" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_professdevelop
+        (title,content,year,publishTime,roleId,dScore,lScore,hScore,rate,otherAttr,sumScore)
+        VALUES
+        (#{title},#{content},#{year},#{publishTime},#{roleId},#{dScore},#{lScore},#{hScore},#{rate},#{otherAttr},#{sumScore})
+    </insert>
+
+    <select id="selectProfessDevelopById" parameterType="java.lang.Long"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_professdevelop p
+        WHERE p.id = #{professDevelopId}
+    </select>
+
+    <update id="updateProfessDevelop" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop">
+        UPDATE t_professdevelop
+        SET title=#{title},content=#{content}
+        WHERE id=#{id}
+    </update>
+
+
+</mapper>

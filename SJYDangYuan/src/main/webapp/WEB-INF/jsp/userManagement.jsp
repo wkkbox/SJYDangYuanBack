@@ -29,7 +29,7 @@
             <th width="5%">身份证号</th>
             <th width="5%">真实姓名</th>
             <th width="5%">性别</th>
-            <th width="5%">所属支部</th>
+            <th width="5%">所在党小组</th>
             <th width="10%">操作</th>
         </tr>
         <c:forEach items="${pageInfo.list}" var="user">

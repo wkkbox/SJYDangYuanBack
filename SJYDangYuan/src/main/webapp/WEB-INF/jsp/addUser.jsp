@@ -41,7 +41,7 @@
                         required:"身份证号不能为空"
                     },
                     "branch":{
-                        required:"所属支部不能为空"
+                        required:"所在党小组不能为空"
                     }
                 }
             });
@@ -91,10 +91,26 @@
             </div>
             <div class="form-group">
                 <div class="label">
-                    <label>所属支部：</label>
+                    <label>所在党小组：</label>
                 </div>
                 <div class="field">
-                    <input value="${user.branch}" type="text" class="input w50" name="branch"/>
+                    <select name="branch" class="input w50">
+                        <option value="第一党小组" ${user.branch=="第一党小组" ? " selected = 'selected' " : " " }>第一党小组</option>
+                        <option value="第二党小组" ${user.branch=="第二党小组" ? " selected = 'selected' " : " " }>第二党小组</option>
+                        <option value="第三党小组" ${user.branch=="第三党小组" ? " selected = 'selected' " : " " }>第三党小组</option>
+                        <option value="第四党小组" ${user.branch=="第四党小组" ? " selected = 'selected' " : " " }>第四党小组</option>
+                        <option value="第五党小组" ${user.branch=="第五党小组" ? " selected = 'selected' " : " " }>第五党小组</option>
+                        <option value="第六党小组" ${user.branch=="第六党小组" ? " selected = 'selected' " : " " }>第六党小组</option>
+                        <option value="第七党小组" ${user.branch=="第七党小组" ? " selected = 'selected' " : " " }>第七党小组</option>
+                        <option value="第八党小组" ${user.branch=="第八党小组" ? " selected = 'selected' " : " " }>第八党小组</option>
+                        <option value="第九党小组" ${user.branch=="第九党小组" ? " selected = 'selected' " : " " }>第九党小组</option>
+                        <option value="第十党小组" ${user.branch=="第十党小组" ? " selected = 'selected' " : " " }>第十党小组</option>
+                        <option value="第十一党小组" ${user.branch=="第十一党小组" ? " selected = 'selected' " : " " }>第十一党小组</option>
+                        <option value="第十二党小组" ${user.branch=="第十二党小组" ? " selected = 'selected' " : " " }>第十二党小组</option>
+                        <option value="第十三党小组" ${user.branch=="第十三党小组" ? " selected = 'selected' " : " " }>第十三党小组</option>
+                        <option value="第十四党小组" ${user.branch=="第十四党小组" ? " selected = 'selected' " : " " }>第十四党小组</option>
+                        <option value="第十五党小组" ${user.branch=="第十五党小组" ? " selected = 'selected' " : " " }>第十五党小组</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.telecom.jx.sjy.dangyuanback.mapper.HonorsAwardMapper">
+
+    <!--注意字段要和javabean的一样-->
+    <sql id="baseSql">
+        h.id id,
+        h.title title,
+        h.content content,
+        h.year year,
+        h.publishTime publishTime,
+        h.roleId roleId,
+        h.dScore dScore,
+        h.lScore lScore,
+        h.hScore hScore,
+        h.rate rate,
+        h.otherAttr otherAttr,
+        h.sumScore sumScore
+    </sql>
+
+    <!--查询本年用户所有荣誉奖励-->
+    <select id="selectHonorsAwards" parameterType="java.lang.Integer"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAward">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_honorsaward h
+        WHERE h.year = #{year}
+    </select>
+
+    <!--查询党责活动的完成状态，未使用-->
+    <select id="selectDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT state
+        FROM t_user_dangze
+        WHERE userId = #{userId} AND dangzeId = #{dangzeId};
+    </select>
+
+    <insert id="insertHonorsAward3Arrange" parameterType="java.util.Map">
+        INSERT INTO t_honorsaward3_arrange
+        (id,year,userId,time,honorsAwardId)
+        VALUES
+        (#{id},#{year},#{userId},#{time},#{honorsAwardId})
+    </insert>
+
+    <insert id="insertHonorsAwardArrange" parameterType="java.util.Map">
+        INSERT INTO t_honorsaward_arrange
+        (id,year,month,time,honorsAwardId)
+        VALUES
+        (#{id},#{year},#{month},#{time},#{honorsAwardId})
+    </insert>
+
+    <insert id="insertHonorsAward" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAward">
+        <!--持久化对象时,返回自增的主键:通用方式  -->
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER"
+                   resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAward">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_honorsaward
+        (title,content,year,publishTime,roleId,dScore,lScore,hScore,rate,otherAttr,sumScore)
+        VALUES
+        (#{title},#{content},#{year},#{publishTime},#{roleId},#{dScore},#{lScore},#{hScore},#{rate},#{otherAttr},#{sumScore})
+    </insert>
+
+    <select id="selectHonorsAwardById" parameterType="java.lang.Long"
+            resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAward">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_honorsaward h
+        WHERE h.id = #{honorsAwardId}
+    </select>
+
+    <update id="updateHonorsAward" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAward">
+        UPDATE t_honorsaward
+        SET title=#{title},content=#{content}
+        WHERE id=#{id}
+    </update>
+
+
+</mapper>
