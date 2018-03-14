@@ -33,4 +33,6 @@ public interface UserService {
     void addUser(User user) throws Exception;
 
     void resetPwd(Long userId) throws Exception;
+
+    User getUserById(Long userId) throws Exception;
 }

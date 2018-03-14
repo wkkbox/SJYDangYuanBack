@@ -32,7 +32,7 @@
                 },
                 messages:{
                     "accountName":{
-                        required:"帐户名不能为空"
+                        required:"手机号不能为空"
                     },
                     "userName":{
                         required:"真实姓名不能为空"
@@ -56,7 +56,7 @@
         <form id="addUserForm" method="post" class="form-x" action="${pageContext.request.contextPath}/user/createUser">
             <div class="form-group">
                 <div class="label">
-                    <label>帐户名：</label>
+                    <label>手机号：</label>
                 </div>
                 <div class="field">
                     <input value="${user.accountName}" type="text" class="input w50" name="accountName"/>

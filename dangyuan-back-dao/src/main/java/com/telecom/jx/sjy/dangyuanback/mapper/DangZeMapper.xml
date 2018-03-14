@@ -71,7 +71,65 @@
         UPDATE t_dangze
         SET title=#{title},content=#{content}
         WHERE id=#{id}
-</update>
+    </update>
 
+    <select id="selectDangZeContents" parameterType="java.util.Map" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.DangZeContent">
+        SELECT  d_c.id,d_c.content,d_c.userId,d_c.arrangeId,
+				d_a.dangzeId,
+				d3_a.dangzeId dangze3Id,
+                u_d.id userDangZeId,u_d.commitTime
+				FROM t_dangze_content d_c
+				LEFT JOIN t_dangze_arrange d_a
+				ON d_c.arrangeId = d_a.id
+				LEFT JOIN t_dangze3_arrange d3_a
+				ON d_c.arrangeId = d3_a.id
+				LEFT JOIN t_user_dangze u_d
+				ON d_c.userId = u_d.userId and
+				IFNULL(d_a.time,d3_a.time) = u_d.time and
+				IFNULL(d_a.dangzeId,d3_a.dangzeId) = u_d.dangzeId
+        WHERE d_c.year=#{year} and u_d.state = 1
+    </select>
+
+    <select id="selectDangZeArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.DangZeArrangeCustom">
+        SELECT time,dangzeId
+        FROM t_dangze_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <select id="selectDangZe3ArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.DangZeArrangeCustom">
+        SELECT time,dangzeId
+        FROM t_dangze3_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <select id="selectUserDangZeId" parameterType="java.util.Map" resultType="java.lang.Long">
+        SELECT id
+        FROM t_user_dangze
+        WHERE time=#{time} and dangzeId=#{dangzeId} and userId=#{userId}
+    </select>
+
+    <select id="selectUserDangZeState" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT state
+        FROM t_user_dangze
+        WHERE time=#{time} and dangzeId=#{dangzeId} and userId=#{userId}
+    </select>
+
+    <select id="selectCommitTime" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT commitTime
+        FROM t_user_dangze
+        WHERE id=#{userDangzeId}
+    </select>
+
+    <update id="passDangZe" parameterType="java.util.Map">
+        UPDATE t_user_dangze
+        SET state=2,rScore=#{rScore},finishTime=#{finishTime}
+        WHERE id=#{userDangzeId}
+    </update>
+
+    <update id="noPassDangZe" parameterType="java.lang.Long">
+        UPDATE t_user_dangze
+        SET state=0
+        WHERE id=#{userDangzeId}
+    </update>
 
 </mapper>

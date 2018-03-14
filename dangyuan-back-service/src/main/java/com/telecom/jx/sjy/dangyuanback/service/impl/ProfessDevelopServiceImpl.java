@@ -5,7 +5,9 @@ import com.telecom.jx.sjy.dangyuanback.mapper.ProfessDevelopMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelopContent;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.pojo.vo.ProfessDevelopArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.ProfessDevelopService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
@@ -139,5 +141,33 @@ public class ProfessDevelopServiceImpl implements ProfessDevelopService {
                 infoMapper.insertUnReadedInfo(map);
             }
         }
+    }
+
+    @Override
+    public List<ProfessDevelopContent> getProfessDevelopContents() throws Exception {
+        Map<String,Object> map = new HashMap<>();
+        map.put("year",String.valueOf(DateUtil.getYear(new Date())));
+        List<ProfessDevelopContent> professDevelopContents=professDevelopMapper.selectProfessDevelopContents(map);
+        return professDevelopContents;
+    }
+
+    @Override
+    public ProfessDevelopArrangeCustom getProfessDevelopArrangeCustom(Long arrangeId) throws Exception {
+        return professDevelopMapper.selectProfessDevelopArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public ProfessDevelopArrangeCustom getProfessDevelop3ArrangeCustom(Long arrangeId) throws Exception {
+        return professDevelopMapper.selectProfessDevelop3ArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public void passProfessDevelop(Map<String, Object> map) throws Exception {
+        professDevelopMapper.passProfessDevelop(map);
+    }
+
+    @Override
+    public void noPassProfessDevelop(Long userProfessDevelopId) throws Exception {
+        professDevelopMapper.noPassProfessDevelop(userProfessDevelopId);
     }
 }

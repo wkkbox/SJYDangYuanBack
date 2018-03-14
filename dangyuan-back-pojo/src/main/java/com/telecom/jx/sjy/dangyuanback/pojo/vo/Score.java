@@ -10,7 +10,7 @@ public class Score implements Serializable {
     private Long id;//主键
     private String userName;//真实姓名
     private String gender;//性别,0表示女1,表示男
-    private Float score;//积分
+    private Integer score;//积分
     private String branch;//所属支部
 
     public Score() {
@@ -46,11 +46,11 @@ public class Score implements Serializable {
         this.gender = gender;
     }
 
-    public Float getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Float score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 

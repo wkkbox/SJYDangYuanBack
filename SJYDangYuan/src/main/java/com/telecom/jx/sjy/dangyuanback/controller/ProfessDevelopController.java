@@ -4,11 +4,19 @@ import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop;
 import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
 import com.telecom.jx.sjy.dangyuanback.service.ProfessDevelopService;
+import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/professDevelop")
@@ -43,5 +51,65 @@ public class ProfessDevelopController {
             model.addAttribute("professDevelop", professDevelop);
         }
         return "editProfessDevelop";
+    }
+
+    @RequestMapping("/checkProfessDevelopDetail")
+    public String checkProfessDevelopDetail(Model model, HttpServletRequest request){
+        List<String> imgs = new ArrayList<>();
+        for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
+            imgs.add(request.getParameter("img" + i));
+        }
+        model.addAttribute("imgs", imgs);
+        Long userProfessDevelopId = Long.valueOf(request.getParameter("userProfessDevelopId"));
+        Long contentId = Long.valueOf(request.getParameter("contentId"));
+        String professDevelopTitle = request.getParameter("professDevelopTitle");
+        String professDevelopContent = request.getParameter("professDevelopContent");
+        String commitContent = request.getParameter("commitContent");
+        Integer dScore = Integer.valueOf(request.getParameter("dScore"));
+        Integer lScore = Integer.valueOf(request.getParameter("lScore"));
+        Integer hScore = Integer.valueOf(request.getParameter("hScore"));
+        Integer otherAttr = Integer.valueOf(request.getParameter("otherAttr"));
+        model.addAttribute("userProfessDevelopId", userProfessDevelopId);
+        model.addAttribute("contentId", contentId);
+        model.addAttribute("professDevelopTitle", professDevelopTitle);
+        model.addAttribute("professDevelopContent", professDevelopContent);
+        model.addAttribute("commitContent", commitContent);
+        model.addAttribute("dScore", dScore);
+        model.addAttribute("lScore", lScore);
+        model.addAttribute("hScore", hScore);
+        model.addAttribute("otherAttr", otherAttr);
+
+        return "checkProfessDevelopDetail";
+    }
+
+    @ResponseBody
+    @RequestMapping("passProfessDevelop")
+    public String passProfessDevelop(Long userProfessDevelopId,Integer rScore){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userProfessDevelopId",userProfessDevelopId);
+        map.put("rScore",rScore);
+        map.put("finishTime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        System.out.println("userProfessDevelopId="+userProfessDevelopId);
+        System.out.println("rScore="+rScore);
+        try {
+            professDevelopService.passProfessDevelop(map);
+            return "{\"msg\":\"审核成功\"}";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{\"msg\":\"审核失败\"}";
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("noPassProfessDevelop")
+    public String noPassProfessDevelop(Long userProfessDevelopId){
+        System.out.println("userProfessDevelopId="+userProfessDevelopId);
+        try {
+            professDevelopService.noPassProfessDevelop(userProfessDevelopId);
+            return "{\"msg\":\"驳回成功\"}";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{\"msg\":\"驳回失败\"}";
+        }
     }
 }

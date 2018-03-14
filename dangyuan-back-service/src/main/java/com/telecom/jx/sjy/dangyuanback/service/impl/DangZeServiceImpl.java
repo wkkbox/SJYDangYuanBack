@@ -4,8 +4,10 @@ import com.telecom.jx.sjy.dangyuanback.mapper.DangZeMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZeContent;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.pojo.vo.DangZeArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.DangZeService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
@@ -141,5 +143,51 @@ public class DangZeServiceImpl implements DangZeService {
     public void editDangZe(DangZe dangZe) throws Exception {
         //更新info之后写
         dangZeMapper.updateDangZe(dangZe);
+    }
+
+    @Override
+    public List<DangZeContent> getDangZeContents() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        //System.out.println("year="+String.valueOf(DateUtil.getYear(new Date())));
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        List<DangZeContent> dangZeContents = dangZeMapper.selectDangZeContents(map);
+        //System.out.println("size="+dangZeContents.size());
+
+        return dangZeContents;
+    }
+
+    @Override
+    public DangZeArrangeCustom getDangZeArrangeCustom(Long arrangeId) throws Exception {
+        return dangZeMapper.selectDangZeArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public DangZeArrangeCustom getDangZe3ArrangeCustom(Long arrangeId) throws Exception {
+        return dangZeMapper.selectDangZe3ArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public Long getUserDangZeId(Map<String, Object> map) throws Exception {
+        return dangZeMapper.selectUserDangZeId(map);
+    }
+
+    @Override
+    public String getCommitTime(Long userDangzeId) throws Exception {
+        return dangZeMapper.selectCommitTime(userDangzeId);
+    }
+
+    @Override
+    public Integer getUserDangZeState(Map<String, Object> map) throws Exception {
+        return dangZeMapper.selectUserDangZeState(map);
+    }
+
+    @Override
+    public void passDangZe(Map<String, Object> map) throws Exception {
+        dangZeMapper.passDangZe(map);
+    }
+
+    @Override
+    public void noPassDangZe(Long userDangzeId) throws Exception {
+        dangZeMapper.noPassDangZe(userDangzeId);
     }
 }

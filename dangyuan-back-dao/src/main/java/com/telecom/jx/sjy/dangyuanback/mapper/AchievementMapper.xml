@@ -74,5 +74,46 @@
         WHERE id=#{id}
     </update>
 
+    <select id="selectAchievementContents" parameterType="java.util.Map" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.AchievementContent">
+        SELECT  d_c.id,d_c.content,d_c.userId,d_c.arrangeId,
+        d_a.achievementId,
+        d3_a.achievementId achievement3Id,
+        u_d.id userAchievementId,u_d.commitTime
+        FROM t_achievement_content d_c
+        LEFT JOIN t_achievement_arrange d_a
+        ON d_c.arrangeId = d_a.id
+        LEFT JOIN t_achievement3_arrange d3_a
+        ON d_c.arrangeId = d3_a.id
+        LEFT JOIN t_user_achievement u_d
+        ON d_c.userId = u_d.userId and
+        IFNULL(d_a.time,d3_a.time) = u_d.time and
+        IFNULL(d_a.achievementId,d3_a.achievementId) = u_d.achievementId
+        WHERE d_c.year=#{year} and u_d.state = 1
+    </select>
+
+    <select id="selectAchievementArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.AchievementArrangeCustom">
+        SELECT time,achievementId
+        FROM t_achievement_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <select id="selectAchievement3ArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.AchievementArrangeCustom">
+        SELECT time,achievementId
+        FROM t_achievement3_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <update id="passAchievement" parameterType="java.util.Map">
+        UPDATE t_user_achievement
+        SET state=2,rScore=#{rScore},finishTime=#{finishTime}
+        WHERE id=#{userAchievementId}
+    </update>
+
+    <update id="noPassAchievement" parameterType="java.lang.Long">
+        UPDATE t_user_achievement
+        SET state=0
+        WHERE id=#{userAchievementId}
+    </update>
+
 
 </mapper>

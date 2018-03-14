@@ -171,4 +171,9 @@ public class UserServiceImpl implements UserService {
         map.put("salt", "dangyuan");
         userMapper.resetPwd(map);
     }
+
+    @Override
+    public User getUserById(Long userId) throws Exception {
+        return userMapper.selectUserById(userId);
+    }
 }

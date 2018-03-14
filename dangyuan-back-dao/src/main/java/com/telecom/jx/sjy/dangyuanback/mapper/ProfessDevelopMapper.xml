@@ -74,5 +74,46 @@
         WHERE id=#{id}
     </update>
 
+    <select id="selectProfessDevelopContents" parameterType="java.util.Map" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelopContent">
+        SELECT  d_c.id,d_c.content,d_c.userId,d_c.arrangeId,
+        d_a.professdevelopId,
+        d3_a.professdevelopId professdevelop3Id,
+        u_d.id userProfessDevelopId,u_d.commitTime
+        FROM t_professdevelop_content d_c
+        LEFT JOIN t_professdevelop_arrange d_a
+        ON d_c.arrangeId = d_a.id
+        LEFT JOIN t_professdevelop3_arrange d3_a
+        ON d_c.arrangeId = d3_a.id
+        LEFT JOIN t_user_professdevelop u_d
+        ON d_c.userId = u_d.userId and
+        IFNULL(d_a.time,d3_a.time) = u_d.time and
+        IFNULL(d_a.professdevelopId,d3_a.professdevelopId) = u_d.professdevelopId
+        WHERE d_c.year=#{year} and u_d.state = 1
+    </select>
+
+    <select id="selectProfessDevelopArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.ProfessDevelopArrangeCustom">
+        SELECT time,professdevelopId
+        FROM t_professdevelop_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <select id="selectProfessDevelop3ArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.ProfessDevelopArrangeCustom">
+        SELECT time,professdevelopId
+        FROM t_professdevelop3_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <update id="passProfessDevelop" parameterType="java.util.Map">
+        UPDATE t_user_professdevelop
+        SET state=2,rScore=#{rScore},finishTime=#{finishTime}
+        WHERE id=#{userProfessDevelopId}
+    </update>
+
+    <update id="noPassProfessDevelop" parameterType="java.lang.Long">
+        UPDATE t_user_professdevelop
+        SET state=0
+        WHERE id=#{userProfessDevelopId}
+    </update>
+
 
 </mapper>

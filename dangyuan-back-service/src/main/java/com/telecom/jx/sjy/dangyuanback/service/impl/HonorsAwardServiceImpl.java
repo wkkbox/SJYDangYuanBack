@@ -4,8 +4,10 @@ import com.telecom.jx.sjy.dangyuanback.mapper.HonorsAwardMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAward;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAwardContent;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.pojo.vo.HonorsAwardArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.HonorsAwardService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
@@ -144,6 +146,34 @@ public class HonorsAwardServiceImpl implements HonorsAwardService {
                 infoMapper.insertUnReadedInfo(map);
             }
         }
+    }
+
+    @Override
+    public List<HonorsAwardContent> getHonorsAwardContents() throws Exception {
+        Map<String,Object> map = new HashMap<>();
+        map.put("year",String.valueOf(DateUtil.getYear(new Date())));
+        List<HonorsAwardContent> honorsAwardContents=honorsAwardMapper.selectHonorsAwardContents(map);
+        return honorsAwardContents;
+    }
+
+    @Override
+    public HonorsAwardArrangeCustom getHonorsAwardArrangeCustom(Long arrangeId) throws Exception {
+        return honorsAwardMapper.selectHonorsAwardArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public HonorsAwardArrangeCustom getHonorsAward3ArrangeCustom(Long arrangeId) throws Exception {
+        return honorsAwardMapper.selectHonorsAward3ArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public void passHonorsAward(Map<String, Object> map) throws Exception {
+        honorsAwardMapper.passHonorsAward(map);
+    }
+
+    @Override
+    public void noPassHonorsAward(Long userHonorsAwardId) throws Exception {
+        honorsAwardMapper.noPassHonorsAward(userHonorsAwardId);
     }
 
 }

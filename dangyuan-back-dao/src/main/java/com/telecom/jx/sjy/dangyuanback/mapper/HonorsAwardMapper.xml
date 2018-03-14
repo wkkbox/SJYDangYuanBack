@@ -74,5 +74,46 @@
         WHERE id=#{id}
     </update>
 
+    <select id="selectHonorsAwardContents" parameterType="java.util.Map" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.HonorsAwardContent">
+        SELECT  d_c.id,d_c.content,d_c.userId,d_c.arrangeId,
+        d_a.honorsAwardId,
+        d3_a.honorsAwardId honorsAward3Id,
+        u_d.id userHonorsAwardId,u_d.commitTime
+        FROM t_honorsaward_content d_c
+        LEFT JOIN t_honorsaward_arrange d_a
+        ON d_c.arrangeId = d_a.id
+        LEFT JOIN t_honorsaward3_arrange d3_a
+        ON d_c.arrangeId = d3_a.id
+        LEFT JOIN t_user_honorsaward u_d
+        ON d_c.userId = u_d.userId and
+        IFNULL(d_a.time,d3_a.time) = u_d.time and
+        IFNULL(d_a.honorsAwardId,d3_a.honorsAwardId) = u_d.honorsAwardId
+        WHERE d_c.year=#{year} and u_d.state = 1
+    </select>
+
+    <select id="selectHonorsAwardArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.HonorsAwardArrangeCustom">
+        SELECT time,honorsAwardId
+        FROM t_honorsaward_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <select id="selectHonorsAward3ArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.HonorsAwardArrangeCustom">
+        SELECT time,honorsAwardId
+        FROM t_honorsaward3_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <update id="passHonorsAward" parameterType="java.util.Map">
+        UPDATE t_user_honorsaward
+        SET state=2,rScore=#{rScore},finishTime=#{finishTime}
+        WHERE id=#{userHonorsAwardId}
+    </update>
+
+    <update id="noPassHonorsAward" parameterType="java.lang.Long">
+        UPDATE t_user_honorsaward
+        SET state=0
+        WHERE id=#{userHonorsAwardId}
+    </update>
+
 
 </mapper>

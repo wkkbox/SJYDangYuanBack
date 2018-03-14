@@ -30,7 +30,7 @@
             <th width="5%">频率</th>
             <th width="5%">其他属性</th>
             <th width="5%">全年累积最高分</th>
-            <th width="5%">操作</th>
+            <%--<th width="5%">操作</th>--%>
         </tr>
         <c:forEach items="${pageInfo.list}" var="honorsAward">
             <tr>
@@ -89,13 +89,13 @@
                     </c:if>
                 </td>
                 <td>${honorsAward.sumScore}</td>
-                <td>
+                <%--<td>
                     <div class="button-group">
                         <a class="button border-main" href="${pageContext.request.contextPath}/page/editHonorsAward?honorsAwardId=${honorsAward.id}">
                             <span class="icon-edit"></span> 修改
                         </a>
                     </div>
-                </td>
+                </td>--%>
             </tr>
         </c:forEach>
     </table>

@@ -46,7 +46,7 @@
     </ul>
     <h2><span class="icon-pencil-square-o"></span>日常管理</h2>
     <ul>
-        <li><a href="${pageContext.request.contextPath}/page/approval" target="right"><span class="icon-caret-right"></span>日常考核</a></li>
+        <li><a href="${pageContext.request.contextPath}/page/check" target="right"><span class="icon-caret-right"></span>日常考核</a></li>
         <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>一票否决</a></li>
     </ul>
     <h2><span class="icon-pencil-square-o"></span>我的桌面</h2>

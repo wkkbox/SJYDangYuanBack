@@ -165,4 +165,11 @@
         WHERE id = #{userId}
     </update>
 
+    <select id="selectUserById" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.User">
+        SELECT
+        <include refid="baseSql"/>
+        FROM t_user u
+        WHERE u.id = #{userId}
+    </select>
+
 </mapper>

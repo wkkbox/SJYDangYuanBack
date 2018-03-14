@@ -5,7 +5,9 @@ import com.telecom.jx.sjy.dangyuanback.mapper.SheZeMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZeContent;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.pojo.vo.SheZeArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.SheZeService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
@@ -144,5 +146,33 @@ public class SheZeServiceImpl implements SheZeService {
     @Transactional(rollbackFor = {Exception.class})
     public void editSheZe(SheZe sheZe) throws Exception {
         sheZeMapper.updateSheZe(sheZe);
+    }
+
+    @Override
+    public List<SheZeContent> getSheZeContents() throws Exception {
+        Map<String,Object> map = new HashMap<>();
+        map.put("year",String.valueOf(DateUtil.getYear(new Date())));
+        List<SheZeContent> sheZeContents=sheZeMapper.selectSheZeContents(map);
+        return sheZeContents;
+    }
+
+    @Override
+    public SheZeArrangeCustom getSheZeArrangeCustom(Long arrangeId) throws Exception {
+        return sheZeMapper.selectSheZeArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public SheZeArrangeCustom getSheZe3ArrangeCustom(Long arrangeId) throws Exception {
+        return sheZeMapper.selectSheZe3ArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public void passSheZe(Map<String, Object> map) throws Exception {
+        sheZeMapper.passSheZe(map);
+    }
+
+    @Override
+    public void noPassSheZe(Long userShezeId) throws Exception {
+        sheZeMapper.noPassSheZe(userShezeId);
     }
 }

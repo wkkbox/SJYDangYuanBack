@@ -72,7 +72,48 @@
         UPDATE t_sheze
         SET title=#{title},content=#{content}
         WHERE id=#{id}
-</update>
+    </update>
+
+    <select id="selectSheZeContents" parameterType="java.util.Map" resultType="com.telecom.jx.sjy.dangyuanback.pojo.po.SheZeContent">
+        SELECT  d_c.id,d_c.content,d_c.userId,d_c.arrangeId,
+				d_a.shezeId,
+				d3_a.shezeId sheze3Id,
+                u_d.id userShezeId,u_d.commitTime
+				FROM t_sheze_content d_c
+				LEFT JOIN t_sheze_arrange d_a
+				ON d_c.arrangeId = d_a.id
+				LEFT JOIN t_sheze3_arrange d3_a
+				ON d_c.arrangeId = d3_a.id
+				LEFT JOIN t_user_sheze u_d
+				ON d_c.userId = u_d.userId and
+				IFNULL(d_a.time,d3_a.time) = u_d.time and
+				IFNULL(d_a.shezeId,d3_a.shezeId) = u_d.shezeId
+        WHERE d_c.year=#{year} and u_d.state = 1
+    </select>
+
+    <select id="selectSheZeArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.SheZeArrangeCustom">
+        SELECT time,shezeId
+        FROM t_sheze_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <select id="selectSheZe3ArrangeCustom" parameterType="java.lang.Long" resultType="com.telecom.jx.sjy.dangyuanback.pojo.vo.SheZeArrangeCustom">
+        SELECT time,shezeId
+        FROM t_sheze3_arrange
+        WHERE id=#{arrangeId}
+    </select>
+
+    <update id="passSheZe" parameterType="java.util.Map">
+        UPDATE t_user_sheze
+        SET state=2,rScore=#{rScore},finishTime=#{finishTime}
+        WHERE id=#{userShezeId}
+    </update>
+
+    <update id="noPassSheZe" parameterType="java.lang.Long">
+        UPDATE t_user_sheze
+        SET state=0
+        WHERE id=#{userShezeId}
+    </update>
 
 
 </mapper>

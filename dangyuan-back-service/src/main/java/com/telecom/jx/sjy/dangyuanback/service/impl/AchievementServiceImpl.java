@@ -4,8 +4,10 @@ import com.telecom.jx.sjy.dangyuanback.mapper.AchievementMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.AchievementContent;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.pojo.vo.AchievementArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
@@ -140,5 +142,33 @@ public class AchievementServiceImpl implements AchievementService {
                 infoMapper.insertUnReadedInfo(map);
             }
         }
+    }
+
+    @Override
+    public List<AchievementContent> getAchievementContents() throws Exception {
+        Map<String,Object> map = new HashMap<>();
+        map.put("year",String.valueOf(DateUtil.getYear(new Date())));
+        List<AchievementContent> achievementContents=achievementMapper.selectAchievementContents(map);
+        return achievementContents;
+    }
+
+    @Override
+    public AchievementArrangeCustom getAchievementArrangeCustom(Long arrangeId) throws Exception {
+        return achievementMapper.selectAchievementArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public AchievementArrangeCustom getAchievement3ArrangeCustom(Long arrangeId) throws Exception {
+        return achievementMapper.selectAchievement3ArrangeCustom(arrangeId);
+    }
+
+    @Override
+    public void passAchievement(Map<String, Object> map) throws Exception {
+        achievementMapper.passAchievement(map);
+    }
+
+    @Override
+    public void noPassAchievement(Long userAchievementId) throws Exception {
+        achievementMapper.noPassAchievement(userAchievementId);
     }
 }

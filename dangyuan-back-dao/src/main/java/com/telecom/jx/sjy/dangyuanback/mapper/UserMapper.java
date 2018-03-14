@@ -41,4 +41,6 @@ public interface UserMapper {
     void addRole(Long userId);
 
     void resetPwd(Map<String, Object> map);
+
+    User selectUserById(Long userId);
 }
