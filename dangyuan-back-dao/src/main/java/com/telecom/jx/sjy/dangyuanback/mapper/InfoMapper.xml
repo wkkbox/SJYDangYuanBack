@@ -91,4 +91,11 @@
         WHERE i.title=#{title} AND i.content=#{content}
     </select>
 
+    <insert id="insertInfoUser" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.InfoUser">
+        INSERT INTO
+        t_info_user(id,userId,title,content,year,publishtime)
+        VALUES
+        (#{id},#{userId},#{title},#{content},#{year},#{publishtime})
+    </insert>
+
 </mapper>

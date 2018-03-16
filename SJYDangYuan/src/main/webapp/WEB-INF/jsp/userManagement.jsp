@@ -24,7 +24,7 @@
     </div>
     <table class="table table-hover text-center">
         <tr>
-            <th width="3%">ID</th>
+            <th width="3%">序号</th>
             <th width="5%">账户名</th>
             <th width="5%">身份证号</th>
             <th width="5%">真实姓名</th>
@@ -32,9 +32,9 @@
             <th width="5%">所在党小组</th>
             <th width="10%">操作</th>
         </tr>
-        <c:forEach items="${pageInfo.list}" var="user">
+        <c:forEach items="${pageInfo.list}" var="user" varStatus="i">
             <tr>
-                <td>${user.id}</td>
+                <td>${i.index+1}</td>
                 <td>${user.accountName}</td>
                 <td>${user.idCard}</td>
                 <td>${user.userName}</td>
@@ -50,7 +50,7 @@
                 <td>
                     <div class="button-group">
                         <button id="resetPwd" onclick="return resetPwd(${user.id},'${user.userName}')"
-                           class="button border-main">
+                                class="button border-main">
                             <span class="icon-edit"></span> 重置密码
                         </button>
                     </div>
@@ -63,16 +63,16 @@
     function resetPwd(userId, userName) {
         if (confirm("您确定要为 " + userName + " 重置密码吗?")) {
             $.ajax({
-                url:"${pageContext.request.contextPath}/user/resetPwd",
-                data:{"userId":userId},
-                dataType:"json",
-                type:"post",
-                cache:false,
-                asynch:true,
-                success:function(data){
+                url: "${pageContext.request.contextPath}/user/resetPwd",
+                data: {"userId": userId},
+                dataType: "json",
+                type: "post",
+                cache: false,
+                asynch: true,
+                success: function (data) {
                     alert(data.msg);
                 },
-                error:function(){
+                error: function () {
                     alert("服务器异常");
                 }
             });
@@ -80,19 +80,21 @@
     }
 </script>
 <div class="pagelist">
-    <c:if test="${pageInfo.pages!=1}">
-        <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=1&pageSize=${pageInfo.pageSize}">首页</a>
+    <c:if test="${pageInfo.pages!=0}">
+        <c:if test="${pageInfo.pages!=1}">
+            <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=1&pageSize=${pageInfo.pageSize}">首页</a>
+        </c:if>
+        <c:if test="${pageInfo.pageNum!=1}">
+            <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.prePage}&pageSize=${pageInfo.pageSize}">上一页</a>
+        </c:if>
+        <c:if test="${pageInfo.pageNum!=pageInfo.pages}">
+            <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.nextPage}&pageSize=${pageInfo.pageSize}">下一页</a>
+        </c:if>
+        <c:if test="${pageInfo.pages!=1}">
+            <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.pages}&pageSize=${pageInfo.pageSize}">尾页</a>
+        </c:if>
+        <span style="color: #333333;">&nbsp;当前&nbsp;${pageInfo.pageNum}&nbsp;/&nbsp;${pageInfo.pages}&nbsp;页&nbsp;，&nbsp;共&nbsp;${pageInfo.total}&nbsp;条</span>
     </c:if>
-    <c:if test="${pageInfo.pageNum!=1}">
-        <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.prePage}&pageSize=${pageInfo.pageSize}">上一页</a>
-    </c:if>
-    <c:if test="${pageInfo.pageNum!=pageInfo.pages}">
-        <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.nextPage}&pageSize=${pageInfo.pageSize}">下一页</a>
-    </c:if>
-    <c:if test="${pageInfo.pages!=1}">
-        <a href="${pageContext.request.contextPath}/page/userManagement?currentPage=${pageInfo.pages}&pageSize=${pageInfo.pageSize}">尾页</a>
-    </c:if>
-    <span style="color: #333333;">&nbsp;当前&nbsp;${pageInfo.pageNum}&nbsp;/&nbsp;${pageInfo.pages}&nbsp;页&nbsp;，&nbsp;共&nbsp;${pageInfo.total}&nbsp;条</span>
 </div>
 </body>
 </html>

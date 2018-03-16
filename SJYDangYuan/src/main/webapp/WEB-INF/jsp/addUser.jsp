@@ -56,7 +56,7 @@
         <form id="addUserForm" method="post" class="form-x" action="${pageContext.request.contextPath}/user/createUser">
             <div class="form-group">
                 <div class="label">
-                    <label>手机号：</label>
+                    <label>手机号(帐户名)：</label>
                 </div>
                 <div class="field">
                     <input value="${user.accountName}" type="text" class="input w50" name="accountName"/>

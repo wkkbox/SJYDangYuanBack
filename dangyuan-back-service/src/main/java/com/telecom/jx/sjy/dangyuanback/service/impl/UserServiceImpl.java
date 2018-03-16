@@ -1,14 +1,8 @@
 package com.telecom.jx.sjy.dangyuanback.service.impl;
 
 
-import com.telecom.jx.sjy.dangyuanback.mapper.DangZeMapper;
-import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
-import com.telecom.jx.sjy.dangyuanback.mapper.SheZeMapper;
-import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.mapper.*;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.*;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.Score;
 import com.telecom.jx.sjy.dangyuanback.service.UserService;
 import com.telecom.jx.sjy.dangyuanback.util.CryptographyUtil;
@@ -36,6 +30,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private SheZeMapper sheZeMapper;
+
+    @Autowired
+    private AchievementMapper achievementMapper;
+
+    @Autowired
+    private HonorsAwardMapper honorsAwardMapper;
+
+    @Autowired
+    private ProfessDevelopMapper professDevelopMapper;
 
     @Override
     public List<User> showUsers() throws Exception {
@@ -158,8 +161,51 @@ public class UserServiceImpl implements UserService {
                 sheZeMapper.insertSheZe3Arrange(map);
             }
         }
-
         //3.工作业绩不限次数
+        List<Achievement> achievements = achievementMapper.selectAchievements(DateUtil.getYear(new Date()));
+        for(Achievement item : achievements){
+            if (item.getRate() == 3) {
+                //为用户在工作业绩不限次数安排表中加一条记录
+                String year = item.getYear();
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", IDUtils.getItemId());
+                map.put("userId", userId);
+                map.put("year", year);
+                map.put("achievementId", item.getId());
+                map.put("time", year + "-01-01 00:00:00");
+                achievementMapper.insertAchievement3Arrange(map);
+            }
+        }
+        //4.荣誉奖励不限次数
+        List<HonorsAward> honorsAwards = honorsAwardMapper.selectHonorsAwards(DateUtil.getYear(new Date()));
+        for(HonorsAward item : honorsAwards){
+            if (item.getRate() == 3) {
+                //为用户在荣誉奖励不限次数安排表中加一条记录
+                String year = item.getYear();
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", IDUtils.getItemId());
+                map.put("userId", userId);
+                map.put("year", year);
+                map.put("honorsAwardId", item.getId());
+                map.put("time", year + "-01-01 00:00:00");
+                honorsAwardMapper.insertHonorsAward3Arrange(map);
+            }
+        }
+        //5.专业提升不限次数
+        List<ProfessDevelop> professDevelops = professDevelopMapper.selectProfessDevelops(DateUtil.getYear(new Date()));
+        for(ProfessDevelop item : professDevelops){
+            if (item.getRate() == 3) {
+                //为用户在专业提升不限次数安排表中加一条记录
+                String year = item.getYear();
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", IDUtils.getItemId());
+                map.put("userId", userId);
+                map.put("year", year);
+                map.put("professDevelopId", item.getId());
+                map.put("time", year + "-01-01 00:00:00");
+                professDevelopMapper.insertProfessDevelop3Arrange(map);
+            }
+        }
     }
 
     @Override

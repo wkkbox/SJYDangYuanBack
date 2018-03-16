@@ -163,12 +163,44 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void passAchievement(Map<String, Object> map) throws Exception {
+        if ((int) map.get("otherAttr") == 1) {
+            map.put("title","(考核优秀)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 2) {
+            map.put("title","(考核称职)"+map.get("title"));
+        }
+        map.put("content", "你申请的" + map.get("title") + "于" + map.get("publishtime") + "审核通过，获得" + map.get("rScore") + "分");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         achievementMapper.passAchievement(map);
     }
 
     @Override
-    public void noPassAchievement(Long userAchievementId) throws Exception {
+    @Transactional(rollbackFor = {Exception.class})
+    public void noPassAchievement(Long userAchievementId, Map<String, Object> map) throws Exception {
+        if ((int) map.get("otherAttr") == 1) {
+            map.put("title","(考核优秀)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 2) {
+            map.put("title","(考核称职)"+map.get("title"));
+        }
+        map.put("content","你申请的"+map.get("title")+"于"+map.get("publishtime")+"审核不通过，请重新申请");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         achievementMapper.noPassAchievement(userAchievementId);
     }
 }

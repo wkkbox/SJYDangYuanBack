@@ -127,8 +127,15 @@ public class UserController {
     @RequiresRoles("admin")
     public String addUser(Model model, User user) {
         try {
-            userService.addUser(user);
-            model.addAttribute("msg", "添加成功");
+            String accountName = user.getAccountName();
+            User findUser = userService.getUserByAccountName(accountName);
+            if(findUser!=null){//已经存在这个帐户
+                model.addAttribute("msg", "添加失败，手机号(帐户名)已存在");
+                model.addAttribute("user", user);
+            }else {
+                userService.addUser(user);
+                model.addAttribute("msg", "添加成功");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("msg", "添加失败");
@@ -150,7 +157,6 @@ public class UserController {
             return "{\"msg\":\"重置密码失败\"}";
         }
     }
-
 
     @RequestMapping("/deleteUser")
     @RequiresRoles("admin")

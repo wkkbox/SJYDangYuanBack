@@ -150,9 +150,9 @@ public class SheZeServiceImpl implements SheZeService {
 
     @Override
     public List<SheZeContent> getSheZeContents() throws Exception {
-        Map<String,Object> map = new HashMap<>();
-        map.put("year",String.valueOf(DateUtil.getYear(new Date())));
-        List<SheZeContent> sheZeContents=sheZeMapper.selectSheZeContents(map);
+        Map<String, Object> map = new HashMap<>();
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        List<SheZeContent> sheZeContents = sheZeMapper.selectSheZeContents(map);
         return sheZeContents;
     }
 
@@ -167,12 +167,44 @@ public class SheZeServiceImpl implements SheZeService {
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void passSheZe(Map<String, Object> map) throws Exception {
+        if ((int) map.get("otherAttr") == 1) {
+            map.put("title","(个人名义参加)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 2) {
+            map.put("title","(集体名义参加)"+map.get("title"));
+        }
+        map.put("content", "你申请的" + map.get("title") + "于" + map.get("publishtime") + "审核通过，获得" + map.get("rScore") + "分");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         sheZeMapper.passSheZe(map);
     }
 
     @Override
-    public void noPassSheZe(Long userShezeId) throws Exception {
+    @Transactional(rollbackFor = {Exception.class})
+    public void noPassSheZe(Long userShezeId, Map<String, Object> map) throws Exception {
+        if ((int) map.get("otherAttr") == 1) {
+            map.put("title","(个人名义参加)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 2) {
+            map.put("title","(集体名义参加)"+map.get("title"));
+        }
+        map.put("content","你申请的"+map.get("title")+"于"+map.get("publishtime")+"审核不通过，请重新申请");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         sheZeMapper.noPassSheZe(userShezeId);
     }
 }

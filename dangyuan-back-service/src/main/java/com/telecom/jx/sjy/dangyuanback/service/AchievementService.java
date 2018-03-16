@@ -24,5 +24,5 @@ public interface AchievementService {
 
     void passAchievement(Map<String, Object> map) throws Exception;
 
-    void noPassAchievement(Long userAchievementId) throws Exception;
+    void noPassAchievement(Long userAchievementId, Map<String, Object> map) throws Exception;
 }

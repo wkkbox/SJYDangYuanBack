@@ -30,5 +30,5 @@ public interface DangZeService {
 
     void passDangZe(Map<String, Object> map) throws Exception;
 
-    void noPassDangZe(Long userDangzeId) throws Exception;
+    void noPassDangZe(Long userDangzeId, Map<String, Object> map) throws Exception;
 }

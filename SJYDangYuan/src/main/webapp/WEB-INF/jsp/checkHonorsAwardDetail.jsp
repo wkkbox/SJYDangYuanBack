@@ -20,6 +20,8 @@
     <div class="body-content">
         <input type="hidden" name="userHonorsAwardId" value="${userHonorsAwardId}"/>
         <input type="hidden" name="contentId" value="${contentId}"/>
+        <input type="hidden" name="userId" value="${userId}"/>
+        <input type="hidden" name="otherAttr" value="${otherAttr}" />
         <form method="post" class="form-x" action="">
             <div class="form-group">
                 <div class="label">
@@ -93,13 +95,13 @@
                 </div>
                 <div class="field">
                     <a href="javascript:void(0)" id="checkPass"
-                       onclick="checkPass(${userHonorsAwardId},${contentId},${dScore},${lScore},${hScore})"
+                       onclick="checkPass(${userHonorsAwardId},${userId},${dScore},${lScore},${hScore},'${honorsAwardTitle}',${otherAttr})"
                        class="button bg-main icon-check-square-o">
                         审批通过
                     </a>
                     <%--<a href="${pageContext.request.contextPath}/page/checkDangZe" class="button bg-main icon-check-square-o" type="button"> 审批通过</a>--%>
                     <%--<button class="button bg-main icon-check-square-o" type="button"> 驳回</button>--%>
-                    <a href="javascript:void(0)" id="checkNo" onclick="checkNo(${userHonorsAwardId})"
+                    <a href="javascript:void(0)" id="checkNo" onclick="checkNo(${userHonorsAwardId},${userId},'${honorsAwardTitle}',${otherAttr})"
                        class="button bg-main icon-check-square-o">
                         驳回
                     </a>
@@ -109,10 +111,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function checkPass(userHonorsAwardId, contentId, dScore, lScore, hScore) {
-        alert("userHonorsAwardId=" + userHonorsAwardId);
-        alert("contentId=" + contentId);
-        alert("rScore=" + $("#rScore").val());
+    function checkPass(userHonorsAwardId, userId, dScore, lScore, hScore,title,otherAttr) {
         if (dScore == -1) {
             if ($("#rScore").val() > hScore || $("#rScore").val() < lScore) {
                 alert("得分应在"+lScore+"到"+hScore+"之间");
@@ -124,7 +123,10 @@
             url:"${pageContext.request.contextPath}/honorsAward/passHonorsAward",
             data:{
                 "userHonorsAwardId":userHonorsAwardId,
-                "rScore":$("#rScore").val()
+                "rScore":$("#rScore").val(),
+                "userId":userId,
+                "title":title,
+                "otherAttr":otherAttr
             },
             dataType:"json",
             type:"post",
@@ -142,13 +144,14 @@
 
     }
 
-    function checkNo(userHonorsAwardId) {
-        alert("userHonorsAwardId=" + userHonorsAwardId);
-        alert("rScore=" + $("#rScore").val());
+    function checkNo(userHonorsAwardId,userId,title,otherAttr) {
         $.ajax({
             url:"${pageContext.request.contextPath}/honorsAward/noPassHonorsAward",
             data:{
-                "userHonorsAwardId":userHonorsAwardId
+                "userHonorsAwardId":userHonorsAwardId,
+                "userId":userId,
+                "title":title,
+                "otherAttr":otherAttr
             },
             dataType:"json",
             type:"post",

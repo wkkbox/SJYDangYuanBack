@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/professDevelop")
@@ -78,19 +75,26 @@ public class ProfessDevelopController {
         model.addAttribute("lScore", lScore);
         model.addAttribute("hScore", hScore);
         model.addAttribute("otherAttr", otherAttr);
+        Long userId = Long.valueOf(request.getParameter("userId"));
+        model.addAttribute("userId", userId);
 
         return "checkProfessDevelopDetail";
     }
 
     @ResponseBody
     @RequestMapping("passProfessDevelop")
-    public String passProfessDevelop(Long userProfessDevelopId,Integer rScore){
+    public String passProfessDevelop(Long userProfessDevelopId,Integer rScore, Long userId,String title, Integer otherAttr){
         Map<String,Object> map = new HashMap<>();
         map.put("userProfessDevelopId",userProfessDevelopId);
         map.put("rScore",rScore);
         map.put("finishTime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         System.out.println("userProfessDevelopId="+userProfessDevelopId);
         System.out.println("rScore="+rScore);
+        map.put("userId", userId);
+        map.put("title", title+"申请结果");
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        map.put("otherAttr", otherAttr);
         try {
             professDevelopService.passProfessDevelop(map);
             return "{\"msg\":\"审核成功\"}";
@@ -102,10 +106,16 @@ public class ProfessDevelopController {
 
     @ResponseBody
     @RequestMapping("noPassProfessDevelop")
-    public String noPassProfessDevelop(Long userProfessDevelopId){
+    public String noPassProfessDevelop(Long userProfessDevelopId, Long userId,String title, Integer otherAttr){
         System.out.println("userProfessDevelopId="+userProfessDevelopId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("title", title+"申请结果");
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        map.put("otherAttr", otherAttr);
         try {
-            professDevelopService.noPassProfessDevelop(userProfessDevelopId);
+            professDevelopService.noPassProfessDevelop(userProfessDevelopId,map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();

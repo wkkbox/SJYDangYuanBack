@@ -24,5 +24,5 @@ public interface ProfessDevelopService {
 
     void passProfessDevelop(Map<String, Object> map) throws Exception;
 
-    void noPassProfessDevelop(Long userProfessDevelopId) throws Exception;
+    void noPassProfessDevelop(Long userProfessDevelopId, Map<String, Object> map) throws Exception;
 }

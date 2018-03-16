@@ -24,5 +24,5 @@ public interface HonorsAwardService {
 
     void passHonorsAward(Map<String, Object> map) throws Exception;
 
-    void noPassHonorsAward(Long userHonorsAwardId) throws Exception;
+    void noPassHonorsAward(Long userHonorsAwardId, Map<String, Object> map) throws Exception;
 }

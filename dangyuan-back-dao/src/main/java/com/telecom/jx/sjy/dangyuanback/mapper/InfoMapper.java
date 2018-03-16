@@ -15,4 +15,6 @@ public interface InfoMapper {
     void insertInfo(Info info);
 
     Info selectInfoByTitleAndContent(Map<String, Object> map);
+
+    void insertInfoUser(Map<String, Object> map);
 }

@@ -3,10 +3,7 @@ package com.telecom.jx.sjy.dangyuanback.service.impl;
 import com.telecom.jx.sjy.dangyuanback.mapper.DangZeMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZeContent;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
+import com.telecom.jx.sjy.dangyuanback.pojo.po.*;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.DangZeArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.DangZeService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
@@ -182,12 +179,32 @@ public class DangZeServiceImpl implements DangZeService {
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void passDangZe(Map<String, Object> map) throws Exception {
+        map.put("content","你申请的"+map.get("title")+"于"+map.get("publishtime")+"审核通过，获得"+map.get("rScore")+"分");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         dangZeMapper.passDangZe(map);
     }
 
     @Override
-    public void noPassDangZe(Long userDangzeId) throws Exception {
+    @Transactional(rollbackFor = {Exception.class})
+    public void noPassDangZe(Long userDangzeId, Map<String, Object> map) throws Exception {
+        map.put("content","你申请的"+map.get("title")+"于"+map.get("publishtime")+"审核不通过，请重新申请");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         dangZeMapper.noPassDangZe(userDangzeId);
     }
 }

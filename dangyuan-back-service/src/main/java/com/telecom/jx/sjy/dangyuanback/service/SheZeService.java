@@ -1,6 +1,5 @@
 package com.telecom.jx.sjy.dangyuanback.service;
 
-import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZeContent;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.SheZeArrangeCustom;
@@ -25,5 +24,5 @@ public interface SheZeService {
 
     void passSheZe(Map<String, Object> map) throws Exception;
 
-    void noPassSheZe(Long userShezeId) throws Exception;
+    void noPassSheZe(Long userShezeId, Map<String, Object> map) throws Exception;
 }

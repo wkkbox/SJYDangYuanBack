@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/dangZe")
@@ -76,21 +73,25 @@ public class DangZeController {
         model.addAttribute("dScore", dScore);
         model.addAttribute("lScore", lScore);
         model.addAttribute("hScore", hScore);
+        Long userId = Long.valueOf(request.getParameter("userId"));
+        model.addAttribute("userId", userId);
 
         return "checkDangZeDetail";
     }
 
     @ResponseBody
     @RequestMapping("passDangZe")
-    public String passDangZe(Long userDangzeId, Integer rScore) {
+    public String passDangZe(Long userDangzeId, Integer rScore, Long userId, String dangzeTitle) {
         Map<String, Object> map = new HashMap<>();
         map.put("userDangzeId", userDangzeId);
         map.put("rScore", rScore);
         map.put("finishTime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        //map.put("adminId", ((User) SecurityUtils.getSubject()).getId());
-        //System.out.println("adminId="+((User) SecurityUtils.getSubject()).getId());
         System.out.println("userDangzeId=" + userDangzeId);
         System.out.println("rScore=" + rScore);
+        map.put("userId", userId);
+        map.put("title", dangzeTitle+"申请结果");
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         try {
             dangZeService.passDangZe(map);
             return "{\"msg\":\"审核成功\"}";
@@ -102,10 +103,15 @@ public class DangZeController {
 
     @ResponseBody
     @RequestMapping("noPassDangZe")
-    public String noPassDangZe(Long userDangzeId) {
+    public String noPassDangZe(Long userDangzeId, Long userId, String dangzeTitle) {
         System.out.println("userDangzeId=" + userDangzeId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("title", dangzeTitle+"申请结果");
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         try {
-            dangZeService.noPassDangZe(userDangzeId);
+            dangZeService.noPassDangZe(userDangzeId,map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();

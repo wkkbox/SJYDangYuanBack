@@ -167,12 +167,86 @@ public class HonorsAwardServiceImpl implements HonorsAwardService {
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public void passHonorsAward(Map<String, Object> map) throws Exception {
+        if ((int) map.get("otherAttr") == 1) {
+            map.put("title","(国家级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 2) {
+            map.put("title","(省部级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 3) {
+            map.put("title","(地市级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 4) {
+            map.put("title","(县(区)级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 5) {
+            map.put("title","(集团(中央企业)级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 6) {
+            map.put("title","(行业级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 7) {
+            map.put("title","(省公司级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 8) {
+            map.put("title","(市公司级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 9) {
+            map.put("title","(客户级)"+map.get("title"));
+        }
+        map.put("content", "你申请的" + map.get("title") + "于" + map.get("publishtime") + "审核通过，获得" + map.get("rScore") + "分");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         honorsAwardMapper.passHonorsAward(map);
     }
 
     @Override
-    public void noPassHonorsAward(Long userHonorsAwardId) throws Exception {
+    @Transactional(rollbackFor = {Exception.class})
+    public void noPassHonorsAward(Long userHonorsAwardId, Map<String, Object> map) throws Exception {
+        if ((int) map.get("otherAttr") == 1) {
+            map.put("title","(国家级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 2) {
+            map.put("title","(省部级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 3) {
+            map.put("title","(地市级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 4) {
+            map.put("title","(县(区)级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 5) {
+            map.put("title","(集团(中央企业)级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 6) {
+            map.put("title","(行业级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 7) {
+            map.put("title","(省公司级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 8) {
+            map.put("title","(市公司级)"+map.get("title"));
+        }
+        if ((int) map.get("otherAttr") == 9) {
+            map.put("title","(客户级)"+map.get("title"));
+        }
+        map.put("content","你申请的"+map.get("title")+"于"+map.get("publishtime")+"审核不通过，请重新申请");
+        Long id = IDUtils.getItemId();
+        map.put("id",id);
+        //插入用户信息表
+        infoMapper.insertInfoUser(map);
+        //插入未读表
+        map.put("infoId",id);
+        infoMapper.insertUnReadedInfo(map);
+        //修改进度表
         honorsAwardMapper.noPassHonorsAward(userHonorsAwardId);
     }
 

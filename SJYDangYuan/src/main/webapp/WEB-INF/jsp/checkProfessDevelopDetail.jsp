@@ -20,6 +20,8 @@
     <div class="body-content">
         <input type="hidden" name="userProfessDevelopId" value="${userProfessDevelopId}"/>
         <input type="hidden" name="contentId" value="${contentId}"/>
+        <input type="hidden" name="userId" value="${userId}"/>
+        <input type="hidden" name="otherAttr" value="${otherAttr}" />
         <form method="post" class="form-x" action="">
             <div class="form-group">
                 <div class="label">
@@ -93,13 +95,13 @@
                 </div>
                 <div class="field">
                     <a href="javascript:void(0)" id="checkPass"
-                       onclick="checkPass(${userProfessDevelopId},${contentId},${dScore},${lScore},${hScore})"
+                       onclick="checkPass(${userProfessDevelopId},${userId},${dScore},${lScore},${hScore},'${professDevelopTitle}',${otherAttr})"
                        class="button bg-main icon-check-square-o">
                         审批通过
                     </a>
                     <%--<a href="${pageContext.request.contextPath}/page/checkDangZe" class="button bg-main icon-check-square-o" type="button"> 审批通过</a>--%>
                     <%--<button class="button bg-main icon-check-square-o" type="button"> 驳回</button>--%>
-                    <a href="javascript:void(0)" id="checkNo" onclick="checkNo(${userProfessDevelopId})"
+                    <a href="javascript:void(0)" id="checkNo" onclick="checkNo(${userProfessDevelopId},${userId},'${professDevelopTitle}',${otherAttr})"
                        class="button bg-main icon-check-square-o">
                         驳回
                     </a>
@@ -109,10 +111,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function checkPass(userProfessDevelopId, contentId, dScore, lScore, hScore) {
-        alert("userProfessDevelopId=" + userProfessDevelopId);
-        alert("contentId=" + contentId);
-        alert("rScore=" + $("#rScore").val());
+    function checkPass(userProfessDevelopId, userId, dScore, lScore, hScore,title,otherAttr) {
         if (dScore == -1) {
             if ($("#rScore").val() > hScore || $("#rScore").val() < lScore) {
                 alert("得分应在"+lScore+"到"+hScore+"之间");
@@ -124,7 +123,10 @@
             url:"${pageContext.request.contextPath}/professDevelop/passProfessDevelop",
             data:{
                 "userProfessDevelopId":userProfessDevelopId,
-                "rScore":$("#rScore").val()
+                "rScore":$("#rScore").val(),
+                "userId":userId,
+                "title":title,
+                "otherAttr":otherAttr
             },
             dataType:"json",
             type:"post",
@@ -142,13 +144,14 @@
 
     }
 
-    function checkNo(userProfessDevelopId) {
-        alert("userProfessDevelopId=" + userProfessDevelopId);
-        alert("rScore=" + $("#rScore").val());
+    function checkNo(userProfessDevelopId,userId,title,otherAttr) {
         $.ajax({
             url:"${pageContext.request.contextPath}/professDevelop/noPassProfessDevelop",
             data:{
-                "userProfessDevelopId":userProfessDevelopId
+                "userProfessDevelopId":userProfessDevelopId,
+                "userId":userId,
+                "title":title,
+                "otherAttr":otherAttr
             },
             dataType:"json",
             type:"post",

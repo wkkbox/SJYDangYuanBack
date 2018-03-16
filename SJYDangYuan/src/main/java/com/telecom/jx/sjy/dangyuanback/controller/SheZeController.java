@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/sheZe")
@@ -76,19 +73,26 @@ public class SheZeController {
         model.addAttribute("lScore", lScore);
         model.addAttribute("hScore", hScore);
         model.addAttribute("otherAttr", otherAttr);
+        Long userId = Long.valueOf(request.getParameter("userId"));
+        model.addAttribute("userId", userId);
 
         return "checkSheZeDetail";
     }
 
     @ResponseBody
     @RequestMapping("passSheZe")
-    public String passSheZe(Long userShezeId,Integer rScore){
-        Map<String,Object> map = new HashMap<>();
-        map.put("userShezeId",userShezeId);
-        map.put("rScore",rScore);
+    public String passSheZe(Long userShezeId, Integer rScore, Long userId, String title, Integer otherAttr) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userShezeId", userShezeId);
+        map.put("rScore", rScore);
         map.put("finishTime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        System.out.println("userShezeId="+userShezeId);
-        System.out.println("rScore="+rScore);
+        System.out.println("userShezeId=" + userShezeId);
+        System.out.println("rScore=" + rScore);
+        map.put("userId", userId);
+        map.put("title", title+"申请结果");
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        map.put("otherAttr", otherAttr);
         try {
             sheZeService.passSheZe(map);
             return "{\"msg\":\"审核成功\"}";
@@ -100,10 +104,16 @@ public class SheZeController {
 
     @ResponseBody
     @RequestMapping("noPassSheZe")
-    public String noPassSheZe(Long userShezeId){
-        System.out.println("userShezeId="+userShezeId);
+    public String noPassSheZe(Long userShezeId, Long userId, String title, Integer otherAttr) {
+        System.out.println("userShezeId=" + userShezeId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("title", title+"申请结果");
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        map.put("otherAttr", otherAttr);
         try {
-            sheZeService.noPassSheZe(userShezeId);
+            sheZeService.noPassSheZe(userShezeId,map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();

@@ -31,10 +31,10 @@
     <h2><span class="icon-user"></span>系统管理</h2>
     <ul style="display:block">
         <li><a href="${pageContext.request.contextPath}/page/userManagement" target="right"><span class="icon-caret-right"></span>用户管理</a></li>
-        <li><a href="${pageContext.request.contextPath}/page/roleManagement" target="right"><span class="icon-caret-right"></span>角色管理</a></li>
+        <%--<li><a href="${pageContext.request.contextPath}/page/roleManagement" target="right"><span class="icon-caret-right"></span>角色管理</a></li>
         <li><a href="${pageContext.request.contextPath}/page/permissionManagement" target="right"><span class="icon-caret-right"></span>权限管理</a></li>
         <li><a href="${pageContext.request.contextPath}/page/scoreManagement" target="right"><span class="icon-caret-right"></span>积分管理</a></li>
-        <li><a href="${pageContext.request.contextPath}/page/departmentManagement" target="right"><span class="icon-caret-right"></span>部门管理</a></li>
+        <li><a href="${pageContext.request.contextPath}/page/departmentManagement" target="right"><span class="icon-caret-right"></span>部门管理</a></li>--%>
     </ul>
     <h2><span class="icon-pencil-square-o"></span>活动录入</h2>
     <ul>
@@ -47,18 +47,18 @@
     <h2><span class="icon-pencil-square-o"></span>日常管理</h2>
     <ul>
         <li><a href="${pageContext.request.contextPath}/page/check" target="right"><span class="icon-caret-right"></span>日常考核</a></li>
-        <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>一票否决</a></li>
+        <%--<li><a href="kb.html" target="right"><span class="icon-caret-right"></span>一票否决</a></li>--%>
     </ul>
     <h2><span class="icon-pencil-square-o"></span>我的桌面</h2>
     <ul>
-        <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>日常待办事务</a></li>
+        <%--<li><a href="kb.html" target="right"><span class="icon-caret-right"></span>日常待办事务</a></li>
         <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>个人考核情况</a></li>
-        <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>信息发布</a></li>
+        <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>信息发布</a></li>--%>
     </ul>
     <h2><span class="icon-pencil-square-o"></span>报表系统</h2>
     <ul>
-        <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>全员考核情况表</a></li>
-        <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>部门考核情况表</a></li>
+        <%--<li><a href="kb.html" target="right"><span class="icon-caret-right"></span>全员考核情况表</a></li>
+        <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>部门考核情况表</a></li>--%>
     </ul>
 </div>
 <script type="text/javascript">
