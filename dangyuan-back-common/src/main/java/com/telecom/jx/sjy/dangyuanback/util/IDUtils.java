@@ -1,5 +1,6 @@
 package com.telecom.jx.sjy.dangyuanback.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 /**
@@ -14,7 +15,7 @@ public class IDUtils {
     /**
      * 商品id生成
      */
-    public static long getItemId() {
+    /*public static long getItemId() {
         //取当前时间的长整形值包含毫秒
         long millis = System.currentTimeMillis();
         //加上两位随机数
@@ -24,7 +25,7 @@ public class IDUtils {
         String str = millis + String.format("%02d", end2);
         long id = new Long(str);
         return id;
-    }
+    }*/
 
 
     /**
@@ -40,5 +41,36 @@ public class IDUtils {
         //如果不足三位前面补0
         String str = millis + String.format("%03d", end3);
         return str;
+    }
+
+    /**
+     * 20位末尾的数字id
+     */
+    public static int Guid = 100;
+
+    public static long getItemId() {
+
+        IDUtils.Guid += 1;
+
+        long now = System.currentTimeMillis();
+        //获取4位年份数字
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        //获取时间戳
+        String time = dateFormat.format(now);
+        String info = now + "";
+        //获取三位随机数
+        //int ran=(int) ((Math.random()*9+1)*100);
+        //要是一段时间内的数据量过大会有重复的情况，所以做以下修改
+        int ran = 0;
+        if (IDUtils.Guid > 999) {
+            IDUtils.Guid = 100;
+        }
+        ran = IDUtils.Guid;
+        long id = new Long(time + info.substring(2, info.length()) + ran);
+        return id;
+    }
+
+    public static void main(String[] args) {
+
     }
 }
