@@ -22,16 +22,18 @@ public class HonorsAwardController {
 
     @RequestMapping("/createHonorsAward")
     @RequiresRoles("admin")
+    @ResponseBody
     public String createHonorsAward(Model model, HonorsAward honorsAward) {
         try {
             honorsAwardService.addHonorsAward(honorsAward);
-            model.addAttribute("msg", "添加成功");
+            //model.addAttribute("msg", "添加成功");
+            return "{\"msg\":\"录入成功\"}";
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msg", "添加失败");
-            model.addAttribute("honorsAward", honorsAward);
+            //model.addAttribute("msg", "添加失败");
+            //model.addAttribute("honorsAward", honorsAward);
+            return "{\"msg\":\"录入失败\"}";
         }
-        return "addHonorsAward";
     }
 
     @RequestMapping("/editHonorsAward")

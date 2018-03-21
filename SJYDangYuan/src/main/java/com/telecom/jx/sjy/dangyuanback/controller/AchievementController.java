@@ -24,16 +24,18 @@ public class AchievementController {
 
     @RequestMapping("/createAchievement")
     @RequiresRoles("admin")
+    @ResponseBody
     public String createAchievement(Model model, Achievement achievement) {
         try {
             achievementService.addAchievement(achievement);
-            model.addAttribute("msg", "添加成功");
+            //model.addAttribute("msg", "添加成功");
+            return "{\"msg\":\"录入成功\"}";
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msg", "添加失败");
-            model.addAttribute("achievement", achievement);
+            //model.addAttribute("msg", "添加失败");
+            //model.addAttribute("achievement", achievement);
+            return "{\"msg\":\"录入失败\"}";
         }
-        return "addAchievement";
     }
 
     @RequestMapping("/editAchievement")

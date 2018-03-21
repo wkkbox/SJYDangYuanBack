@@ -24,16 +24,18 @@ public class DangZeController {
 
     @RequestMapping("/createDangZe")
     @RequiresRoles("admin")
+    @ResponseBody
     public String createDangZe(Model model, DangZe dangZe) {
         try {
             dangZeService.addDangZe(dangZe);
-            model.addAttribute("msg", "添加成功");
+            //model.addAttribute("msg", "添加成功");
+            return "{\"msg\":\"录入成功\"}";
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msg", "添加失败");
-            model.addAttribute("dangZe", dangZe);
+            //model.addAttribute("msg", "添加失败");
+            //model.addAttribute("dangZe", dangZe);
+            return "{\"msg\":\"录入失败\"}";
         }
-        return "addDangZe";
     }
 
     @RequestMapping("/editDangZe")

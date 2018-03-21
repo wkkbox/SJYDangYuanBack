@@ -1,4 +1,4 @@
-body{ color:#333; font-size:13px;}
+body{ color:#333; font-size:13px;height: 900px;position: relative; }
 input,select,textarea{color:#333;}
 .bg{ width:100%; height:100%; position:absolute; background:url(../images/bg.jpg) }
 .panel{background:#fff;}
@@ -18,7 +18,7 @@ ul,li{ list-style-type:none;}
 .head-l{ float:left; margin-top:17px; margin-left:15px; }
 .head-l .button{ padding:8px 15px;}
 .head-l .bg-blue:hover{ background-color:#03b6fd;}
-.leftnav{width:180px; height:100%; position:fixed; top:70px; left:0px;}
+.leftnav{width:180px; height:100%;position: absolute;top: 70px;left: 0;}
 .leftnav-title { height:50px; background:url(../images/bg.jpg) no-repeat 0 -1000px;  color:#FFF; padding-left:22px;  font-size:14px; line-height:50px;}
 .leftnav-title span{ margin-right:10px;}
 .leftnav h2{ padding:10px 0 10px 22px; transition:all .1s ease-in-out; display:block; cursor:pointer; font-weight:bold; font-size:14px; border-top:1px solid #b5cfd9;}
@@ -33,7 +33,7 @@ ul,li{ list-style-type:none;}
 .leftnav ul li a:hover,.leftnav ul li a.on{ color:#09c;}
 
 /***主要内容***/
-.admin{background:#fff;position:fixed;border-left:solid 1px #b5cfd9;right:0;bottom:0;top:110px;left:180px; padding:15px; padding-right:0px; padding-bottom:0px; overflow:auto; border-top:1px solid #b5cfd9; padding-right:15px;}
+.admin{background:#fff;position:absolute;border-left:solid 1px #b5cfd9;right:0;bottom:0;top:110px;left:180px; padding:15px; padding-right:0px; padding-bottom:0px; overflow:auto; border-top:1px solid #b5cfd9; padding-right:15px;}
 .content{width:100%;}
 .body-content{padding:20px 0; overflow:hidden;}
 .content .title{ border-bottom:1px solid #dfdfdf; line-height:35px; font-size:14px; font-weight:bold; color:#09c}

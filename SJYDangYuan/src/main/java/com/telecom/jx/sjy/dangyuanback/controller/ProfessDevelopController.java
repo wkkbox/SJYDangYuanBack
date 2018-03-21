@@ -24,16 +24,18 @@ public class ProfessDevelopController {
 
     @RequestMapping("/createProfessDevelop")
     @RequiresRoles("admin")
+    @ResponseBody
     public String createProfessDevelop(Model model, ProfessDevelop professDevelop) {
         try {
             professDevelopService.addProfessDevelop(professDevelop);
-            model.addAttribute("msg", "添加成功");
+            //model.addAttribute("msg", "添加成功");
+            return "{\"msg\":\"录入成功\"}";
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msg", "添加失败");
-            model.addAttribute("professDevelop", professDevelop);
+            //model.addAttribute("msg", "添加失败");
+            //model.addAttribute("professDevelop", professDevelop);
+            return "{\"msg\":\"录入失败\"}";
         }
-        return "addProfessDevelop";
     }
 
     @RequestMapping("/editProfessDevelop")

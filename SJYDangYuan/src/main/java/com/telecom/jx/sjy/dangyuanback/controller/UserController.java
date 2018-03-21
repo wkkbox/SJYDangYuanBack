@@ -125,23 +125,40 @@ public class UserController {
 
     @RequestMapping("/createUser")
     @RequiresRoles("admin")
+    @ResponseBody
     public String addUser(Model model, User user) {
         try {
             String accountName = user.getAccountName();
+            System.out.println("accountName" + accountName);
             User findUser = userService.getUserByAccountName(accountName);
-            if(findUser!=null){//已经存在这个帐户
-                model.addAttribute("msg", "添加失败，手机号(帐户名)已存在");
-                model.addAttribute("user", user);
-            }else {
+            if (findUser != null) {//已经存在这个帐户
+                //model.addAttribute("msg", "添加失败，手机号(帐户名)已存在");
+                //model.addAttribute("user", user);
+                return "{\"msg\":\"添加失败，手机号(帐户名)已存在\"}";
+            } else {
                 userService.addUser(user);
-                model.addAttribute("msg", "添加成功");
+                //model.addAttribute("msg", "添加成功");
+                return "{\"msg\":\"添加成功\"}";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msg", "添加失败");
-            model.addAttribute("user", user);
+            //model.addAttribute("msg", "添加失败");
+            //model.addAttribute("user", user);
+            return "{\"msg\":\"添加失败\"}";
         }
-        return "addUser";
+    }
+
+    @RequestMapping("/ajaxCheckAccountName")
+    @RequiresRoles("admin")
+    @ResponseBody
+    public String ajaxCheckAccountName(String accountName) throws Exception {
+        System.out.println("accountName" + accountName);
+        User findUser = userService.getUserByAccountName(accountName);
+        if (findUser != null) {//手机号已经存在
+            return "{\"msg\":\"0\"}";
+        } else {//手机号可用
+            return "{\"msg\":\"1\"}";
+        }
     }
 
     @RequestMapping("/resetPwd")

@@ -14,37 +14,130 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/pintuer.css"/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
     <script type="text/javascript">
-        $(function() {
-            $("#addUserForm").validate({
-                rules:{
-                    "accountName":{
-                        required:true
-                    },
-                    "userName":{
-                        required:true
-                    },
-                    "idCard":{
-                        required:true
-                    },
-                    "branch":{
-                        required:true
+        // 默认表示手机号(帐户名)不对
+        var accountNameFlag = false;
+        // 默认表示真实姓名不对
+        var userNameFlag = false;
+        // 默认表示身份证号不对
+        var idCardFlag = false;
+
+        $(function () {
+
+            $("#accountName").blur(function () {
+                var accountName = $("#accountName").val().trim();
+                $("#accountNameTip").html("");
+                if (accountName != "") {
+                    var regexAccountName = /^\d{3}\d{8}|\d{4}\{7,8}$/;
+                    if (!regexAccountName.test(accountName)) {
+                        $("#accountNameTip").html("格式错误");
+                        accountNameFlag = false;
+                    } else {
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/user/ajaxCheckAccountName",
+                            data: {
+                                "accountName": accountName
+                            },
+                            dataType: "json",
+                            type: "post",
+                            cache: false,
+                            asynch: true,
+                            success: function (data) {
+                                //alert(data.msg);
+                                if (data.msg == "1") {// 输入的手机号(帐户名)可用
+                                    // 修改全局的手机号(帐户名)标记为true
+                                    accountNameFlag = true;
+                                } else {// 输入的手机号(帐户名)不可用
+                                    // 修改全局的手机号(帐户名)标记为false
+                                    accountNameFlag = false;
+                                    // 提示用户
+                                    $("#accountNameTip").html("手机号(帐户名)已存在");
+                                    // 不可用时获取焦点
+                                    $("#accountName").focus();
+                                }
+                            },
+                            error: function () {
+                                alert("服务器异常");
+                            }
+                        });
                     }
-                },
-                messages:{
-                    "accountName":{
-                        required:"手机号不能为空"
-                    },
-                    "userName":{
-                        required:"真实姓名不能为空"
-                    },
-                    "idCard":{
-                        required:"身份证号不能为空"
-                    },
-                    "branch":{
-                        required:"所在党小组不能为空"
-                    }
+                } else {
+                    $("#accountNameTip").html("手机号(帐户名)不能为空");
+                    accountNameFlag = false;
                 }
             });
+
+            $("#userName").blur(function () {
+                var userName = $("#userName").val().trim();
+                $("#userNameTip").html("");
+                if (userName != "") {
+                    userNameFlag = true;
+                } else {
+                    $("#userNameTip").html("真实姓名不能为空");
+                    userNameFlag = false;
+                }
+            });
+
+            $("#idCard").blur(function () {
+                var idCard = $("#idCard").val().trim();
+                $("#idCardTip").html("");
+                if (idCard != "") {
+                    var regexIdCard = /^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/;
+                    if (!regexIdCard.test(idCard)) {
+                        $("#idCardTip").html("格式错误");
+                        idCardFlag = false;
+                    } else {
+                        idCardFlag = true;
+                    }
+                } else {
+                    $("#idCardTip").html("身份证号不能为空");
+                    idCardFlag = false;
+                }
+            });
+
+            // 表单提交
+            $("#commitButton").click(function () {
+                if (!accountNameFlag) {
+                    $("#accountName").focus();
+                    return;
+                }
+                if (!userNameFlag) {
+                    $("#userName").focus();
+                    return;
+                }
+                if (!idCardFlag) {
+                    $("#idCard").focus();
+                    return;
+                }
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/createUser",
+                    data: {
+                        "accountName": $("input[name='accountName']").val().trim(),
+                        "userName": $("input[name='userName']").val().trim(),
+                        "gender": $("select[name='gender']").val(),
+                        "idCard": $("input[name='idCard']").val().trim(),
+                        "branch": $("select[name='branch']").val()
+                    },
+                    dataType: "json",
+                    type: "post",
+                    cache: false,
+                    asynch: true,
+                    success: function (data) {
+                        //alert(data.msg);
+                        if (data.msg == "添加成功") {
+                            alert('添加成功');
+                            window.location.href = '${pageContext.request.contextPath}/page/userManagement';
+                        } else if (data.msg == "添加失败") {
+                            alert('添加失败');
+                        } else {
+                            alert('添加失败，手机号(帐户名)已存在');
+                        }
+                    },
+                    error: function () {
+                        alert("服务器异常");
+                    }
+                });
+            });
+
         })
 
     </script>
@@ -59,7 +152,9 @@
                     <label>手机号(帐户名)：</label>
                 </div>
                 <div class="field">
-                    <input value="${user.accountName}" type="text" class="input w50" name="accountName"/>
+                    <input id="accountName" value="${user.accountName}" type="text" class="input w50"
+                           name="accountName"/>
+                    <div id="accountNameTip" class="tips" style="color: red"></div>
                 </div>
             </div>
             <div class="form-group">
@@ -67,7 +162,8 @@
                     <label>真实姓名：</label>
                 </div>
                 <div class="field">
-                    <input value="${user.userName}" type="text" class="input w50" name="userName"/>
+                    <input id="userName" value="${user.userName}" type="text" class="input w50" name="userName"/>
+                    <div id="userNameTip" class="tips" style="color: red"></div>
                 </div>
             </div>
             <div class="form-group">
@@ -86,7 +182,8 @@
                     <label>身份证号：</label>
                 </div>
                 <div class="field">
-                    <input value="${user.idCard}" type="text" class="input w50" name="idCard"/>
+                    <input id="idCard" value="${user.idCard}" type="text" class="input w50" name="idCard"/>
+                    <div id="idCardTip" class="tips" style="color: red"></div>
                 </div>
             </div>
             <div class="form-group">
@@ -105,11 +202,16 @@
                         <option value="第八党小组" ${user.branch=="第八党小组" ? " selected = 'selected' " : " " }>第八党小组</option>
                         <option value="第九党小组" ${user.branch=="第九党小组" ? " selected = 'selected' " : " " }>第九党小组</option>
                         <option value="第十党小组" ${user.branch=="第十党小组" ? " selected = 'selected' " : " " }>第十党小组</option>
-                        <option value="第十一党小组" ${user.branch=="第十一党小组" ? " selected = 'selected' " : " " }>第十一党小组</option>
-                        <option value="第十二党小组" ${user.branch=="第十二党小组" ? " selected = 'selected' " : " " }>第十二党小组</option>
-                        <option value="第十三党小组" ${user.branch=="第十三党小组" ? " selected = 'selected' " : " " }>第十三党小组</option>
-                        <option value="第十四党小组" ${user.branch=="第十四党小组" ? " selected = 'selected' " : " " }>第十四党小组</option>
-                        <option value="第十五党小组" ${user.branch=="第十五党小组" ? " selected = 'selected' " : " " }>第十五党小组</option>
+                        <option value="第十一党小组" ${user.branch=="第十一党小组" ? " selected = 'selected' " : " " }>第十一党小组
+                        </option>
+                        <option value="第十二党小组" ${user.branch=="第十二党小组" ? " selected = 'selected' " : " " }>第十二党小组
+                        </option>
+                        <option value="第十三党小组" ${user.branch=="第十三党小组" ? " selected = 'selected' " : " " }>第十三党小组
+                        </option>
+                        <option value="第十四党小组" ${user.branch=="第十四党小组" ? " selected = 'selected' " : " " }>第十四党小组
+                        </option>
+                        <option value="第十五党小组" ${user.branch=="第十五党小组" ? " selected = 'selected' " : " " }>第十五党小组
+                        </option>
                     </select>
                 </div>
             </div>
@@ -118,8 +220,8 @@
                     <label></label>
                 </div>
                 <div class="field">
-                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
-                    <span style="color: red">${msg}</span>
+                    <button id="commitButton" class="button bg-main icon-check-square-o" type="button"> 提交</button>
+                    <%--<span style="color: red">${msg}</span>--%>
                 </div>
             </div>
         </form>

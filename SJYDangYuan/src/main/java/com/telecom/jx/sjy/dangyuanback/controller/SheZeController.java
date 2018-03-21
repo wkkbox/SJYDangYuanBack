@@ -22,16 +22,18 @@ public class SheZeController {
 
     @RequestMapping("/createSheZe")
     @RequiresRoles("admin")
+    @ResponseBody
     public String createSheZe(Model model, SheZe sheZe) {
         try {
             sheZeService.addSheZe(sheZe);
-            model.addAttribute("msg", "添加成功");
+            //model.addAttribute("msg", "添加成功");
+            return "{\"msg\":\"录入成功\"}";
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msg", "添加失败");
-            model.addAttribute("sheZe", sheZe);
+            //model.addAttribute("msg", "添加失败");
+            //model.addAttribute("sheZe", sheZe);
+            return "{\"msg\":\"录入失败\"}";
         }
-        return "addSheZe";
     }
 
     @RequestMapping("/editSheZe")

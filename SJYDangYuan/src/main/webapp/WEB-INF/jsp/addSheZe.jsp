@@ -14,30 +14,95 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/pintuer.css"/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
     <script type="text/javascript">
+        // 默认表示标题不对
+        var titleFlag = false;
+        // 默认表示内容不对
+        var contentFlag = false;
+        // 默认表示累积最高分不对
+        var sumScoreFlag = false;
+
         $(function() {
-            $("#addSheZeForm").validate({
-                rules:{
-                    "title":{
-                        required:true
-                    },
-                    "content":{
-                        required:true
-                    },
-                    "sumScore":{
-                        required:true
-                    }
-                },
-                messages:{
-                    "title":{
-                        required:"标题不能为空"
-                    },
-                    "content":{
-                        required:"积分内容不能为空"
-                    },
-                    "sumScore":{
-                        required:"累积最高分不能为空"
-                    }
+            $("#title").blur(function () {
+                var title = $("#title").val().trim();
+                $("#titleTip").html("");
+                if (title != "") {
+                    titleFlag = true;
+                }else{
+                    $("#titleTip").html("标题不能为空");
+                    titleFlag = false;
                 }
+            });
+
+            $("#content").blur(function () {
+                var content = $("#content").val().trim();
+                $("#contentTip").html("");
+                if (content != "") {
+                    contentFlag = true;
+                }else{
+                    $("#contentTip").html("积分内容不能为空");
+                    contentFlag = false;
+                }
+            });
+
+            $("#sumScore").blur(function () {
+                var sumScore = $("#sumScore").val().trim();
+                $("#sumScoreTip").html("");
+                if (sumScore != "") {
+                    var regexScore = /^[1-9]\d*$/;
+                    if(!regexScore.test(sumScore)){
+                        $("#sumScoreTip").html("请输入数字");
+                        sumScoreFlag = false;
+                    }else {
+                        sumScoreFlag = true;
+                    }
+                }else{
+                    $("#sumScoreTip").html("全年累积最高分不能为空");
+                    sumScoreFlag = false;
+                }
+            });
+
+            // 表单提交
+            $("#commitButton").click(function () {
+                if (!titleFlag) {
+                    $("#title").focus();
+                    return;
+                }
+                if (!contentFlag) {
+                    $("#content").focus();
+                    return;
+                }
+                if (!sumScoreFlag) {
+                    $("#sumScore").focus();
+                    return;
+                }
+                $.ajax({
+                    url:"${pageContext.request.contextPath}/sheZe/createSheZe",
+                    data:{
+                        "title":$("input[name='title']").val().trim(),
+                        "content":$("input[name='content']").val().trim(),
+                        "lScore":$("select[name='lScore']").val(),
+                        "hScore":$("select[name='hScore']").val(),
+                        "rate":$("select[name='rate']").val(),
+                        "sumScore":$("input[name='sumScore']").val().trim(),
+                        "otherAttr":$("select[name='otherAttr']").val()
+                    },
+                    dataType:"json",
+                    type:"post",
+                    cache:false,
+                    asynch:true,
+                    success:function(data){
+                        //alert(data.msg);
+                        if(data.msg=="录入成功"){
+                            alert('录入成功');
+                            window.location.href='${pageContext.request.contextPath}/page/sheZeManagement';
+                        }else {
+                            alert('录入失败');
+                        }
+                    },
+                    error:function(){
+                        alert("服务器异常");
+                    }
+                });
             });
         })
 
@@ -53,7 +118,8 @@
                     <label>标题：</label>
                 </div>
                 <div class="field">
-                    <input value="${sheZe.title}" type="text" class="input w50" name="title" />
+                    <input id="title" value="${sheZe.title}" type="text" class="input w50" name="title" />
+                    <div id="titleTip" class="tips" style="color: red"></div>
                 </div>
             </div>
             <div class="form-group">
@@ -61,7 +127,8 @@
                     <label>积分内容：</label>
                 </div>
                 <div class="field">
-                    <input value="${sheZe.content}" type="text" class="input w50" name="content" />
+                    <input id="content" value="${sheZe.content}" type="text" class="input w50" name="content" />
+                    <div id="contentTip" class="tips" style="color: red"></div>
                 </div>
             </div>
             <div class="form-group">
@@ -69,7 +136,7 @@
                     <label>分值：</label>
                 </div>
                 <div class="w51">
-                    <select name="lScore" class="input w52">
+                    <select name="lScore" class="input w52" style="display: inline-table; width: 100px;">
                         <option value="1" ${sheZe.lScore == 1 ? " selected = 'selected' " : " " }>1</option>
                         <option value="2" ${sheZe.lScore == 2 ? " selected = 'selected' " : " " }>2</option>
                         <option value="3" ${sheZe.lScore == 3 ? " selected = 'selected' " : " " }>3</option>
@@ -84,7 +151,7 @@
                         <option value="12" ${sheZe.lScore == 12 ? " selected = 'selected' " : " " }>12</option>
                     </select>
                     <label class="w53">到</label>
-                    <select name="hScore" class="input w52">
+                    <select name="hScore" class="input w52" style="display: inline-table;width: 100px;">
                         <option value="1" ${sheZe.hScore == 1 ? " selected = 'selected' " : " " }>1</option>
                         <option value="2" ${sheZe.hScore == 2 ? " selected = 'selected' " : " " }>2</option>
                         <option value="3" ${sheZe.hScore == 3 ? " selected = 'selected' " : " " }>3</option>
@@ -120,8 +187,8 @@
                     <label>全年累积最高分：</label>
                 </div>
                 <div class="field">
-                    <input value="${sheZe.sumScore}" type="text" class="input w50" name="sumScore" />
-                    <div class="tips"></div>
+                    <input id="sumScore" value="${sheZe.sumScore}" type="text" class="input w50" name="sumScore" />
+                    <div id="sumScoreTip" class="tips" style="color: red"></div>
                 </div>
             </div>
             <div class="form-group">
@@ -141,8 +208,8 @@
                     <label></label>
                 </div>
                 <div class="field">
-                    <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
-                    <span style="color: red">${msg}</span>
+                    <button id="commitButton" class="button bg-main icon-check-square-o" type="button"> 提交</button>
+                    <%--<span style="color: red">${msg}</span>--%>
                 </div>
             </div>
         </form>
