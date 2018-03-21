@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.*;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.*;
 import com.telecom.jx.sjy.dangyuanback.service.*;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,7 @@ public class PageController {
     private AttachmentService attachmentService;
 
     @RequestMapping("/userManagement")
+    @RequiresRoles("admin")
     public String userManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
         System.out.println("currentPage=" + currentPage);
         System.out.println("pageSize=" + pageSize);
@@ -59,11 +61,13 @@ public class PageController {
     }
 
     @RequestMapping("/roleManagement")
+    @RequiresRoles("admin")
     public String roleManagement() {
         return "roleManagement";
     }
 
     @RequestMapping("/dangZeManagement")
+    @RequiresRoles("admin")
     public String dangZeManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //分页查询所有党责
         if (currentPage == null || currentPage == 0) {
@@ -80,6 +84,7 @@ public class PageController {
     }
 
     @RequestMapping("/sheZeManagement")
+    @RequiresRoles("admin")
     public String sheZeManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //分页查询所有社责
         if (currentPage == null || currentPage == 0) {
@@ -96,6 +101,7 @@ public class PageController {
     }
 
     @RequestMapping("/achievement")
+    @RequiresRoles("admin")
     public String achievement(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //分页查询所有工作业绩
         if (currentPage == null || currentPage == 0) {
@@ -112,6 +118,7 @@ public class PageController {
     }
 
     @RequestMapping("/honorsAward")
+    @RequiresRoles("admin")
     public String honorsAwards(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //分页查询所有荣誉奖励
         if (currentPage == null || currentPage == 0) {
@@ -128,6 +135,7 @@ public class PageController {
     }
 
     @RequestMapping("/professDevelop")
+    @RequiresRoles("admin")
     public String professDevelop(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //分页查询所有专业提升
         if (currentPage == null || currentPage == 0) {
@@ -150,36 +158,43 @@ public class PageController {
     }
 
     @RequestMapping("/addUser")
+    @RequiresRoles("admin")
     public String addUser() {
         return "addUser";
     }
 
     @RequestMapping("/addDangZe")
+    @RequiresRoles("admin")
     public String addDangZe() {
         return "addDangZe";
     }
 
     @RequestMapping("/addSheZe")
+    @RequiresRoles("admin")
     public String addSheZe() {
         return "addSheZe";
     }
 
     @RequestMapping("/addAchievement")
+    @RequiresRoles("admin")
     public String addAchievement() {
         return "addAchievement";
     }
 
     @RequestMapping("/addProfessDevelop")
+    @RequiresRoles("admin")
     public String addProfessDevelop() {
         return "addProfessDevelop";
     }
 
     @RequestMapping("/addHonorsAward")
+    @RequiresRoles("admin")
     public String addHonorsAward() {
         return "addHonorsAward";
     }
 
     @RequestMapping("/editDangZe")
+    @RequiresRoles("admin")
     public String editDangZe(Model model, Long dangzeId) throws Exception {
         System.out.println("dangzeId=" + dangzeId);
         DangZe dangZe = dangZeService.getDangZeById(dangzeId);
@@ -188,6 +203,7 @@ public class PageController {
     }
 
     @RequestMapping("/editSheZe")
+    @RequiresRoles("admin")
     public String editSheZe(Model model, Long shezeId) throws Exception {
         System.out.println("shezeId=" + shezeId);
         SheZe sheZe = sheZeService.getSheZeById(shezeId);
@@ -196,6 +212,7 @@ public class PageController {
     }
 
     @RequestMapping("/editAchievement")
+    @RequiresRoles("admin")
     public String editAchievement(Model model, Long achievementId) throws Exception {
         System.out.println("achievementId=" + achievementId);
         Achievement achievement = achievementService.getAchievementById(achievementId);
@@ -204,6 +221,7 @@ public class PageController {
     }
 
     @RequestMapping("/editProfessDevelop")
+    @RequiresRoles("admin")
     public String editProfessDevelop(Model model, Long professDevelopId) throws Exception {
         System.out.println("professDevelopId=" + professDevelopId);
         ProfessDevelop professDevelop = professDevelopService.getProfessDevelopById(professDevelopId);
@@ -212,6 +230,7 @@ public class PageController {
     }
 
     @RequestMapping("/editHonorsAward")
+    @RequiresRoles("admin")
     public String editHonorsAward(Model model, Long honorsAwardId) throws Exception {
         System.out.println("honorsAwardId=" + honorsAwardId);
         HonorsAward honorsAward = honorsAwardService.getHonorsAwardById(honorsAwardId);
@@ -220,11 +239,13 @@ public class PageController {
     }
 
     @RequestMapping("/check")
+    @RequiresRoles("admin")
     public String check() {
         return "check";
     }
 
     @RequestMapping("/checkDangZe")
+    @RequiresRoles("admin")
     public String checkDangZe(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
@@ -295,6 +316,7 @@ public class PageController {
     }
 
     @RequestMapping("/checkSheZe")
+    @RequiresRoles("admin")
     public String checkSheZe(Model model, Integer currentPage, Integer pageSize) throws Exception{
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
@@ -346,6 +368,7 @@ public class PageController {
     }
 
     @RequestMapping("/checkAchieve")
+    @RequiresRoles("admin")
     public String checkAchieve(Model model, Integer currentPage, Integer pageSize) throws Exception{
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
@@ -396,6 +419,7 @@ public class PageController {
     }
 
     @RequestMapping("/checkHonorsAward")
+    @RequiresRoles("admin")
     public String checkHonorsAward(Model model, Integer currentPage, Integer pageSize) throws Exception{
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
@@ -446,6 +470,7 @@ public class PageController {
     }
 
     @RequestMapping("/checkProfessDevelop")
+    @RequiresRoles("admin")
     public String checkProfessDevelop(Model model, Integer currentPage, Integer pageSize) throws Exception{
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {

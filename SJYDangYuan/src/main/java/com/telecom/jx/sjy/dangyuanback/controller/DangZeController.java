@@ -53,6 +53,7 @@ public class DangZeController {
     }
 
     @RequestMapping("/checkDangZeDetail")
+    @RequiresRoles("admin")
     public String checkDangZeDetail(Model model, HttpServletRequest request) {
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
@@ -83,6 +84,7 @@ public class DangZeController {
 
     @ResponseBody
     @RequestMapping("passDangZe")
+    @RequiresRoles("admin")
     public String passDangZe(Long userDangzeId, Integer rScore, Long userId, String dangzeTitle) {
         Map<String, Object> map = new HashMap<>();
         map.put("userDangzeId", userDangzeId);
@@ -105,6 +107,7 @@ public class DangZeController {
 
     @ResponseBody
     @RequestMapping("noPassDangZe")
+    @RequiresRoles("admin")
     public String noPassDangZe(Long userDangzeId, Long userId, String dangzeTitle) {
         System.out.println("userDangzeId=" + userDangzeId);
         Map<String, Object> map = new HashMap<>();

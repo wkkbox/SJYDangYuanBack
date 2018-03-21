@@ -53,6 +53,7 @@ public class AchievementController {
     }
 
     @RequestMapping("/checkAchieveDetail")
+    @RequiresRoles("admin")
     public String checkAchieveDetail(Model model, HttpServletRequest request){
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
@@ -85,6 +86,7 @@ public class AchievementController {
 
     @ResponseBody
     @RequestMapping("passAchievement")
+    @RequiresRoles("admin")
     public String passAchievement(Long userAchievementId,Integer rScore, Long userId,String title, Integer otherAttr){
         Map<String,Object> map = new HashMap<>();
         map.put("userAchievementId",userAchievementId);
@@ -108,6 +110,7 @@ public class AchievementController {
 
     @ResponseBody
     @RequestMapping("noPassAchievement")
+    @RequiresRoles("admin")
     public String noPassAchievement(Long userAchievementId, Long userId,String title, Integer otherAttr){
         System.out.println("userAchievementId="+userAchievementId);
         Map<String, Object> map = new HashMap<>();

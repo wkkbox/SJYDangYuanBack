@@ -53,6 +53,7 @@ public class ProfessDevelopController {
     }
 
     @RequestMapping("/checkProfessDevelopDetail")
+    @RequiresRoles("admin")
     public String checkProfessDevelopDetail(Model model, HttpServletRequest request){
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
@@ -85,6 +86,7 @@ public class ProfessDevelopController {
 
     @ResponseBody
     @RequestMapping("passProfessDevelop")
+    @RequiresRoles("admin")
     public String passProfessDevelop(Long userProfessDevelopId,Integer rScore, Long userId,String title, Integer otherAttr){
         Map<String,Object> map = new HashMap<>();
         map.put("userProfessDevelopId",userProfessDevelopId);
@@ -108,6 +110,7 @@ public class ProfessDevelopController {
 
     @ResponseBody
     @RequestMapping("noPassProfessDevelop")
+    @RequiresRoles("admin")
     public String noPassProfessDevelop(Long userProfessDevelopId, Long userId,String title, Integer otherAttr){
         System.out.println("userProfessDevelopId="+userProfessDevelopId);
         Map<String, Object> map = new HashMap<>();

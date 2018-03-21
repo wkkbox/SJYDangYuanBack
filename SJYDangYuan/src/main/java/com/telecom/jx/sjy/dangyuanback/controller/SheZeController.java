@@ -51,6 +51,7 @@ public class SheZeController {
     }
 
     @RequestMapping("/checkSheZeDetail")
+    @RequiresRoles("admin")
     public String checkSheZeDetail(Model model, HttpServletRequest request) {
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
@@ -83,6 +84,7 @@ public class SheZeController {
 
     @ResponseBody
     @RequestMapping("passSheZe")
+    @RequiresRoles("admin")
     public String passSheZe(Long userShezeId, Integer rScore, Long userId, String title, Integer otherAttr) {
         Map<String, Object> map = new HashMap<>();
         map.put("userShezeId", userShezeId);
@@ -106,6 +108,7 @@ public class SheZeController {
 
     @ResponseBody
     @RequestMapping("noPassSheZe")
+    @RequiresRoles("admin")
     public String noPassSheZe(Long userShezeId, Long userId, String title, Integer otherAttr) {
         System.out.println("userShezeId=" + userShezeId);
         Map<String, Object> map = new HashMap<>();

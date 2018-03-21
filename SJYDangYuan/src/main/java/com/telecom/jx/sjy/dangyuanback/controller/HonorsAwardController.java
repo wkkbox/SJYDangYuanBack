@@ -51,6 +51,7 @@ public class HonorsAwardController {
     }
 
     @RequestMapping("/checkHonorsAwardDetail")
+    @RequiresRoles("admin")
     public String checkHonorsAwardDetail(Model model, HttpServletRequest request){
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
@@ -83,6 +84,7 @@ public class HonorsAwardController {
 
     @ResponseBody
     @RequestMapping("passHonorsAward")
+    @RequiresRoles("admin")
     public String passHonorsAward(Long userHonorsAwardId,Integer rScore, Long userId,String title, Integer otherAttr){
         Map<String,Object> map = new HashMap<>();
         map.put("userHonorsAwardId",userHonorsAwardId);
@@ -106,6 +108,7 @@ public class HonorsAwardController {
 
     @ResponseBody
     @RequestMapping("noPassHonorsAward")
+    @RequiresRoles("admin")
     public String noPassHonorsAward(Long userHonorsAwardId, Long userId,String title, Integer otherAttr){
         System.out.println("userHonorsAwardId="+userHonorsAwardId);
         Map<String, Object> map = new HashMap<>();
