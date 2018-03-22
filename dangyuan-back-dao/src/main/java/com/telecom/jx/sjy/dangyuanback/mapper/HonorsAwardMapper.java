@@ -29,4 +29,10 @@ public interface HonorsAwardMapper {
     void passHonorsAward(Map<String, Object> map);
 
     void noPassHonorsAward(Long userHonorsAwardId);
+
+    Integer selectHonorsAwardMonthScore(Map<String, Object> scoreMap);
+
+    Integer selectHonorsAwardSeasonScore(Map<String, Object> scoreMap);
+
+    Integer selectHonorsAwardYearScore(Map<String, Object> scoreMap);
 }

@@ -2,15 +2,24 @@ package com.telecom.jx.sjy.dangyuanback.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * User: DHC
- * Date: 2017/9/6
- * Time: 22:03
- * Version:V1.0
- */
 public class IDUtils {
 
+    private static AtomicInteger counter = new AtomicInteger(0);
+
+    /**
+     * id生成，未使用
+     * @return
+     */
+    public static long getAtomicCounter() {
+        if (counter.get() > 999999) {
+            counter.set(1);
+        }
+        long time = System.currentTimeMillis();
+        long returnValue = time * 100 + counter.incrementAndGet();
+        return returnValue;
+    }
 
     /**
      * 商品id生成
@@ -30,8 +39,9 @@ public class IDUtils {
 
     /**
      * 图片名生成
+     * @return
      */
-    public static String genImageName() {
+    public static String getImageName() {
         //取当前时间的长整形值包含毫秒
         long millis = System.currentTimeMillis();
         //long millis = System.nanoTime();
@@ -44,9 +54,9 @@ public class IDUtils {
     }
 
     /**
-     * 20位末尾的数字id
+     * 18位末尾的数字id
      */
-    public static int Guid = 100;
+    private static int Guid = 100;
 
     public static long getItemId() {
 

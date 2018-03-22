@@ -259,7 +259,6 @@ public class PageController {
         List<DangZeContent> dangZeContents = dangZeService.getDangZeContents();
         //System.out.println("dangZeContents.size=" + dangZeContents.size());
 
-
         for (int i = 0; i < dangZeContents.size(); i++) {
             //String content = dangZeContents.get(i).getContent();
             Long contentId = dangZeContents.get(i).getId();
@@ -306,12 +305,10 @@ public class PageController {
             Date date = sdf.parse(dangZeContents.get(i).getCommitTime());
             dangZeContents.get(i).setCommitTime(sdf.format(date));
             //System.out.println(dangZeContents.get(i).getCommitTime());
-
         }
 
         // 绑定分页返回
         model.addAttribute("pageInfo", new PageInfo<>(dangZeContents));
-
         return "checkDangZe";
     }
 
@@ -358,12 +355,8 @@ public class PageController {
             sheZeContents.get(i).setCommitTime(sdf.format(date));
 
         }
-
         // 绑定分页返回
         model.addAttribute("pageInfo", new PageInfo<>(sheZeContents));
-
-
-
         return "checkSheZe";
     }
 
@@ -410,11 +403,8 @@ public class PageController {
             achievementContents.get(i).setCommitTime(sdf.format(date));
 
         }
-
         // 绑定分页返回
         model.addAttribute("pageInfo", new PageInfo<>(achievementContents));
-
-
         return "checkAchieve";
     }
 
@@ -461,11 +451,8 @@ public class PageController {
             honorsAwardContents.get(i).setCommitTime(sdf.format(date));
 
         }
-
         // 绑定分页返回
         model.addAttribute("pageInfo", new PageInfo<>(honorsAwardContents));
-
-
         return "checkHonorsAward";
     }
 
@@ -512,12 +499,63 @@ public class PageController {
             professDevelopContents.get(i).setCommitTime(sdf.format(date));
 
         }
-
         // 绑定分页返回
         model.addAttribute("pageInfo", new PageInfo<>(professDevelopContents));
-
-
         return "checkProfessDevelop";
+    }
+
+    @RequestMapping("/monthReport")
+    @RequiresRoles("admin")
+    public String monthReport(Model model, Integer currentPage, Integer pageSize) throws Exception{
+        if (currentPage == null || currentPage == 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 6;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<Score> scoreList = userService.getMonthScorePublicity();
+
+        // 绑定分页返回
+        model.addAttribute("pageInfo", new PageInfo<>(scoreList));
+
+        return "monthReport";
+    }
+
+    @RequestMapping("/seasonReport")
+    @RequiresRoles("admin")
+    public String seasonReport(Model model, Integer currentPage, Integer pageSize) throws Exception{
+        if (currentPage == null || currentPage == 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 6;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<Score> scoreList = userService.getSeasonScorePublicity();
+
+        // 绑定分页返回
+        model.addAttribute("pageInfo", new PageInfo<>(scoreList));
+
+        return "seasonReport";
+    }
+
+    @RequestMapping("/yearReport")
+    @RequiresRoles("admin")
+    public String yearReport(Model model, Integer currentPage, Integer pageSize) throws Exception{
+        if (currentPage == null || currentPage == 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 6;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<Score> scoreList = userService.getYearScorePublicity();
+
+        // 绑定分页返回
+        model.addAttribute("pageInfo", new PageInfo<>(scoreList));
+
+        return "yearReport";
     }
 
 }

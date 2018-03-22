@@ -11,6 +11,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/pintuer.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/zooming.min.js"></script>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/pintuer.css"/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
 </head>
@@ -39,7 +40,6 @@
                     <input readonly="readonly" type="text" class="input" name="shezeContent" value="${shezeContent}"/>
                 </div>
             </div>
-
             <c:if test="${imgs.size()>=1}">
                 <div class="form-group">
                     <div class="label">
@@ -47,8 +47,9 @@
                     </div>
                     <div id="imgchk" class="field">
                         <c:forEach items="${imgs}" var="img">
-                            <img style="margin: 2px;width: 300px;height: 300px"
-                                 src="http://101.132.177.132/images/${img}">
+                            <div>
+                                <img class="img-zoomable" style="margin: 2px;width: 200px;height: 200px" src="http://101.132.177.132/images/${img}">
+                            </div>
                         </c:forEach>
                     </div>
                 </div>
@@ -111,6 +112,16 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    //图片放大
+    var zooming = new Zooming({
+        customSize: {
+            width: 400,
+            height: 400
+        }
+    });
+    zooming.listen('.img-zoomable');
+
     function checkPass(userShezeId, userId, dScore, lScore, hScore,title,otherAttr) {
         if (dScore == -1) {
             if ($("#rScore").val() > hScore || $("#rScore").val() < lScore) {

@@ -115,5 +115,23 @@
         WHERE id=#{userHonorsAwardId}
     </update>
 
+    <select id="selectHonorsAwardMonthScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_honorsaward
+        WHERE userId=#{userId} and year=#{year} and month(finishTime)=month(CURDATE())
+    </select>
+
+    <select id="selectHonorsAwardSeasonScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_honorsaward
+        WHERE userId=#{userId} and year=#{year} and quarter(finishTime)=quarter(CURDATE())
+    </select>
+
+    <select id="selectHonorsAwardYearScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_honorsaward
+        WHERE userId=#{userId} AND year=#{year}
+    </select>
+
 
 </mapper>

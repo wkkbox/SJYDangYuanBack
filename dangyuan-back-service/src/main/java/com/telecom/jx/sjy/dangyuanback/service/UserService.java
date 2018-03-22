@@ -22,7 +22,7 @@ public interface UserService {
 
     User getUserByAccountName(String accountName) throws Exception;
 
-    List<Score> getScorePublicity() throws Exception;
+    List<Score> getMonthScorePublicity() throws Exception;
 
     PageBean<Score> getScorePublicityByPage(Integer currentPage, Integer pageSize) throws Exception;
 
@@ -35,4 +35,8 @@ public interface UserService {
     void resetPwd(Long userId) throws Exception;
 
     User getUserById(Long userId) throws Exception;
+
+    List<Score> getSeasonScorePublicity() throws Exception;
+
+    List<Score> getYearScorePublicity() throws Exception;
 }

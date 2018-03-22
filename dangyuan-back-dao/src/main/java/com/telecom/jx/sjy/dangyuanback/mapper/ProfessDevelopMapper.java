@@ -29,4 +29,10 @@ public interface ProfessDevelopMapper {
     void passProfessDevelop(Map<String, Object> map);
 
     void noPassProfessDevelop(Long userProfessDevelopId);
+
+    Integer selectProfessDevelopMonthScore(Map<String, Object> scoreMap);
+
+    Integer selectProfessDevelopSeasonScore(Map<String, Object> scoreMap);
+
+    Integer selectProfessDevelopYearScore(Map<String, Object> scoreMap);
 }

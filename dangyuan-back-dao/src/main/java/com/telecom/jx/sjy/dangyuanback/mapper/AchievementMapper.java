@@ -29,4 +29,10 @@ public interface AchievementMapper {
     void passAchievement(Map<String, Object> map);
 
     void noPassAchievement(Long userAchievementId);
+
+    Integer selectAchieveMonthScore(Map<String, Object> scoreMap);
+
+    Integer selectAchieveSeasonScore(Map<String, Object> scoreMap);
+
+    Integer selectAchieveYearScore(Map<String, Object> scoreMap);
 }

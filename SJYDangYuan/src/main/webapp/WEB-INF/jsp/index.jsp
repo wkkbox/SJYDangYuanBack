@@ -46,7 +46,12 @@
     </ul>
     <h2><span class="icon-pencil-square-o"></span>日常管理</h2>
     <ul>
-        <li><a href="${pageContext.request.contextPath}/page/check" target="right"><span class="icon-caret-right"></span>日常考核</a></li>
+        <%--<li><a href="${pageContext.request.contextPath}/page/check" target="right"><span class="icon-caret-right"></span>日常考核</a></li>--%>
+            <li><a href="${pageContext.request.contextPath}/page/checkDangZe" target="right"><span class="icon-caret-right"></span>党责考核</a></li>
+            <li><a href="${pageContext.request.contextPath}/page/checkSheZe" target="right"><span class="icon-caret-right"></span>社责考核</a></li>
+            <li><a href="${pageContext.request.contextPath}/page/checkAchieve" target="right"><span class="icon-caret-right"></span>工作业绩考核</a></li>
+            <li><a href="${pageContext.request.contextPath}/page/checkHonorsAward" target="right"><span class="icon-caret-right"></span>荣誉奖励考核</a></li>
+            <li><a href="${pageContext.request.contextPath}/page/checkProfessDevelop" target="right"><span class="icon-caret-right"></span>专业提升考核</a></li>
         <%--<li><a href="kb.html" target="right"><span class="icon-caret-right"></span>一票否决</a></li>--%>
     </ul>
     <h2><span class="icon-pencil-square-o"></span>我的桌面</h2>
@@ -57,6 +62,9 @@
     </ul>
     <h2><span class="icon-pencil-square-o"></span>报表系统</h2>
     <ul>
+        <li><a href="${pageContext.request.contextPath}/page/monthReport" target="right"><span class="icon-caret-right"></span>本月报表</a></li>
+        <li><a href="${pageContext.request.contextPath}/page/seasonReport" target="right"><span class="icon-caret-right"></span>本季报表</a></li>
+        <li><a href="${pageContext.request.contextPath}/page/yearReport" target="right"><span class="icon-caret-right"></span>本年报表</a></li>
         <%--<li><a href="kb.html" target="right"><span class="icon-caret-right"></span>全员考核情况表</a></li>
         <li><a href="kb.html" target="right"><span class="icon-caret-right"></span>部门考核情况表</a></li>--%>
     </ul>

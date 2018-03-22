@@ -115,5 +115,22 @@
         WHERE id=#{userShezeId}
     </update>
 
+    <select id="selectSheZeMonthScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_sheze
+        WHERE userId=#{userId} and year=#{year} and month(finishTime)=month(CURDATE())
+    </select>
+
+    <select id="selectSheZeSeasonScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_sheze
+        WHERE userId=#{userId} and year=#{year} and quarter(finishTime)=quarter(CURDATE())
+    </select>
+
+    <select id="selectSheZeYearScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_sheze
+        WHERE userId=#{userId} AND year=#{year}
+    </select>
 
 </mapper>

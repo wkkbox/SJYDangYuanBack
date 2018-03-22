@@ -71,8 +71,165 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Score> getScorePublicity() throws Exception {
-        return userMapper.selectScorePublicity();
+    public List<Score> getMonthScorePublicity() throws Exception {
+        List<Score> scoreList = userMapper.selectScorePublicity();
+        //把参加的活动的分数设置上来
+        for (int i = 0; i < scoreList.size(); i++) {
+            Score score = scoreList.get(i);
+            Long userId = score.getId();
+            Map<String, Object> scoreMap = new HashMap<>();
+            scoreMap.put("year", DateUtil.getYear(new Date()));
+            scoreMap.put("userId", userId);
+            //党责分
+            Integer dangZeScore = dangZeMapper.selectDangZeMonthScore(scoreMap);
+            if (dangZeScore == null) {
+                dangZeScore = 0;
+            }
+            //社责分
+            Integer sheZeScore = sheZeMapper.selectSheZeMonthScore(scoreMap);
+            if (sheZeScore == null) {
+                sheZeScore = 0;
+            }
+            //工作业绩分
+            Integer achieveScore = achievementMapper.selectAchieveMonthScore(scoreMap);
+            if (achieveScore == null) {
+                achieveScore = 0;
+            }
+            //荣誉奖励分
+            Integer honorsAwardScore = honorsAwardMapper.selectHonorsAwardMonthScore(scoreMap);
+            if (honorsAwardScore == null) {
+                honorsAwardScore = 0;
+            }
+            //专业提升分
+            Integer professDevelopScore = professDevelopMapper.selectProfessDevelopMonthScore(scoreMap);
+            if (professDevelopScore == null) {
+                professDevelopScore = 0;
+            }
+            Integer sumScore = dangZeScore + sheZeScore + achieveScore + honorsAwardScore + professDevelopScore;
+            score.setScore(sumScore);
+        }
+        //积分降序排序
+        Collections.sort(scoreList, new Comparator<Score>() {
+            @Override
+            public int compare(Score o1, Score o2) {
+                if (o1.getScore() < o2.getScore()) {
+                    return 1;
+                } else if (o1.getScore() == o2.getScore()) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        });
+        return scoreList;
+    }
+
+    @Override
+    public List<Score> getSeasonScorePublicity() throws Exception {
+        List<Score> scoreList = userMapper.selectScorePublicity();
+        //把参加的活动的分数设置上来
+        for (int i = 0; i < scoreList.size(); i++) {
+            Score score = scoreList.get(i);
+            Long userId = score.getId();
+            Map<String, Object> scoreMap = new HashMap<>();
+            scoreMap.put("year", DateUtil.getYear(new Date()));
+            scoreMap.put("userId", userId);
+            //党责分
+            Integer dangZeScore = dangZeMapper.selectDangZeSeasonScore(scoreMap);
+            if (dangZeScore == null) {
+                dangZeScore = 0;
+            }
+            //社责分
+            Integer sheZeScore = sheZeMapper.selectSheZeSeasonScore(scoreMap);
+            if (sheZeScore == null) {
+                sheZeScore = 0;
+            }
+            //工作业绩分
+            Integer achieveScore = achievementMapper.selectAchieveSeasonScore(scoreMap);
+            if (achieveScore == null) {
+                achieveScore = 0;
+            }
+            //荣誉奖励分
+            Integer honorsAwardScore = honorsAwardMapper.selectHonorsAwardSeasonScore(scoreMap);
+            if (honorsAwardScore == null) {
+                honorsAwardScore = 0;
+            }
+            //专业提升分
+            Integer professDevelopScore = professDevelopMapper.selectProfessDevelopSeasonScore(scoreMap);
+            if (professDevelopScore == null) {
+                professDevelopScore = 0;
+            }
+            Integer sumScore = dangZeScore + sheZeScore + achieveScore + honorsAwardScore + professDevelopScore;
+            score.setScore(sumScore);
+        }
+        //积分降序排序
+        Collections.sort(scoreList, new Comparator<Score>() {
+            @Override
+            public int compare(Score o1, Score o2) {
+                if (o1.getScore() < o2.getScore()) {
+                    return 1;
+                } else if (o1.getScore() == o2.getScore()) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        });
+        return scoreList;
+    }
+
+    @Override
+    public List<Score> getYearScorePublicity() throws Exception {
+        List<Score> scoreList = userMapper.selectScorePublicity();
+        //把参加的活动的分数设置上来
+        for (int i = 0; i < scoreList.size(); i++) {
+            Score score = scoreList.get(i);
+            Long userId = score.getId();
+            Map<String, Object> scoreMap = new HashMap<>();
+            scoreMap.put("year", DateUtil.getYear(new Date()));
+            scoreMap.put("userId", userId);
+            //党责分
+            Integer dangZeScore = dangZeMapper.selectDangZeYearScore(scoreMap);
+            if (dangZeScore == null) {
+                dangZeScore = 0;
+            }
+            //社责分
+            Integer sheZeScore = sheZeMapper.selectSheZeYearScore(scoreMap);
+            if (sheZeScore == null) {
+                sheZeScore = 0;
+            }
+            //工作业绩分
+            Integer achieveScore = achievementMapper.selectAchieveYearScore(scoreMap);
+            if (achieveScore == null) {
+                achieveScore = 0;
+            }
+            //荣誉奖励分
+            Integer honorsAwardScore = honorsAwardMapper.selectHonorsAwardYearScore(scoreMap);
+            if (honorsAwardScore == null) {
+                honorsAwardScore = 0;
+            }
+            //专业提升分
+            Integer professDevelopScore = professDevelopMapper.selectProfessDevelopYearScore(scoreMap);
+            if (professDevelopScore == null) {
+                professDevelopScore = 0;
+            }
+            Integer sumScore = dangZeScore + sheZeScore + achieveScore + honorsAwardScore + professDevelopScore;
+            score.setScore(sumScore);
+        }
+        //积分降序排序
+        Collections.sort(scoreList, new Comparator<Score>() {
+            @Override
+            public int compare(Score o1, Score o2) {
+                if (o1.getScore() < o2.getScore()) {
+                    return 1;
+                } else if (o1.getScore() == o2.getScore()) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        });
+        return scoreList;
     }
 
     @Override
@@ -148,7 +305,7 @@ public class UserServiceImpl implements UserService {
         }
         //2.社责中不限次数
         List<SheZe> sheZes = sheZeMapper.selectSheZes(DateUtil.getYear(new Date()));
-        for(SheZe item : sheZes){
+        for (SheZe item : sheZes) {
             if (item.getRate() == 3) {
                 //为用户在社责不限次数安排表中加一条记录
                 String year = item.getYear();
@@ -163,7 +320,7 @@ public class UserServiceImpl implements UserService {
         }
         //3.工作业绩不限次数
         List<Achievement> achievements = achievementMapper.selectAchievements(DateUtil.getYear(new Date()));
-        for(Achievement item : achievements){
+        for (Achievement item : achievements) {
             if (item.getRate() == 3) {
                 //为用户在工作业绩不限次数安排表中加一条记录
                 String year = item.getYear();
@@ -178,7 +335,7 @@ public class UserServiceImpl implements UserService {
         }
         //4.荣誉奖励不限次数
         List<HonorsAward> honorsAwards = honorsAwardMapper.selectHonorsAwards(DateUtil.getYear(new Date()));
-        for(HonorsAward item : honorsAwards){
+        for (HonorsAward item : honorsAwards) {
             if (item.getRate() == 3) {
                 //为用户在荣誉奖励不限次数安排表中加一条记录
                 String year = item.getYear();
@@ -193,7 +350,7 @@ public class UserServiceImpl implements UserService {
         }
         //5.专业提升不限次数
         List<ProfessDevelop> professDevelops = professDevelopMapper.selectProfessDevelops(DateUtil.getYear(new Date()));
-        for(ProfessDevelop item : professDevelops){
+        for (ProfessDevelop item : professDevelops) {
             if (item.getRate() == 3) {
                 //为用户在专业提升不限次数安排表中加一条记录
                 String year = item.getYear();
@@ -222,4 +379,6 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long userId) throws Exception {
         return userMapper.selectUserById(userId);
     }
+
+
 }

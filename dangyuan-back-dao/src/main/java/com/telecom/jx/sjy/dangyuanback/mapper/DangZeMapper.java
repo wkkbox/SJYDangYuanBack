@@ -38,4 +38,10 @@ public interface DangZeMapper {
     void passDangZe(Map<String, Object> map);
 
     void noPassDangZe(Long userDangzeId);
+
+    Integer selectDangZeMonthScore(Map<String, Object> scoreMap);
+
+    Integer selectDangZeSeasonScore(Map<String, Object> scoreMap);
+
+    Integer selectDangZeYearScore(Map<String, Object> scoreMap);
 }

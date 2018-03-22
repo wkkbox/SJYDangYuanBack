@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title></title>  
+    <link rel="stylesheet" href="css/pintuer.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/pintuer.js"></script>
+    <style type="text/css">
+    	body{position: relative;}
+    	.monthlystatement,.quarterlystatement,.yearlystatement{display: none;position: absolute;left: 0;top: 105px;}
+    	.checked{display: block;}
+    </style>
+</head>
+<body>
+<form method="post" action="">
+  <div class="panel admin-panel">
+    <div class="panel-head"><strong class="icon-reorder"> 全员考核列表</strong></div>
+     <div class="padding border-bottom">
+    <button type="button" class="button border-yellow" id="month" ><span class="icon-plus-square-o"></span> 本月报表</button>
+    <button type="button" class="button border-yellow" id="quarter"><span class="icon-plus-square-o"></span> 本季报表</button>
+    <button type="button" class="button border-yellow" id="year"><span class="icon-plus-square-o"></span> 本年报表</button>
+    
+  </div>
+  
+   
+    <table class="table table-hover text-center monthlystatement checked" id="monthly">
+      <tr>
+        <th width="5%">序号</th>
+        <th width="6%">姓名</th>       
+        <th width="6%">所属支部</th>
+        <th width="9%">总积分</th>       
+      </tr>      
+        <tr>
+          <td>1</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+          
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+          
+          <td>87</td>
+        </tr>
+          <tr>
+          <td>1</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>56</td>
+        </tr>
+          <tr>
+          <td>1</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>57</div></td>
+        </tr>
+          <tr>
+          <td>1</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>58</td>
+        </tr>
+      <tr>
+        <td colspan="120"><div class="pagelist"> <a href="">首页</a> <span class="current">上一页</span><a href="">下一页</a><a href="">尾页</a><a href="">当前1/2页，共2页</a> </div></td>
+      </tr>
+    </table>
+    
+    <!--季度-->
+    
+    <table class="table table-hover text-center quarterlystatement" id="quarterly">
+      <tr>
+        <th width="5%">ID</th>
+        <th width="6%">姓名</th>       
+        <th width="6%">所属支部</th>
+        
+        <th width="9%">总积分</th>       
+      </tr>      
+        <tr>
+          <td>2</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>87</td>
+        </tr>
+          <tr>
+          <td>2</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>56</td>
+        </tr>
+          <tr>
+          <td>2</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+       
+          <td>57</div></td>
+        </tr>
+          <tr>
+          <td>2</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+          
+          <td>58</td>
+        </tr>
+      <tr>
+        <td colspan="120"><div class="pagelist"> <a href="">首页</a> <span class="current">上一页</span><a href="">下一页</a><a href="">尾页</a><a href="">当前1/2页，共2页</a> </div></td>
+      </tr>
+    </table>
+    
+    
+    <!--年报表-->
+    <table class="table table-hover text-center yearlystatement" id="yearly">
+      <tr>
+        <th width="5%">ID</th>
+        <th width="6%">姓名</th>       
+        <th width="6%">所属支部</th>
+      
+        <th width="9%">总积分</th>       
+      </tr>      
+        <tr>
+          <td>3</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+        
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>87</td>
+        </tr>
+          <tr>
+          <td>3</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+          
+          <td>56</td>
+        </tr>
+          <tr>
+          <td>3</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+          
+          <td>57</div></td>
+        </tr>
+          <tr>
+          <td>3</td>
+          <td>姓名</td>
+          <td>所属支部</td>
+         
+          <td>58</td>
+        </tr>
+      <tr>
+        <td colspan="120"><div class="pagelist"> <a href="">首页</a> <span class="current">上一页</span><a href="">下一页</a><a href="">尾页</a><a href="">当前1/2页，共2页</a> </div></td>
+      </tr>
+    </table>
+  </div>
+</form>
+<script type="text/javascript">
+$('#quarter').click(function(){
+	
+	$('#yearly').hide();
+	$('#monthly').hide();
+	$('#quarterly').show();
+	
+	
+})
+$('#year').click(function(){
+	
+	$('#yearly').show();
+	$('#monthly').hide();
+	$('#quarterly').hide();
+	
+	
+})
+$('#month').click(function(){
+	
+	$('#yearly').hide();
+	$('#monthly').show();
+	$('#quarterly').hide();
+	
+	
+})
+
+</script>
+</body></html>

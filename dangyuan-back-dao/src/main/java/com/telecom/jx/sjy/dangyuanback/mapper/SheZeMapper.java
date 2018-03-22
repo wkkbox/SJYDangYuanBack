@@ -32,4 +32,10 @@ public interface SheZeMapper {
     void passSheZe(Map<String, Object> map);
 
     void noPassSheZe(Long userShezeId);
+
+    Integer selectSheZeMonthScore(Map<String, Object> scoreMap);
+
+    Integer selectSheZeSeasonScore(Map<String, Object> scoreMap);
+
+    Integer selectSheZeYearScore(Map<String, Object> scoreMap);
 }

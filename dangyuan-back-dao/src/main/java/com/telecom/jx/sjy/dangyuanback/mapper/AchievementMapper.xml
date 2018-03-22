@@ -115,5 +115,23 @@
         WHERE id=#{userAchievementId}
     </update>
 
+    <select id="selectAchieveMonthScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_achievement
+        WHERE userId=#{userId} and year=#{year} and month(finishTime)=month(CURDATE())
+    </select>
+
+    <select id="selectAchieveSeasonScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_achievement
+        WHERE userId=#{userId} and year=#{year} and quarter(finishTime)=quarter(CURDATE())
+    </select>
+
+    <select id="selectAchieveYearScore" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT SUM(rScore)
+        FROM t_user_achievement
+        WHERE userId=#{userId} AND year=#{year}
+    </select>
+
 
 </mapper>
