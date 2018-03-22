@@ -12,6 +12,16 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/pintuer.js"></script>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/pintuer.css"/>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
+    <style type="text/css">
+        .supercontent {
+            width: 250px;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding-left: 88px;
+        }
+    </style>
 </head>
 <body>
 <div class="panel admin-panel">
@@ -26,7 +36,7 @@
         <tr>
             <th width="3%">序号</th>
             <th width="5%">标题</th>
-            <th width="10%">积分内容</th>
+            <th width="5%">积分内容</th>
             <th width="5%">分值/次</th>
             <th width="5%">频率</th>
             <th width="5%">其他属性</th>
@@ -36,8 +46,8 @@
         <c:forEach items="${pageInfo.list}" var="achievement" varStatus="i">
             <tr>
                 <td>${i.index+1}</td>
-                <td>${achievement.title}</td>
-                <td>${achievement.content}</td>
+                <td align="center"><div style="width: 100px;padding-left: 0px" class='supercontent' onmouseover="overShow(this,event)" onmouseout="outHide()">${achievement.title}</div></td>
+                <td align="center"><div style="width: 100px;padding-left: 0px" class='supercontent' onmouseover="overShow(this,event)" onmouseout="outHide()">${achievement.content}</div></td>
                 <td>${achievement.dScore}</td>
                 <td>
                     <c:if test="${achievement.rate==0}">
@@ -74,6 +84,22 @@
     </table>
 </div>
 <script type="text/javascript">
+    /*内容太多省略*/
+    function overShow(obj,e) {
+        var showDiv = document.getElementById('showDiv');
+        var theEvent = window.event|| e;
+        showDiv.style.left = theEvent.clientX+"px";
+        showDiv.style.top = theEvent.clientY+"px";
+        showDiv.style.display = 'block';
+        //alert(obj.innerHTML);
+        showDiv.innerHTML = obj.innerHTML;
+    }
+    function outHide() {
+        var showDiv = document.getElementById('showDiv');
+        showDiv.style.display = 'none';
+        showDiv.innerHTML = '';
+    }
+
     function del(id, mid) {
         if (confirm("您确定要删除吗?")) {
             alert("删除成功")
@@ -82,7 +108,7 @@
 </script>
 <div class="pagelist">
     <c:if test="${pageInfo.pages!=0}">
-        <c:if test="${pageInfo.pages!=1}">
+        <c:if test="${pageInfo.pageNum!=1}">
             <a href="${pageContext.request.contextPath}/page/achievement?currentPage=1&pageSize=${pageInfo.pageSize}">首页</a>
         </c:if>
         <c:if test="${pageInfo.pageNum!=1}">
@@ -91,11 +117,12 @@
         <c:if test="${pageInfo.pageNum!=pageInfo.pages}">
             <a href="${pageContext.request.contextPath}/page/achievement?currentPage=${pageInfo.nextPage}&pageSize=${pageInfo.pageSize}">下一页</a>
         </c:if>
-        <c:if test="${pageInfo.pages!=1}">
+        <c:if test="${pageInfo.pageNum!=pageInfo.pages}">
             <a href="${pageContext.request.contextPath}/page/achievement?currentPage=${pageInfo.pages}&pageSize=${pageInfo.pageSize}">尾页</a>
         </c:if>
         <span style="color: #333333;">&nbsp;当前&nbsp;${pageInfo.pageNum}&nbsp;/&nbsp;${pageInfo.pages}&nbsp;页&nbsp;，&nbsp;共&nbsp;${pageInfo.total}&nbsp;条</span>
     </c:if>
 </div>
+<div id="showDiv" style="position: absolute; background-color: white; border: 1px solid black;font-size: 16px"></div>
 </body>
 </html>

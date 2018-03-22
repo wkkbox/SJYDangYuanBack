@@ -42,7 +42,7 @@
 </script>
 <div class="pagelist">
     <c:if test="${pageInfo.pages!=0}">
-        <c:if test="${pageInfo.pages!=1}">
+        <c:if test="${pageInfo.pageNum!=1}">
             <a href="${pageContext.request.contextPath}/page/seasonReport?currentPage=1&pageSize=${pageInfo.pageSize}">首页</a>
         </c:if>
         <c:if test="${pageInfo.pageNum!=1}">
@@ -51,7 +51,7 @@
         <c:if test="${pageInfo.pageNum!=pageInfo.pages}">
             <a href="${pageContext.request.contextPath}/page/seasonReport?currentPage=${pageInfo.nextPage}&pageSize=${pageInfo.pageSize}">下一页</a>
         </c:if>
-        <c:if test="${pageInfo.pages!=1}">
+        <c:if test="${pageInfo.pageNum!=pageInfo.pages}">
             <a href="${pageContext.request.contextPath}/page/seasonReport?currentPage=${pageInfo.pages}&pageSize=${pageInfo.pageSize}">尾页</a>
         </c:if>
         <span style="color: #333333;">&nbsp;当前&nbsp;${pageInfo.pageNum}&nbsp;/&nbsp;${pageInfo.pages}&nbsp;页&nbsp;，&nbsp;共&nbsp;${pageInfo.total}&nbsp;条</span>
