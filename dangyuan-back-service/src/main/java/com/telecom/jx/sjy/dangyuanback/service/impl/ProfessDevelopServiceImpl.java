@@ -119,7 +119,7 @@ public class ProfessDevelopServiceImpl implements ProfessDevelopService {
         }
         //发布的工作业绩给所有用户添加消息
         //在t_info表添加一条记录,先判断
-        Map<String, Object> map_ = new HashMap<>();
+        /*Map<String, Object> map_ = new HashMap<>();
         map_.put("title", professDevelop.getTitle());
         map_.put("content", professDevelop.getContent());
         if (infoMapper.selectInfoByTitleAndContent(map_) == null) {
@@ -140,7 +140,7 @@ public class ProfessDevelopServiceImpl implements ProfessDevelopService {
                 map.put("year", year);
                 infoMapper.insertUnReadedInfo(map);
             }
-        }
+        }*/
     }
 
     @Override

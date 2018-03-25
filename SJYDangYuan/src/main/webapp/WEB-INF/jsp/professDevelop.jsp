@@ -74,7 +74,7 @@
                         地市级
                     </c:if>
                     <c:if test="${professDevelop.otherAttr==4}">
-                        集团（中央企业）级
+                        集团(中央企业)级
                     </c:if>
                     <c:if test="${professDevelop.otherAttr==5}">
                         省公司级

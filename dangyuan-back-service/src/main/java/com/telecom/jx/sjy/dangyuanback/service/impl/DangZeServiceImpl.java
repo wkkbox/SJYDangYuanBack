@@ -99,7 +99,7 @@ public class DangZeServiceImpl implements DangZeService {
         }
         //发布的党责活动给所有用户添加消息
         //在t_info表添加一条记录,先判断
-        Map<String, Object> map_ = new HashMap<>();
+        /*Map<String, Object> map_ = new HashMap<>();
         map_.put("title", dangZe.getTitle());
         map_.put("content", dangZe.getContent());
         if (infoMapper.selectInfoByTitleAndContent(map_) == null) {
@@ -120,7 +120,7 @@ public class DangZeServiceImpl implements DangZeService {
                 map.put("year", year);
                 infoMapper.insertUnReadedInfo(map);
             }
-        }
+        }*/
     }
 
     @Override

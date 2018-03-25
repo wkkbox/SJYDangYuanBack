@@ -123,7 +123,7 @@ public class HonorsAwardServiceImpl implements HonorsAwardService {
         }
         //发布的荣誉奖励活动给所有用户添加消息
         //在t_info表添加一条记录,先判断
-        Map<String, Object> map_ = new HashMap<>();
+        /*Map<String, Object> map_ = new HashMap<>();
         map_.put("title", honorsAward.getTitle());
         map_.put("content", honorsAward.getContent());
         if (infoMapper.selectInfoByTitleAndContent(map_) == null) {
@@ -145,7 +145,7 @@ public class HonorsAwardServiceImpl implements HonorsAwardService {
                 map.put("year", year);
                 infoMapper.insertUnReadedInfo(map);
             }
-        }
+        }*/
     }
 
     @Override

@@ -48,9 +48,7 @@
                     </div>
                     <div id="imgchk" class="field">
                         <c:forEach items="${imgs}" var="img">
-                            <div>
-                                <img class="img-zoomable" style="margin: 2px;width: 200px;height: 200px" src="http://101.132.177.132/images/${img}">
-                            </div>
+                                <img class="img-zoomable" style="margin: 2px;width: 200px;height: 200px" src="http://101.132.177.132:8081/${img}">
                         </c:forEach>
                     </div>
                 </div>

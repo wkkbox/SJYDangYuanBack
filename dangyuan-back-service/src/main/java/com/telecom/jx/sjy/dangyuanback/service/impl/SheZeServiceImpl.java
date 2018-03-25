@@ -106,7 +106,7 @@ public class SheZeServiceImpl implements SheZeService {
         }
         //发布的社责活动给所有用户添加消息
         //在t_info表添加一条记录,先判断
-        Map<String, Object> map_ = new HashMap<>();
+        /*Map<String, Object> map_ = new HashMap<>();
         map_.put("title", sheZe.getTitle());
         map_.put("content", sheZe.getContent());
         if (infoMapper.selectInfoByTitleAndContent(map_) == null) {
@@ -127,7 +127,7 @@ public class SheZeServiceImpl implements SheZeService {
                 map.put("year", year);
                 infoMapper.insertUnReadedInfo(map);
             }
-        }
+        }*/
     }
 
     @Override
