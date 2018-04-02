@@ -38,7 +38,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>SJYDangYuan</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>

@@ -105,6 +105,32 @@ public class UserServiceImpl implements UserService {
             if (professDevelopScore == null) {
                 professDevelopScore = 0;
             }
+
+            /**
+             * SELECT SUM(rScore)
+             FROM(
+             select rScore
+             from t_user_dangze u_d
+             WHERE userId=32 and year=2018 and month(finishTime)=month(CURDATE())
+             UNION ALL
+             SELECT rScore
+             from t_user_sheze u_s
+             WHERE userId=32 and year=2018 and month(finishTime)=month(CURDATE())
+             UNION ALL
+             SELECT rScore
+             from t_user_achievement u_a
+             WHERE userId=32 and year=2018 and month(finishTime)=month(CURDATE())
+             UNION ALL
+             SELECT rScore
+             from t_user_honorsaward u_h
+             WHERE userId=32 and year=2018 and month(finishTime)=month(CURDATE())
+             UNION ALL
+             SELECT rScore
+             from t_user_professdevelop u_p
+             WHERE userId=32 and year=2018 and month(finishTime)=month(CURDATE())
+             ) as table1
+             */
+
             Integer sumScore = dangZeScore + sheZeScore + achieveScore + honorsAwardScore + professDevelopScore;
             score.setScore(sumScore);
         }
