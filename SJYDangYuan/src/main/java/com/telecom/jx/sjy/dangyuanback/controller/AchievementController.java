@@ -1,9 +1,7 @@
 package com.telecom.jx.sjy.dangyuanback.controller;
 
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.SheZe;
 import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
-import com.telecom.jx.sjy.dangyuanback.service.SheZeService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,13 @@ public class AchievementController {
     @Autowired
     private AchievementService achievementService;
 
+    /**
+     * 录入工作业绩（title，content，dScore，rate，sumScore，otherAttr）
+     *
+     * @param model
+     * @param achievement
+     * @return
+     */
     @RequestMapping("/createAchievement")
     @RequiresRoles("admin")
     @ResponseBody
@@ -52,9 +57,16 @@ public class AchievementController {
         return "editAchievement";
     }
 
+    /**
+     * 跳转到详情
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/checkAchieveDetail")
     @RequiresRoles("admin")
-    public String checkAchieveDetail(Model model, HttpServletRequest request){
+    public String checkAchieveDetail(Model model, HttpServletRequest request) {
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
             imgs.add(request.getParameter("img" + i));
@@ -80,22 +92,32 @@ public class AchievementController {
         model.addAttribute("otherAttr", otherAttr);
         Long userId = Long.valueOf(request.getParameter("userId"));
         model.addAttribute("userId", userId);
-
+        //跳转到详情
         return "checkAchieveDetail";
     }
 
+    /**
+     * 审核通过
+     *
+     * @param userAchievementId
+     * @param rScore
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("passAchievement")
     @RequiresRoles("admin")
-    public String passAchievement(Long userAchievementId,Integer rScore, Long userId,String title, Integer otherAttr){
-        Map<String,Object> map = new HashMap<>();
-        map.put("userAchievementId",userAchievementId);
-        map.put("rScore",rScore);
+    public String passAchievement(Long userAchievementId, Integer rScore, Long userId, String title, Integer otherAttr) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userAchievementId", userAchievementId);
+        map.put("rScore", rScore);
         map.put("finishTime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        System.out.println("userAchievementId="+userAchievementId);
-        System.out.println("rScore="+rScore);
+        System.out.println("userAchievementId=" + userAchievementId);
+        System.out.println("rScore=" + rScore);
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
@@ -108,19 +130,28 @@ public class AchievementController {
         }
     }
 
+    /**
+     * 驳回
+     *
+     * @param userAchievementId
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("noPassAchievement")
     @RequiresRoles("admin")
-    public String noPassAchievement(Long userAchievementId, Long userId,String title, Integer otherAttr){
-        System.out.println("userAchievementId="+userAchievementId);
+    public String noPassAchievement(Long userAchievementId, Long userId, String title, Integer otherAttr) {
+        System.out.println("userAchievementId=" + userAchievementId);
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
         try {
-            achievementService.noPassAchievement(userAchievementId,map);
+            achievementService.noPassAchievement(userAchievementId, map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();

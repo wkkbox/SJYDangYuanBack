@@ -20,6 +20,13 @@ public class SheZeController {
     @Autowired
     private SheZeService sheZeService;
 
+    /**
+     * 录入社责（title，content，lScore，hScore，rate，sumScore，otherAttr）
+     *
+     * @param model
+     * @param sheZe
+     * @return
+     */
     @RequestMapping("/createSheZe")
     @RequiresRoles("admin")
     @ResponseBody
@@ -50,6 +57,13 @@ public class SheZeController {
         return "editSheZe";
     }
 
+    /**
+     * 跳转到详情
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/checkSheZeDetail")
     @RequiresRoles("admin")
     public String checkSheZeDetail(Model model, HttpServletRequest request) {
@@ -78,10 +92,20 @@ public class SheZeController {
         model.addAttribute("otherAttr", otherAttr);
         Long userId = Long.valueOf(request.getParameter("userId"));
         model.addAttribute("userId", userId);
-
+        //跳转到详情
         return "checkSheZeDetail";
     }
 
+    /**
+     * 审核通过
+     *
+     * @param userShezeId
+     * @param rScore
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("passSheZe")
     @RequiresRoles("admin")
@@ -93,7 +117,7 @@ public class SheZeController {
         System.out.println("userShezeId=" + userShezeId);
         System.out.println("rScore=" + rScore);
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
@@ -106,6 +130,15 @@ public class SheZeController {
         }
     }
 
+    /**
+     * 驳回
+     *
+     * @param userShezeId
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("noPassSheZe")
     @RequiresRoles("admin")
@@ -113,12 +146,12 @@ public class SheZeController {
         System.out.println("userShezeId=" + userShezeId);
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
         try {
-            sheZeService.noPassSheZe(userShezeId,map);
+            sheZeService.noPassSheZe(userShezeId, map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();

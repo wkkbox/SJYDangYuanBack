@@ -2,11 +2,7 @@ package com.telecom.jx.sjy.dangyuanback.controller;
 
 
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
-import com.telecom.jx.sjy.dangyuanback.pojo.vo.Score;
 import com.telecom.jx.sjy.dangyuanback.service.UserService;
-import com.telecom.jx.sjy.dangyuanback.util.JsonUtils;
-import com.telecom.jx.sjy.dangyuanback.util.dto.MessageResult;
-import com.telecom.jx.sjy.dangyuanback.util.dto.PageBean;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,13 +25,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 跳转到登录页面
+     *
+     * @return
+     */
     @RequestMapping("/login")
     public String loginView() {
         return "login";
     }
 
     /**
-     * 登录控制器
+     * 登录控制器（accountName(电话号码)，password）
      *
      * @param user
      * @param model
@@ -102,27 +103,12 @@ public class UserController {
     }
 
     /**
-     * 分页获得党员积分公示信息
+     * 新增党员（accountName，userName，gender，idCard，branch）
      *
      * @param model
-     * @param request
+     * @param user
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = {"/scorePublicity"}, produces = "application/json;charset=utf-8")
-    public String scorePublicityByPage(Integer currentPage, Integer pageSize, Model model, HttpServletRequest request) {
-        MessageResult result = null;
-        PageBean<Score> scorePage = null;
-        try {
-            scorePage = userService.getScorePublicityByPage(currentPage, pageSize);
-            result = new MessageResult(true, "查询成功", scorePage);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = new MessageResult(false, "查询失败", null);
-        }
-        return JsonUtils.objectToJson(result);
-    }
-
     @RequestMapping("/createUser")
     @RequiresRoles("admin")
     @ResponseBody
@@ -148,6 +134,13 @@ public class UserController {
         }
     }
 
+    /**
+     * 校验帐户名是否可用(accountName)
+     *
+     * @param accountName
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/ajaxCheckAccountName")
     @RequiresRoles("admin")
     @ResponseBody
@@ -161,6 +154,12 @@ public class UserController {
         }
     }
 
+    /**
+     * 重置密码（userId）
+     *
+     * @param userId
+     * @return
+     */
     @RequestMapping("/resetPwd")
     @ResponseBody
     @RequiresRoles("admin")
@@ -175,18 +174,34 @@ public class UserController {
         }
     }
 
+    /**
+     * 未使用
+     *
+     * @return
+     */
     @RequestMapping("/deleteUser")
     @RequiresRoles("admin")
     public String delUser() {
         return "delUser";
     }
 
+    /**
+     * 未使用
+     *
+     * @return
+     */
     @RequestMapping("/updateUser")
     @RequiresPermissions(value = {"user:update"})
     public String updateUser() {
         return "updateUser";
     }
 
+    /**
+     * 未使用
+     *
+     * @param model
+     * @return
+     */
     @RequestMapping("/listUser")
     @RequiresPermissions(value = {"user:view"})
     public String showUsers(Model model) {

@@ -1,10 +1,8 @@
 package com.telecom.jx.sjy.dangyuanback.controller;
 
 import com.telecom.jx.sjy.dangyuanback.pojo.po.DangZe;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
 import com.telecom.jx.sjy.dangyuanback.service.DangZeService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +20,13 @@ public class DangZeController {
     @Autowired
     private DangZeService dangZeService;
 
+    /**
+     * 录入党责（title，content，dScore，rate，sumScore）
+     *
+     * @param model
+     * @param dangZe
+     * @return
+     */
     @RequestMapping("/createDangZe")
     @RequiresRoles("admin")
     @ResponseBody
@@ -52,6 +57,13 @@ public class DangZeController {
         return "editDangZe";
     }
 
+    /**
+     * 跳转到详情
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/checkDangZeDetail")
     @RequiresRoles("admin")
     public String checkDangZeDetail(Model model, HttpServletRequest request) {
@@ -78,10 +90,19 @@ public class DangZeController {
         model.addAttribute("hScore", hScore);
         Long userId = Long.valueOf(request.getParameter("userId"));
         model.addAttribute("userId", userId);
-
+        //跳转到详情
         return "checkDangZeDetail";
     }
 
+    /**
+     * 审核通过
+     *
+     * @param userDangzeId
+     * @param rScore
+     * @param userId
+     * @param dangzeTitle
+     * @return
+     */
     @ResponseBody
     @RequestMapping("passDangZe")
     @RequiresRoles("admin")
@@ -93,7 +114,7 @@ public class DangZeController {
         System.out.println("userDangzeId=" + userDangzeId);
         System.out.println("rScore=" + rScore);
         map.put("userId", userId);
-        map.put("title", dangzeTitle+"申请结果");
+        map.put("title", dangzeTitle + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         try {
@@ -105,6 +126,14 @@ public class DangZeController {
         }
     }
 
+    /**
+     * 驳回
+     *
+     * @param userDangzeId
+     * @param userId
+     * @param dangzeTitle
+     * @return
+     */
     @ResponseBody
     @RequestMapping("noPassDangZe")
     @RequiresRoles("admin")
@@ -112,17 +141,15 @@ public class DangZeController {
         System.out.println("userDangzeId=" + userDangzeId);
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("title", dangzeTitle+"申请结果");
+        map.put("title", dangzeTitle + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         try {
-            dangZeService.noPassDangZe(userDangzeId,map);
+            dangZeService.noPassDangZe(userDangzeId, map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();
             return "{\"msg\":\"驳回失败\"}";
         }
-
-
     }
 }

@@ -34,6 +34,7 @@
         WHERE userId = #{userId} AND dangzeId = #{dangzeId};
     </select>
 
+    <!--插入到不限次数的安排表-->
     <insert id="insertAchievement3Arrange" parameterType="java.util.Map">
         INSERT INTO t_achievement3_arrange
         (id,year,userId,time,achievementId)
@@ -41,6 +42,7 @@
         (#{id},#{year},#{userId},#{time},#{achievementId})
     </insert>
 
+    <!--插入到有限次数的安排表-->
     <insert id="insertAchievementArrange" parameterType="java.util.Map">
         INSERT INTO t_achievement_arrange
         (id,year,month,time,achievementId)
@@ -48,6 +50,7 @@
         (#{id},#{year},#{month},#{time},#{achievementId})
     </insert>
 
+    <!--录入工作业绩-->
     <insert id="insertAchievement" parameterType="com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement">
         <!--持久化对象时,返回自增的主键:通用方式  -->
         <selectKey keyColumn="id" keyProperty="id" order="AFTER"

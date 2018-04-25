@@ -38,7 +38,7 @@
     <bean id="cronTriggerFactoryBean"
           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="springQtzJobMethod"/>
-        <property name="cronExpression" value="0 27 10 ? * *"/>
+        <property name="cronExpression" value="0 33 09 ? * *"/>
     </bean>
     <bean id="reCronTriggerFactoryBean"
           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">

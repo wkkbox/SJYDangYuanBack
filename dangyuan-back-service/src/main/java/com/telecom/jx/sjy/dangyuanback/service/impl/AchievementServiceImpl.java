@@ -5,7 +5,6 @@ import com.telecom.jx.sjy.dangyuanback.mapper.InfoMapper;
 import com.telecom.jx.sjy.dangyuanback.mapper.UserMapper;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.AchievementContent;
-import com.telecom.jx.sjy.dangyuanback.pojo.po.Info;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.User;
 import com.telecom.jx.sjy.dangyuanback.pojo.vo.AchievementArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
@@ -34,6 +33,7 @@ public class AchievementServiceImpl implements AchievementService {
 
     @Override
     public List<Achievement> getAchievements() throws Exception {
+
         //查询所有工作业绩集合
         Integer year = DateUtil.getYear(new Date());
         return achievementMapper.selectAchievements(year);
@@ -146,9 +146,9 @@ public class AchievementServiceImpl implements AchievementService {
 
     @Override
     public List<AchievementContent> getAchievementContents() throws Exception {
-        Map<String,Object> map = new HashMap<>();
-        map.put("year",String.valueOf(DateUtil.getYear(new Date())));
-        List<AchievementContent> achievementContents=achievementMapper.selectAchievementContents(map);
+        Map<String, Object> map = new HashMap<>();
+        map.put("year", String.valueOf(DateUtil.getYear(new Date())));
+        List<AchievementContent> achievementContents = achievementMapper.selectAchievementContents(map);
         return achievementContents;
     }
 
@@ -166,18 +166,18 @@ public class AchievementServiceImpl implements AchievementService {
     @Transactional(rollbackFor = {Exception.class})
     public void passAchievement(Map<String, Object> map) throws Exception {
         if ((int) map.get("otherAttr") == 1) {
-            map.put("title","(考核优秀)"+map.get("title"));
+            map.put("title", "(考核优秀)" + map.get("title"));
         }
         if ((int) map.get("otherAttr") == 2) {
-            map.put("title","(考核称职)"+map.get("title"));
+            map.put("title", "(考核称职)" + map.get("title"));
         }
         map.put("content", "你申请的" + map.get("title") + "于" + map.get("publishtime") + "审核通过，获得" + map.get("rScore") + "分");
         Long id = IDUtils.getItemId();
-        map.put("id",id);
+        map.put("id", id);
         //插入用户信息表
         infoMapper.insertInfoUser(map);
         //插入未读表
-        map.put("infoId",id);
+        map.put("infoId", id);
         infoMapper.insertUnReadedInfo(map);
         //修改进度表
         achievementMapper.passAchievement(map);
@@ -187,18 +187,18 @@ public class AchievementServiceImpl implements AchievementService {
     @Transactional(rollbackFor = {Exception.class})
     public void noPassAchievement(Long userAchievementId, Map<String, Object> map) throws Exception {
         if ((int) map.get("otherAttr") == 1) {
-            map.put("title","(考核优秀)"+map.get("title"));
+            map.put("title", "(考核优秀)" + map.get("title"));
         }
         if ((int) map.get("otherAttr") == 2) {
-            map.put("title","(考核称职)"+map.get("title"));
+            map.put("title", "(考核称职)" + map.get("title"));
         }
-        map.put("content","你申请的"+map.get("title")+"于"+map.get("publishtime")+"审核不通过，请重新申请");
+        map.put("content", "你申请的" + map.get("title") + "于" + map.get("publishtime") + "审核不通过，请重新申请");
         Long id = IDUtils.getItemId();
-        map.put("id",id);
+        map.put("id", id);
         //插入用户信息表
         infoMapper.insertInfoUser(map);
         //插入未读表
-        map.put("infoId",id);
+        map.put("infoId", id);
         infoMapper.insertUnReadedInfo(map);
         //修改进度表
         achievementMapper.noPassAchievement(userAchievementId);

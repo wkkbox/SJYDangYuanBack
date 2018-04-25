@@ -39,6 +39,15 @@ public class PageController {
     @Autowired
     private AttachmentService attachmentService;
 
+    /**
+     * 跳转到所有用户列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/userManagement")
     @RequiresRoles("admin")
     public String userManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -66,6 +75,15 @@ public class PageController {
         return "roleManagement";
     }
 
+    /**
+     * 跳转到所有党责列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/dangZeManagement")
     @RequiresRoles("admin")
     public String dangZeManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -83,6 +101,15 @@ public class PageController {
         return "dangZeManagement";
     }
 
+    /**
+     * 跳转到所有社责列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/sheZeManagement")
     @RequiresRoles("admin")
     public String sheZeManagement(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -100,6 +127,15 @@ public class PageController {
         return "sheZeManagement";
     }
 
+    /**
+     * 跳转到所有工作业绩列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/achievement")
     @RequiresRoles("admin")
     public String achievement(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -117,6 +153,15 @@ public class PageController {
         return "achievement";
     }
 
+    /**
+     * 跳转到所有荣誉奖励列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/honorsAward")
     @RequiresRoles("admin")
     public String honorsAwards(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -134,6 +179,15 @@ public class PageController {
         return "honorsAward";
     }
 
+    /**
+     * 跳转到所有专业提升列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/professDevelop")
     @RequiresRoles("admin")
     public String professDevelop(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -157,36 +211,66 @@ public class PageController {
         return "info";
     }
 
+    /**
+     * 跳转到添加用户页面
+     *
+     * @return
+     */
     @RequestMapping("/addUser")
     @RequiresRoles("admin")
     public String addUser() {
         return "addUser";
     }
 
+    /**
+     * 跳转到录入党责页面
+     *
+     * @return
+     */
     @RequestMapping("/addDangZe")
     @RequiresRoles("admin")
     public String addDangZe() {
         return "addDangZe";
     }
 
+    /**
+     * 跳转到录入社责页面
+     *
+     * @return
+     */
     @RequestMapping("/addSheZe")
     @RequiresRoles("admin")
     public String addSheZe() {
         return "addSheZe";
     }
 
+    /**
+     * 跳转到录入工作业绩页面
+     *
+     * @return
+     */
     @RequestMapping("/addAchievement")
     @RequiresRoles("admin")
     public String addAchievement() {
         return "addAchievement";
     }
 
+    /**
+     * 跳转到录入专业提升页面
+     *
+     * @return
+     */
     @RequestMapping("/addProfessDevelop")
     @RequiresRoles("admin")
     public String addProfessDevelop() {
         return "addProfessDevelop";
     }
 
+    /**
+     * 跳转到录入荣誉奖励页面
+     *
+     * @return
+     */
     @RequestMapping("/addHonorsAward")
     @RequiresRoles("admin")
     public String addHonorsAward() {
@@ -244,6 +328,15 @@ public class PageController {
         return "check";
     }
 
+    /**
+     * 跳转到党责考核列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/checkDangZe")
     @RequiresRoles("admin")
     public String checkDangZe(Model model, Integer currentPage, Integer pageSize) throws Exception {
@@ -312,9 +405,18 @@ public class PageController {
         return "checkDangZe";
     }
 
+    /**
+     * 跳转到社责考核列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/checkSheZe")
     @RequiresRoles("admin")
-    public String checkSheZe(Model model, Integer currentPage, Integer pageSize) throws Exception{
+    public String checkSheZe(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
@@ -360,9 +462,18 @@ public class PageController {
         return "checkSheZe";
     }
 
+    /**
+     * 跳转到工作业绩考核列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/checkAchieve")
     @RequiresRoles("admin")
-    public String checkAchieve(Model model, Integer currentPage, Integer pageSize) throws Exception{
+    public String checkAchieve(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
@@ -408,9 +519,18 @@ public class PageController {
         return "checkAchieve";
     }
 
+    /**
+     * 跳转到荣誉奖励考核列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/checkHonorsAward")
     @RequiresRoles("admin")
-    public String checkHonorsAward(Model model, Integer currentPage, Integer pageSize) throws Exception{
+    public String checkHonorsAward(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
@@ -456,9 +576,18 @@ public class PageController {
         return "checkHonorsAward";
     }
 
+    /**
+     * 跳转到专业提升考核列表页面
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/checkProfessDevelop")
     @RequiresRoles("admin")
-    public String checkProfessDevelop(Model model, Integer currentPage, Integer pageSize) throws Exception{
+    public String checkProfessDevelop(Model model, Integer currentPage, Integer pageSize) throws Exception {
         //System.out.println("党责审核");
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
@@ -504,9 +633,18 @@ public class PageController {
         return "checkProfessDevelop";
     }
 
+    /**
+     * 本月报表
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/monthReport")
     @RequiresRoles("admin")
-    public String monthReport(Model model, Integer currentPage, Integer pageSize) throws Exception{
+    public String monthReport(Model model, Integer currentPage, Integer pageSize) throws Exception {
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
         }
@@ -522,9 +660,18 @@ public class PageController {
         return "monthReport";
     }
 
+    /**
+     * 本季报表
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/seasonReport")
     @RequiresRoles("admin")
-    public String seasonReport(Model model, Integer currentPage, Integer pageSize) throws Exception{
+    public String seasonReport(Model model, Integer currentPage, Integer pageSize) throws Exception {
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
         }
@@ -540,9 +687,18 @@ public class PageController {
         return "seasonReport";
     }
 
+    /**
+     * 本年报表
+     *
+     * @param model
+     * @param currentPage
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/yearReport")
     @RequiresRoles("admin")
-    public String yearReport(Model model, Integer currentPage, Integer pageSize) throws Exception{
+    public String yearReport(Model model, Integer currentPage, Integer pageSize) throws Exception {
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
         }

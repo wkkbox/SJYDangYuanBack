@@ -20,6 +20,13 @@ public class HonorsAwardController {
     @Autowired
     private HonorsAwardService honorsAwardService;
 
+    /**
+     * 录入荣誉奖励（title，content，lScore，hScore，rate，sumScore，otherAttr）
+     *
+     * @param model
+     * @param honorsAward
+     * @return
+     */
     @RequestMapping("/createHonorsAward")
     @RequiresRoles("admin")
     @ResponseBody
@@ -50,9 +57,16 @@ public class HonorsAwardController {
         return "editHonorsAward";
     }
 
+    /**
+     * 跳转到详情
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/checkHonorsAwardDetail")
     @RequiresRoles("admin")
-    public String checkHonorsAwardDetail(Model model, HttpServletRequest request){
+    public String checkHonorsAwardDetail(Model model, HttpServletRequest request) {
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
             imgs.add(request.getParameter("img" + i));
@@ -78,22 +92,32 @@ public class HonorsAwardController {
         model.addAttribute("otherAttr", otherAttr);
         Long userId = Long.valueOf(request.getParameter("userId"));
         model.addAttribute("userId", userId);
-
+        //跳转到详情
         return "checkHonorsAwardDetail";
     }
 
+    /**
+     * 审核通过
+     *
+     * @param userHonorsAwardId
+     * @param rScore
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("passHonorsAward")
     @RequiresRoles("admin")
-    public String passHonorsAward(Long userHonorsAwardId,Integer rScore, Long userId,String title, Integer otherAttr){
-        Map<String,Object> map = new HashMap<>();
-        map.put("userHonorsAwardId",userHonorsAwardId);
-        map.put("rScore",rScore);
+    public String passHonorsAward(Long userHonorsAwardId, Integer rScore, Long userId, String title, Integer otherAttr) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userHonorsAwardId", userHonorsAwardId);
+        map.put("rScore", rScore);
         map.put("finishTime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        System.out.println("userHonorsAwardId="+userHonorsAwardId);
-        System.out.println("rScore="+rScore);
+        System.out.println("userHonorsAwardId=" + userHonorsAwardId);
+        System.out.println("rScore=" + rScore);
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
@@ -106,19 +130,28 @@ public class HonorsAwardController {
         }
     }
 
+    /**
+     * 驳回
+     *
+     * @param userHonorsAwardId
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("noPassHonorsAward")
     @RequiresRoles("admin")
-    public String noPassHonorsAward(Long userHonorsAwardId, Long userId,String title, Integer otherAttr){
-        System.out.println("userHonorsAwardId="+userHonorsAwardId);
+    public String noPassHonorsAward(Long userHonorsAwardId, Long userId, String title, Integer otherAttr) {
+        System.out.println("userHonorsAwardId=" + userHonorsAwardId);
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
         try {
-            honorsAwardService.noPassHonorsAward(userHonorsAwardId,map);
+            honorsAwardService.noPassHonorsAward(userHonorsAwardId, map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();

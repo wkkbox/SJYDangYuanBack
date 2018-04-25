@@ -1,8 +1,6 @@
 package com.telecom.jx.sjy.dangyuanback.controller;
 
-import com.telecom.jx.sjy.dangyuanback.pojo.po.Achievement;
 import com.telecom.jx.sjy.dangyuanback.pojo.po.ProfessDevelop;
-import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
 import com.telecom.jx.sjy.dangyuanback.service.ProfessDevelopService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -22,6 +20,13 @@ public class ProfessDevelopController {
     @Autowired
     private ProfessDevelopService professDevelopService;
 
+    /**
+     * 录入专业提升（title，content，dScore，rate，sumScore，otherAttr）
+     *
+     * @param model
+     * @param professDevelop
+     * @return
+     */
     @RequestMapping("/createProfessDevelop")
     @RequiresRoles("admin")
     @ResponseBody
@@ -52,9 +57,16 @@ public class ProfessDevelopController {
         return "editProfessDevelop";
     }
 
+    /**
+     * 跳转到详情
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/checkProfessDevelopDetail")
     @RequiresRoles("admin")
-    public String checkProfessDevelopDetail(Model model, HttpServletRequest request){
+    public String checkProfessDevelopDetail(Model model, HttpServletRequest request) {
         List<String> imgs = new ArrayList<>();
         for (int i = 1; i <= Integer.valueOf(request.getParameter("imgNum")); i++) {
             imgs.add(request.getParameter("img" + i));
@@ -80,22 +92,32 @@ public class ProfessDevelopController {
         model.addAttribute("otherAttr", otherAttr);
         Long userId = Long.valueOf(request.getParameter("userId"));
         model.addAttribute("userId", userId);
-
+        //跳转到详情
         return "checkProfessDevelopDetail";
     }
 
+    /**
+     * 审核通过
+     *
+     * @param userProfessDevelopId
+     * @param rScore
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("passProfessDevelop")
     @RequiresRoles("admin")
-    public String passProfessDevelop(Long userProfessDevelopId,Integer rScore, Long userId,String title, Integer otherAttr){
-        Map<String,Object> map = new HashMap<>();
-        map.put("userProfessDevelopId",userProfessDevelopId);
-        map.put("rScore",rScore);
+    public String passProfessDevelop(Long userProfessDevelopId, Integer rScore, Long userId, String title, Integer otherAttr) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userProfessDevelopId", userProfessDevelopId);
+        map.put("rScore", rScore);
         map.put("finishTime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        System.out.println("userProfessDevelopId="+userProfessDevelopId);
-        System.out.println("rScore="+rScore);
+        System.out.println("userProfessDevelopId=" + userProfessDevelopId);
+        System.out.println("rScore=" + rScore);
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
@@ -108,19 +130,28 @@ public class ProfessDevelopController {
         }
     }
 
+    /**
+     * 驳回
+     *
+     * @param userProfessDevelopId
+     * @param userId
+     * @param title
+     * @param otherAttr
+     * @return
+     */
     @ResponseBody
     @RequestMapping("noPassProfessDevelop")
     @RequiresRoles("admin")
-    public String noPassProfessDevelop(Long userProfessDevelopId, Long userId,String title, Integer otherAttr){
-        System.out.println("userProfessDevelopId="+userProfessDevelopId);
+    public String noPassProfessDevelop(Long userProfessDevelopId, Long userId, String title, Integer otherAttr) {
+        System.out.println("userProfessDevelopId=" + userProfessDevelopId);
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        map.put("title", title+"申请结果");
+        map.put("title", title + "申请结果");
         map.put("year", String.valueOf(DateUtil.getYear(new Date())));
         map.put("publishtime", DateUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         map.put("otherAttr", otherAttr);
         try {
-            professDevelopService.noPassProfessDevelop(userProfessDevelopId,map);
+            professDevelopService.noPassProfessDevelop(userProfessDevelopId, map);
             return "{\"msg\":\"驳回成功\"}";
         } catch (Exception e) {
             e.printStackTrace();
