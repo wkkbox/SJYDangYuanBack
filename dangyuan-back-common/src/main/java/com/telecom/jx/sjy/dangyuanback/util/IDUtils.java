@@ -1,5 +1,7 @@
 package com.telecom.jx.sjy.dangyuanback.util;
 
+import redis.clients.jedis.Jedis;
+
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -81,6 +83,9 @@ public class IDUtils {
     }
 
     public static void main(String[] args) {
-
+        Jedis jedis = new Jedis("192.168.147.128",6379);
+        //jedis.auth("temp890!@#");
+        System.out.println(jedis.keys("*"));
+        System.out.println(jedis.get("name"));
     }
 }

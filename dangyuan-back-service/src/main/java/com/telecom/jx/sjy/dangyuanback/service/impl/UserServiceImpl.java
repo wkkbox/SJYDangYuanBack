@@ -280,13 +280,13 @@ public class UserServiceImpl implements UserService {
         if (roleIds.size() == 1) {
             return roleIds.get(0);
         } else {
-            return Collections.min(roleIds);
+            return Collections.min(roleIds);//管理员是1，党员是3，所以值越低 角色越高
         }
     }
 
     @Override
     public List<User> getUsers() throws Exception {
-        //查询所有用户集合
+        //查询所有用户集合（除了admin）
         return userMapper.selectUsers();
     }
 
