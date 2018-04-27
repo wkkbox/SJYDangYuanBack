@@ -10,6 +10,9 @@ import com.telecom.jx.sjy.dangyuanback.pojo.vo.AchievementArrangeCustom;
 import com.telecom.jx.sjy.dangyuanback.service.AchievementService;
 import com.telecom.jx.sjy.dangyuanback.util.DateUtil;
 import com.telecom.jx.sjy.dangyuanback.util.IDUtils;
+import com.telecom.jx.sjy.dangyuanback.util.jedis.JedisClient;
+import com.telecom.jx.sjy.dangyuanback.util.jedis.JedisClientCluster;
+import com.telecom.jx.sjy.dangyuanback.util.jedis.JedisClientPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +36,6 @@ public class AchievementServiceImpl implements AchievementService {
 
     @Override
     public List<Achievement> getAchievements() throws Exception {
-
         //查询所有工作业绩集合
         Integer year = DateUtil.getYear(new Date());
         return achievementMapper.selectAchievements(year);
